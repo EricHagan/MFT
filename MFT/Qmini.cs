@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RgbDriverKit;
 
 namespace MFT
 {
     internal class Qmini : ISpectrometer
     {
-        public bool Connect(out string ErrMsg)
+        public virtual bool Connect(out string ErrMsg)
         {
             ErrMsg = string.Empty;
             try
@@ -108,7 +106,7 @@ namespace MFT
                 return false;
             }
         }
-        Spectrometer spectrometer;
-        List<double> wavelengths;
+        protected Spectrometer spectrometer;
+        protected List<double> wavelengths;
     }
 }

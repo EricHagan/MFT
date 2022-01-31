@@ -1,4 +1,4 @@
 ﻿namespace MFT
 {
-    internal enum SpectrometerTypes { BROADCOM, CONTROLDEV, SPECTRALIGHT }
+    internal enum SpectrometerTypes { BROADCOM, SIMULATED, CONTROLDEV, SPECTRALIGHT }
 }

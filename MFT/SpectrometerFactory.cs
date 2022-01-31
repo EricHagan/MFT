@@ -14,6 +14,8 @@ namespace MFT
             {
                 case SpectrometerTypes.BROADCOM:
                     return new Qmini();
+                case SpectrometerTypes.SIMULATED:
+                    return new SimulatedSpectrometer();
                 case SpectrometerTypes.CONTROLDEV:
                 case SpectrometerTypes.SPECTRALIGHT:
                     throw new NotImplementedException();
@@ -28,6 +30,8 @@ namespace MFT
             {
                 case SpectrometerTypes.BROADCOM:
                     return "Broadcom";
+                case SpectrometerTypes.SIMULATED:
+                    return "Simulated";
                 case SpectrometerTypes.CONTROLDEV:
                     return "Control Development";
                 case SpectrometerTypes.SPECTRALIGHT:
