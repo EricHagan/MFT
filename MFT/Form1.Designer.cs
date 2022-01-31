@@ -54,8 +54,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.dwellTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -67,8 +65,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.continuousSpectrumGraph1 = new MFT.ContinuousSpectrumGraph();
-            this.monitorSpectrumGraph = new MFT.SingleSpectrumGraph();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -410,26 +407,6 @@
             this.label12.TabIndex = 28;
             this.label12.Text = "CALIBRATION";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(200, 20);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(58, 13);
-            this.label15.TabIndex = 34;
-            this.label15.Text = "MONITOR";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(201, 349);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(98, 13);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "MEASUREMENTS";
-            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.label10);
@@ -565,34 +542,22 @@
             this.panel3.Size = new System.Drawing.Size(165, 174);
             this.panel3.TabIndex = 30;
             // 
-            // continuousSpectrumGraph1
+            // tabControl1
             // 
-            this.continuousSpectrumGraph1.Exposure = null;
-            this.continuousSpectrumGraph1.ExposureStream = null;
-            this.continuousSpectrumGraph1.Location = new System.Drawing.Point(293, 102);
-            this.continuousSpectrumGraph1.Name = "continuousSpectrumGraph1";
-            this.continuousSpectrumGraph1.Size = new System.Drawing.Size(604, 591);
-            this.continuousSpectrumGraph1.TabIndex = 39;
-            // 
-            // monitorSpectrumGraph
-            // 
-            this.monitorSpectrumGraph.Exposure = null;
-            this.monitorSpectrumGraph.Location = new System.Drawing.Point(189, 36);
-            this.monitorSpectrumGraph.Name = "monitorSpectrumGraph";
-            this.monitorSpectrumGraph.Size = new System.Drawing.Size(98, 90);
-            this.monitorSpectrumGraph.TabIndex = 38;
+            this.tabControl1.Location = new System.Drawing.Point(186, 14);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(975, 711);
+            this.tabControl1.TabIndex = 38;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1171, 739);
-            this.Controls.Add(this.continuousSpectrumGraph1);
-            this.Controls.Add(this.monitorSpectrumGraph);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.spectrometerLabel);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label15);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label9);
@@ -662,8 +627,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button singleSpectrumButton;
@@ -674,10 +637,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ComboBox spectrometerComboBox;
         private System.Windows.Forms.CheckBox normalizedCheckBox;
-        private SingleSpectrumGraph monitorSpectrumGraph;
-        private ContinuousSpectrumGraph continuousSpectrumGraph1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown dwellTimeNumericUpDown;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }
 

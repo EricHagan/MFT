@@ -32,7 +32,7 @@ namespace MFT
             {
                 spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);
             }
-            catch (NotImplementedException ex)
+            catch (NotImplementedException)
             {
                 MessageBox.Show(this, $"Internal error: unknown device", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -76,17 +76,22 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, out string errMsg);
             if (exposure != null)
             {
+                var singleGraph = new SingleSpectrumGraph();
                 if (!normalizedCheckBox.Checked)
                 {
-                    monitorSpectrumGraph.Exposure = exposure;
-                    monitorSpectrumGraph.SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
+                    singleGraph.Exposure = exposure;
+                    singleGraph.SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
                         (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
                 }
                 else
                 {
-                    monitorSpectrumGraph.Exposure = exposure.GetNormalized(WhiteReference, DarkReference);
-                    monitorSpectrumGraph.SetYAxisScale(-0.1, 1.1, 0.1);
+                    singleGraph.Exposure = exposure.GetNormalized(WhiteReference, DarkReference);
+                    singleGraph.SetYAxisScale(-0.1, 1.1, 0.1);
                 }
+                var tabPage = new TabPage(exposure.Name);
+                tabPage.Controls.Add(singleGraph);
+                tabControl1.TabPages.Add(tabPage);
+                tabControl1.SelectedTab = tabPage;
             }
             else
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -151,11 +156,23 @@ namespace MFT
             normalizedCheckBox.Enabled = false;
         }
 
+        string GetNextContinuousName()
+        {
+            return "";
+        }
+
         private void button8_Click(object sender, EventArgs e)
         {
             var exposureStream = new ExposureStream(spectrometer);
             ControlsAdjusted += exposureStream.ControlsAdjustedEventHandler;
-            continuousSpectrumGraph1.ExposureStream = exposureStream;
+            var graph = new ContinuousSpectrumGraph();
+            graph.ExposureStream = exposureStream;
+
+            var tabPage = new TabPage("Continuous");
+            tabPage.Controls.Add(graph);
+            tabControl1.TabPages.Add(tabPage);
+            tabControl1.SelectedTab = tabPage;
+
             exposureStream.Start();
         }
 

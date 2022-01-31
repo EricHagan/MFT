@@ -18,6 +18,11 @@ namespace MFT
             InitializeComponent();
         }
 
+        private void SingleSpectrumGraph_Load(object sender, EventArgs e)
+        {
+            Dock = DockStyle.Fill;
+        }
+
         public Exposure Exposure
         {
             get
@@ -73,5 +78,7 @@ namespace MFT
             chart1.ChartAreas[0].AxisY.Maximum = yMax;
             chart1.ChartAreas[0].AxisY.Interval = interval;
         }
+
+
     }
 }

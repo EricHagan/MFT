@@ -86,6 +86,9 @@
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
+    <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
+      <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ExposureSettings.resx">
       <DependentUpon>ExposureSettings.cs</DependentUpon>
     </EmbeddedResource>
