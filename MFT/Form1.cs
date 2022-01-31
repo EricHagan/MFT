@@ -24,6 +24,9 @@ namespace MFT
         public Exposure WhiteReference { get; set; }
         public event EventHandler<ControlsAdjustedEventArgs> ControlsAdjusted;
 
+        private TabPage DarkSpectrum { get; set; }
+        private TabPage WhiteSpectrum { get; set; }
+
         private void connectButton_Click(object sender, EventArgs e)
         {
             ResetSpectrometer();
@@ -76,22 +79,7 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, out string errMsg);
             if (exposure != null)
             {
-                var singleGraph = new SingleSpectrumGraph();
-                if (!normalizedCheckBox.Checked)
-                {
-                    singleGraph.Exposure = exposure;
-                    singleGraph.SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
-                        (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
-                }
-                else
-                {
-                    singleGraph.Exposure = exposure.GetNormalized(WhiteReference, DarkReference);
-                    singleGraph.SetYAxisScale(-0.1, 1.1, 0.1);
-                }
-                var tabPage = new TabPage(exposure.Name);
-                tabPage.Controls.Add(singleGraph);
-                tabControl1.TabPages.Add(tabPage);
-                tabControl1.SelectedTab = tabPage;
+                AddSingleSpectrumTab(exposure);
             }
             else
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -112,6 +100,29 @@ namespace MFT
                 return exposure;
         }
 
+        TabPage AddSingleSpectrumTab(Exposure exposure, bool allowNormalized = true, string tabName = "")
+        {
+            if (tabName == "")
+                tabName = exposure.Name;
+            var singleGraph = new SingleSpectrumGraph();
+            if (!allowNormalized || !normalizedCheckBox.Checked)
+            {
+                singleGraph.Exposure = exposure;
+                singleGraph.SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
+                    (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
+            }
+            else
+            {
+                singleGraph.Exposure = exposure.GetNormalized(WhiteReference, DarkReference);
+                singleGraph.SetYAxisScale(-0.1, 1.1, 0.1);
+            }
+            var tabPage = new TabPage(tabName);
+            tabPage.Controls.Add(singleGraph);
+            tabControl1.TabPages.Add(tabPage);
+            tabControl1.SelectedTab = tabPage;
+            return tabPage;
+        }
+
         private void darkRefButton_Click(object sender, EventArgs e)
         {
             var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
@@ -119,6 +130,9 @@ namespace MFT
             if (exposure != null)
             {
                 DarkReference = exposure;
+                if (DarkSpectrum != null)
+                    tabControl1.TabPages.Remove(DarkSpectrum);
+                DarkSpectrum = AddSingleSpectrumTab(DarkReference, false, "Dark");
                 if (WhiteReference != null)
                     AllowNormalized();
             }
@@ -136,6 +150,9 @@ namespace MFT
             if (exposure != null)
             {
                 WhiteReference = exposure;
+                if (WhiteSpectrum != null)
+                    tabControl1.TabPages.Remove(WhiteSpectrum);
+                WhiteSpectrum = AddSingleSpectrumTab(WhiteReference, false, "White");
                 AllowNormalized();
             }
             else
