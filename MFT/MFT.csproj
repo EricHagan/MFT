@@ -57,6 +57,12 @@
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="Exposure.cs" />
+    <Compile Include="ExposureSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExposureSettings.Designer.cs">
+      <DependentUpon>ExposureSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExposureStream.cs" />
     <Compile Include="SpectrometerDescription.cs" />
     <Compile Include="SpectrometerFactory.cs" />
@@ -80,6 +86,9 @@
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
+    <EmbeddedResource Include="ExposureSettings.resx">
+      <DependentUpon>ExposureSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
