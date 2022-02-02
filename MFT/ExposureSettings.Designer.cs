@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.normalizeCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -119,10 +120,21 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "ms";
             // 
+            // normalizeCheckBox
+            // 
+            this.normalizeCheckBox.AutoSize = true;
+            this.normalizeCheckBox.Location = new System.Drawing.Point(121, 57);
+            this.normalizeCheckBox.Name = "normalizeCheckBox";
+            this.normalizeCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.normalizeCheckBox.TabIndex = 6;
+            this.normalizeCheckBox.Text = "Normalize";
+            this.normalizeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ExposureSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.normalizeCheckBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -130,7 +142,7 @@
             this.Controls.Add(this.integrationTimeMsNumericUpDown);
             this.Controls.Add(this.averagingNumericUpDown);
             this.Name = "ExposureSettings";
-            this.Size = new System.Drawing.Size(302, 60);
+            this.Size = new System.Drawing.Size(302, 85);
             this.Load += new System.EventHandler(this.ExposureSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).EndInit();
@@ -147,5 +159,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox normalizeCheckBox;
     }
 }

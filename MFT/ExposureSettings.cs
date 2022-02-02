@@ -50,6 +50,23 @@ namespace MFT
             }
         }
 
+        public bool Normalize
+        {
+            get => normalizeCheckBox.Checked;
+            set => normalizeCheckBox.Checked = value;
+        }
+
+        public void NormalizeAllowedChangedHandler(object sender, NormalizeAllowedChangedEventArgs e)
+        {
+            if (e.NormalizeAllowed)
+                normalizeCheckBox.Enabled = true;
+            else
+            {
+                normalizeCheckBox.Checked = false;
+                normalizeCheckBox.Enabled = false;
+            }
+        }
+
         public event EventHandler<EventArgs> ResampleClick;
 
         private void resampleButton_Click(object sender, EventArgs e)
