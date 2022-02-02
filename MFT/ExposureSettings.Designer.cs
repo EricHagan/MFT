@@ -125,9 +125,9 @@
             this.normalizeCheckBox.AutoSize = true;
             this.normalizeCheckBox.Location = new System.Drawing.Point(121, 57);
             this.normalizeCheckBox.Name = "normalizeCheckBox";
-            this.normalizeCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.normalizeCheckBox.Size = new System.Drawing.Size(120, 17);
             this.normalizeCheckBox.TabIndex = 6;
-            this.normalizeCheckBox.Text = "Normalize";
+            this.normalizeCheckBox.Text = "Normalize Spectrum";
             this.normalizeCheckBox.UseVisualStyleBackColor = true;
             // 
             // ExposureSettings
