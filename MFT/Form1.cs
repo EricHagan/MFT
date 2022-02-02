@@ -73,33 +73,15 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
+            var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
+                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg,
+                WhiteReference, DarkReference);
             if (exposure != null)
             {
                 AddSingleSpectrumTab(exposure);
             }
             else
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        Exposure GetExposure(float TimeSeconds, int Averaging, bool Normalized, out string ErrMsg)
-        {        
-            if (spectrometer == null)
-            {
-                ErrMsg = "Spectrometer not connected.";
-                return null;
-            }
-            var exposure = new Exposure(spectrometer);
-            if (!exposure.CollectSpectrum((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out ErrMsg))
-                return null;
-            else
-            {
-                if (Normalized)
-                    exposure = exposure.GetNormalized(WhiteReference, DarkReference);
-                return exposure;
-            }
         }
 
         TabPage AddSingleSpectrumTab(Exposure exposure, bool allowNormalized = true, string tabName = "")
@@ -117,7 +99,7 @@ namespace MFT
 
         private void darkRefButton_Click(object sender, EventArgs e)
         {
-            var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
+            var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
@@ -137,7 +119,7 @@ namespace MFT
 
         private void whiteRefButton_Click(object sender, EventArgs e)
         {
-            var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
+            var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
