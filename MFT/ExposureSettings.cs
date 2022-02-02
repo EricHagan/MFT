@@ -22,6 +22,8 @@ namespace MFT
 
         }
 
+        public ISpectrometer Spectrometer { get; set; }
+
         public int Averaging
         {
             get => (int)averagingNumericUpDown.Value;
@@ -67,11 +69,21 @@ namespace MFT
             }
         }
 
-        public event EventHandler<EventArgs> ResampleClick;
+        public event EventHandler<ExposureResampledEventArgs> ExposureResampled;
 
         private void resampleButton_Click(object sender, EventArgs e)
         {
-            ResampleClick?.Invoke(sender, e);
+            var exposure = Exposure.GetExposure(Spectrometer, (float)IntegrationTimeMs / 1000, Averaging,
+                Normalize, out string errMsg);
+            if (exposure != null)
+                ExposureResampled?.Invoke(sender, new ExposureResampledEventArgs() { ResampledExposure = exposure });
+            else
+                MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+    }
+
+    public class ExposureResampledEventArgs : EventArgs
+    {
+        public Exposure ResampledExposure { get; set; }
     }
 }

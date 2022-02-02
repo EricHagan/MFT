@@ -85,6 +85,8 @@ namespace MFT
                 tabName = exposure.Name;
             var singleGraph = new SingleSpectrumGraph();
             singleGraph.Exposure = exposure;
+            singleGraph.ExposureSettings.Spectrometer = spectrometer;
+            singleGraph.ExposureSettings.ExposureResampled += singleGraph.ExposureResampledHandler;
             var tabPage = new TabPage(tabName);
             tabPage.Controls.Add(singleGraph);
             tabControl1.TabPages.Add(tabPage);
@@ -192,6 +194,32 @@ namespace MFT
                 IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
             });
         }
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            SyncDataAndSettingsControls();
+        }
+
+        private void tabControl1_ControlAdded(object sender, ControlEventArgs e)
+        {
+            SyncDataAndSettingsControls();
+        }
+
+        void SyncDataAndSettingsControls()
+        {
+            flowLayoutPanel1.Controls.Clear();
+            foreach (Control mainControl in tabControl1.SelectedTab.Controls)
+            {
+                if (mainControl is ISecondaryControlsHolder)
+                {
+                    foreach (Control secondaryControl in ((ISecondaryControlsHolder)mainControl).SecondaryControls)
+                    {
+                        flowLayoutPanel1.Controls.Add(secondaryControl);
+                    }
+                }
+            }
+        }
+
     }
 
     public class ControlsAdjustedEventArgs : EventArgs

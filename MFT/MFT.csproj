@@ -64,6 +64,7 @@
       <DependentUpon>ExposureSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="ExposureStream.cs" />
+    <Compile Include="ISecondaryControlsHolder.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
     <Compile Include="SpectrometerFactory.cs" />

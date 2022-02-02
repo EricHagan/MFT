@@ -11,11 +11,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MFT
 {
-    public partial class SingleSpectrumGraph : UserControl
+    public partial class SingleSpectrumGraph : UserControl, ISecondaryControlsHolder
     {
         public SingleSpectrumGraph()
         {
             InitializeComponent();
+            exposureSettings = new ExposureSettings();
         }
 
         private void SingleSpectrumGraph_Load(object sender, EventArgs e)
@@ -38,6 +39,26 @@ namespace MFT
             }
         }
         Exposure exposure;
+
+        public ExposureSettings ExposureSettings
+        {
+            get => exposureSettings;
+            set => exposureSettings = value;
+        }
+        ExposureSettings exposureSettings;
+
+        public void ExposureResampledHandler(object sender, ExposureResampledEventArgs e)
+        {
+            Exposure = e.ResampledExposure;
+        }
+
+        public virtual List<Control> SecondaryControls
+        {
+            get
+            {
+                return new List<Control>() { ExposureSettings };
+            }
+        }
 
         public void UpdateValues()
         {
