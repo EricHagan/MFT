@@ -17,8 +17,6 @@ namespace MFT
             InitializeComponent();
         }
 
-        const int YAxisTicks = 10;
-
         ISpectrometer spectrometer { get; set; }
         public Exposure DarkReference { get; set; }
         public Exposure WhiteReference { get; set; }
@@ -76,7 +74,7 @@ namespace MFT
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
             var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out string errMsg);
+                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
             if (exposure != null)
             {
                 AddSingleSpectrumTab(exposure);
@@ -85,7 +83,7 @@ namespace MFT
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        Exposure GetExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        Exposure GetExposure(float TimeSeconds, int Averaging, bool Normalized, out string ErrMsg)
         {        
             if (spectrometer == null)
             {
@@ -97,7 +95,11 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, out ErrMsg))
                 return null;
             else
+            {
+                if (Normalized)
+                    exposure = exposure.GetNormalized(WhiteReference, DarkReference);
                 return exposure;
+            }
         }
 
         TabPage AddSingleSpectrumTab(Exposure exposure, bool allowNormalized = true, string tabName = "")
@@ -105,17 +107,7 @@ namespace MFT
             if (tabName == "")
                 tabName = exposure.Name;
             var singleGraph = new SingleSpectrumGraph();
-            if (!allowNormalized || !normalizedCheckBox.Checked)
-            {
-                singleGraph.Exposure = exposure;
-                singleGraph.SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
-                    (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
-            }
-            else
-            {
-                singleGraph.Exposure = exposure.GetNormalized(WhiteReference, DarkReference);
-                singleGraph.SetYAxisScale(-0.1, 1.1, 0.1);
-            }
+            singleGraph.Exposure = exposure;
             var tabPage = new TabPage(tabName);
             tabPage.Controls.Add(singleGraph);
             tabControl1.TabPages.Add(tabPage);
@@ -126,7 +118,7 @@ namespace MFT
         private void darkRefButton_Click(object sender, EventArgs e)
         {
             var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out string errMsg);
+                (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
                 DarkReference = exposure;
@@ -146,7 +138,7 @@ namespace MFT
         private void whiteRefButton_Click(object sender, EventArgs e)
         {
             var exposure = GetExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out string errMsg);
+                (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
                 WhiteReference = exposure;
@@ -162,15 +154,19 @@ namespace MFT
             }
         }
 
+        public event EventHandler<NormalizeAllowedChangedEventArgs> NormalizeAllowedChanged;
+
         void AllowNormalized()
         {
             normalizedCheckBox.Enabled = true;
+            NormalizeAllowedChanged?.Invoke(this, new NormalizeAllowedChangedEventArgs() { NormalizeAllowed = true });
         }
 
         void DisallowNormalized()
         {
             normalizedCheckBox.Checked = false;
             normalizedCheckBox.Enabled = false;
+            NormalizeAllowedChanged?.Invoke(this, new NormalizeAllowedChangedEventArgs() { NormalizeAllowed = false });
         }
 
         string GetNextContinuousName()
@@ -226,5 +222,10 @@ namespace MFT
         public float IntegrationTimeS { get; set; }
         public int Averaging { get; set; }
         public int DwellTimeMs { get; set; }
+    }
+
+    public class NormalizeAllowedChangedEventArgs : EventArgs
+    {
+        public bool NormalizeAllowed { get; set; }
     }
 }

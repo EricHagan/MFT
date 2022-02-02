@@ -23,6 +23,8 @@ namespace MFT
             Dock = DockStyle.Fill;
         }
 
+        const int YAxisTicks = 10;
+
         public Exposure Exposure
         {
             get
@@ -65,6 +67,14 @@ namespace MFT
                 chart1.Series.Add(series);
 
                 chart1.Legends[0].Enabled = false;
+
+                if (exposure.Normalized)
+                    SetYAxisScale(-0.1, 1.1, 0.1);
+                else
+                {
+                    SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
+                                        (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
+                }
 
                 chart1.Update();
             }
