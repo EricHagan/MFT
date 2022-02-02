@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace MFT
 {
@@ -14,6 +12,7 @@ namespace MFT
             Spectrometer = s;
             Spectrum = new List<double>();
             TimeStamp = DateTime.MinValue;
+            Normalized = false;
         }
 
         public ISpectrometer Spectrometer { get; set; }
@@ -21,6 +20,7 @@ namespace MFT
         public double MaxReflectance { get => Spectrum.Max(); }
         public double MinReflectance { get => Spectrum.Min(); }
         public DateTime TimeStamp { get; private set; }
+        public bool Normalized { get; private set; }
         public string Name
         {
             get
@@ -84,6 +84,7 @@ namespace MFT
             else
                 normalized = this / whiteReference;
             normalized.Name = Name + " (Normalized)";
+            normalized.Normalized = true;
             return normalized;
         }
 
@@ -100,6 +101,7 @@ namespace MFT
                 throw new Exception("A and B do not point to the same spectrometer.");
             var output = new Exposure(A.Spectrometer);
             output.TimeStamp = A.TimeStamp;
+            output.Normalized = A.Normalized && B.Normalized; // if either is unnormalized, quotient is unnormalized
             for (int i = 0; i < A.Spectrum.Count; i++)
             {
                 if (B.Spectrum[i] == 0.0)
@@ -121,8 +123,12 @@ namespace MFT
                     $" is not the same as B.Spectrum.Count ({B.Spectrum.Count})");
             if (A.Spectrometer != B.Spectrometer)
                 throw new Exception("A and B do not point to the same spectrometer.");
+            if (A.Normalized != B.Normalized)
+                throw new Exception($"A.Normalized ({A.Normalized})" +
+                    $" is not the same as B.Normalized ({B.Normalized})");
             var output = new Exposure(A.Spectrometer);
             output.TimeStamp = A.TimeStamp;
+            output.Normalized = A.Normalized;
             for (int i = 0; i < A.Spectrum.Count; i++)
             {
                 output.Spectrum.Add(A.Spectrum[i] - B.Spectrum[i]);
