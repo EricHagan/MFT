@@ -18,8 +18,6 @@ namespace MFT
         }
 
         ISpectrometer spectrometer { get; set; }
-        public Exposure DarkReference { get; set; }
-        public Exposure WhiteReference { get; set; }
         public event EventHandler<ControlsAdjustedEventArgs> ControlsAdjusted;
 
         private TabPage DarkSpectrum { get; set; }
@@ -50,8 +48,6 @@ namespace MFT
         {
             spectrometer = null;
             spectrometerLabel.Text = string.Empty;
-            DarkReference = null;
-            WhiteReference = null;
             DisallowNormalized();
         }
 
@@ -74,8 +70,7 @@ namespace MFT
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
             var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg,
-                WhiteReference, DarkReference);
+                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
             if (exposure != null)
             {
                 AddSingleSpectrumTab(exposure);
@@ -103,11 +98,11 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
-                DarkReference = exposure;
+                spectrometer.DarkReference = exposure;
                 if (DarkSpectrum != null)
                     tabControl1.TabPages.Remove(DarkSpectrum);
-                DarkSpectrum = AddSingleSpectrumTab(DarkReference, false, "Dark");
-                if (WhiteReference != null)
+                DarkSpectrum = AddSingleSpectrumTab(spectrometer.DarkReference, false, "Dark");
+                if (spectrometer.WhiteReference != null)
                     AllowNormalized();
             }
             else
@@ -123,10 +118,10 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, false, out string errMsg);
             if (exposure != null)
             {
-                WhiteReference = exposure;
+                spectrometer.WhiteReference = exposure;
                 if (WhiteSpectrum != null)
                     tabControl1.TabPages.Remove(WhiteSpectrum);
-                WhiteSpectrum = AddSingleSpectrumTab(WhiteReference, false, "White");
+                WhiteSpectrum = AddSingleSpectrumTab(spectrometer.WhiteReference, false, "White");
                 AllowNormalized();
             }
             else

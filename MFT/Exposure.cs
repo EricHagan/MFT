@@ -7,8 +7,8 @@ namespace MFT
 {
     public class Exposure
     {
-        public static Exposure GetExposure(ISpectrometer spectrometer, float TimeSeconds, int Averaging, bool Normalized,
-             out string ErrMsg, Exposure WhiteReference = null, Exposure DarkReference = null)
+        public static Exposure GetExposure(ISpectrometer spectrometer,
+            float TimeSeconds, int Averaging, bool Normalized, out string ErrMsg)
         {
             if (spectrometer == null)
             {
@@ -21,7 +21,7 @@ namespace MFT
             else
             {
                 if (Normalized)
-                    exposure = exposure.GetNormalized(WhiteReference, DarkReference);
+                    exposure = exposure.GetNormalized();
                 return exposure;
             }
         }
@@ -95,8 +95,10 @@ namespace MFT
 
         private static readonly object collectLock = new object();
 
-        public Exposure GetNormalized(Exposure whiteReference, Exposure darkReference)
+        public Exposure GetNormalized()
         {
+            Exposure whiteReference = Spectrometer.WhiteReference;
+            Exposure darkReference = Spectrometer.DarkReference;
             Exposure normalized;
             if (darkReference != null)
                 normalized = (this - darkReference) / (whiteReference - darkReference);

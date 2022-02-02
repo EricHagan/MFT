@@ -106,6 +106,10 @@ namespace MFT
                 return false;
             }
         }
+
+        public Exposure WhiteReference { get; set; }
+        public Exposure DarkReference { get; set; }
+
         protected Spectrometer spectrometer;
         protected List<double> wavelengths;
     }

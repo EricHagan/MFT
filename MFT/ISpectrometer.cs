@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MFT
 {
@@ -12,15 +9,11 @@ namespace MFT
         string GetDeviceDescription();
         List<double> GetWavelengths();
         int StartWavelengthIndex { get; }
-        int EndWavelengthIndex { get; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        int EndWavelengthIndex { get; }       
         List<double> GetSpectrum();
         DateTime GetTimeStamp();
         bool PerformExposure(float TimeSeconds, int Averaging, out string ErrMsg);
-
+        Exposure WhiteReference { get; set; }
+        Exposure DarkReference { get; set; }
     }
 }
