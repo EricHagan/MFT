@@ -44,23 +44,6 @@ namespace MFT
     
         }
 
-        public List<double> GetSpectrum()
-        {
-            var output = new List<double>();
-            foreach(var value in spectrometer.GetSpectrum())
-                output.Add(value);
-            return output;
-        }
-
-        public DateTime GetTimeStamp()
-        {
-            if (spectrometer == null)
-            {
-                return DateTime.MinValue;
-            }
-            return spectrometer.TimeStamp;
-        }
-
         public List<double> GetWavelengths()
         {
             if (spectrometer == null)
@@ -81,7 +64,70 @@ namespace MFT
         public int EndWavelengthIndex { get => endwaveindex; }
         int endwaveindex;
 
-        public bool PerformExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        public Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
+        {
+            lock (collectLock)
+            {
+                ErrMsg = string.Empty;
+                if (!PerformExposure(TimeSeconds, Averaging, out ErrMsg))
+                {
+                    return null;
+                }
+                var RawSpectrum = spectrometer.GetSpectrum().ToList();
+                var Spectrum = RawSpectrum.GetRange(StartWavelengthIndex, EndWavelengthIndex - StartWavelengthIndex);
+                var TimeStamp = GetTimeStamp();
+                return new Exposure(this, Spectrum.Select(x => (double)x), TimeStamp, false);
+            }
+
+        }
+
+        private static readonly object collectLock = new object();
+
+        public bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        {
+            WhiteReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            UpdateNormalizeAllowed();
+            return WhiteReference != null;
+        }
+
+        public bool CollectDarkReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        {
+            TriedToGetDarkReference = true;
+            DarkReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            UpdateNormalizeAllowed();
+            return DarkReference != null;
+        }
+
+        public Exposure WhiteReference { get; set; }
+        public Exposure DarkReference { get; set; }
+
+        public bool NormalizeAllowed { get; private set; }
+        public event EventHandler<NormalizeAllowedChangedEventArgs> NormalizeAllowedChanged;
+
+
+
+        protected bool TriedToGetDarkReference { get; set; }
+
+        protected void UpdateNormalizeAllowed()
+        {
+            bool oldValue = NormalizeAllowed;
+            if (WhiteReference == null
+                || (TriedToGetDarkReference && DarkReference == null))
+                NormalizeAllowed = false;
+            else
+                NormalizeAllowed = true;
+
+            if (NormalizeAllowed != oldValue)
+            {
+                NormalizeAllowedChanged?.Invoke(
+                    this, new NormalizeAllowedChangedEventArgs() { NormalizeAllowed = this.NormalizeAllowed });
+            }
+        }
+
+        protected Spectrometer spectrometer;
+        protected List<double> wavelengths;
+
+        protected bool PerformExposure(float TimeSeconds, int Averaging, out string ErrMsg)
         {
             ErrMsg = string.Empty;
             if (spectrometer == null)
@@ -107,10 +153,22 @@ namespace MFT
             }
         }
 
-        public Exposure WhiteReference { get; set; }
-        public Exposure DarkReference { get; set; }
+        protected List<double> GetSpectrum()
+        {
+            var output = new List<double>();
+            foreach (var value in spectrometer.GetSpectrum())
+                output.Add(value);
+            return output;
+        }
 
-        protected Spectrometer spectrometer;
-        protected List<double> wavelengths;
+        protected DateTime GetTimeStamp()
+        {
+            if (spectrometer == null)
+            {
+                return DateTime.MinValue;
+            }
+            return spectrometer.TimeStamp;
+        }
+
     }
 }

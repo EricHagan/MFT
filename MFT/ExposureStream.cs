@@ -33,9 +33,9 @@ namespace MFT
             {
                 while (!PleaseStop)
                 {
-                    var exposure = new Exposure(Spectrometer);
                     string errMsg;
-                    if (!exposure.CollectSpectrum(IntegrationTimeS, Averaging, out errMsg))
+                    var exposure = Spectrometer.CollectSpectrum(IntegrationTimeS, Averaging, out errMsg);
+                    if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)
                         ExposureAvailable(this, new ExposureEventArgs(exposure));

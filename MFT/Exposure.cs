@@ -15,8 +15,8 @@ namespace MFT
                 ErrMsg = "Spectrometer not connected.";
                 return null;
             }
-            var exposure = new Exposure(spectrometer);
-            if (!exposure.CollectSpectrum(TimeSeconds, Averaging, out ErrMsg))
+            var exposure = spectrometer.CollectSpectrum(TimeSeconds, Averaging, out ErrMsg);
+            if (exposure == null)
                 return null;
             else
             {
@@ -26,13 +26,18 @@ namespace MFT
             }
         }
 
-        public Exposure(ISpectrometer s) // constructor
+        // constructor:
+        public Exposure(ISpectrometer s, IEnumerable<double> spectrum, DateTime timeStamp, bool normalized)
         {
             Spectrometer = s;
-            Spectrum = new List<double>();
-            TimeStamp = DateTime.MinValue;
-            Normalized = false;
+            Spectrum = spectrum.ToList();
+            TimeStamp = timeStamp;
+            Normalized = normalized;
         }
+
+        // constructs an empty Exposure:
+        public Exposure(ISpectrometer s)
+            : this(s, new List<double>(), DateTime.MinValue, false) { }
 
         public ISpectrometer Spectrometer { get; set; }
         public List<double> Spectrum { get; private set; }
@@ -55,45 +60,6 @@ namespace MFT
             }
         }
         string name;
-
-        public bool CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
-        {
-            lock (collectLock)
-            {
-                ErrMsg = string.Empty;
-                Spectrum = new List<double>();
-                TimeStamp = DateTime.MinValue;
-                if (Spectrometer == null)
-                {
-                    ErrMsg = "Spectrum not collected.";
-                    return false;
-                }
-
-                if (!Spectrometer.PerformExposure(TimeSeconds, Averaging, out ErrMsg))
-                {
-                    return false;
-                }
-                var RawSpectrum = Spectrometer.GetSpectrum();
-                Spectrum = RawSpectrum.GetRange(Spectrometer.StartWavelengthIndex, Spectrometer.EndWavelengthIndex - Spectrometer.StartWavelengthIndex);
-                TimeStamp = Spectrometer.GetTimeStamp();
-                return true;
-            }
-
-        }
-
-        /// <summary>
-        /// We problably don't need this async method
-        /// </summary>
-        public Task<bool> CollectSpectrumAsync(float TimeSeconds, int Averaging, IProgress<string> progress)
-        {
-            return Task.Run(() =>
-            {
-                string errMsg;
-                return CollectSpectrum(TimeSeconds, Averaging, out errMsg);
-            });
-        }
-
-        private static readonly object collectLock = new object();
 
         public Exposure GetNormalized()
         {
