@@ -17,12 +17,19 @@ namespace MFT
             InitializeComponent();
         }
 
-        private void ExposureSettings_Load(object sender, EventArgs e)
-        {
-
-        }
-
         public ISpectrometer Spectrometer { get; set; }
+
+        public void HandleSpectrometerChanged(object sender, SpectrometerChangedEventArgs e)
+        {
+            Spectrometer = e.Spectrometer;
+            if (Spectrometer == null)
+            {
+                AllowNormalize = false;
+                return;
+            }
+            Spectrometer.NormalizeAllowedChanged += HandleNormalizeAllowedChanged;
+            AllowNormalize = Spectrometer.NormalizeAllowed;
+        }
 
         public int Averaging
         {
@@ -52,21 +59,43 @@ namespace MFT
             }
         }
 
+        public bool ForbidNormalizing
+        {
+            get => forbidNormalizing;
+            set
+            {
+                forbidNormalizing = value;
+                if (forbidNormalizing)
+                    AllowNormalize = false;
+            }
+        }
+        bool forbidNormalizing;
+
+        public bool AllowNormalize
+        {
+            get => normalizeCheckBox.Enabled;
+            set
+            {
+                if (ForbidNormalizing)
+                    normalizeCheckBox.Enabled = false;
+                else
+                {
+                    normalizeCheckBox.Enabled = value;
+                    if (normalizeCheckBox.Enabled == false)
+                        normalizeCheckBox.Checked = false;
+                }
+            }
+        }
+
         public bool Normalize
         {
             get => normalizeCheckBox.Checked;
             set => normalizeCheckBox.Checked = value;
         }
 
-        public void NormalizeAllowedChangedHandler(object sender, NormalizeAllowedChangedEventArgs e)
+        public void HandleNormalizeAllowedChanged(object sender, NormalizeAllowedChangedEventArgs e)
         {
-            if (e.NormalizeAllowed)
-                normalizeCheckBox.Enabled = true;
-            else
-            {
-                normalizeCheckBox.Checked = false;
-                normalizeCheckBox.Enabled = false;
-            }
+            AllowNormalize = e.NormalizeAllowed;
         }
 
         public event EventHandler<ExposureResampledEventArgs> ExposureResampled;

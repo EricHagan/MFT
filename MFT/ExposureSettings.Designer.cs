@@ -143,7 +143,6 @@
             this.Controls.Add(this.averagingNumericUpDown);
             this.Name = "ExposureSettings";
             this.Size = new System.Drawing.Size(302, 85);
-            this.Load += new System.EventHandler(this.ExposureSettings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).EndInit();
             this.ResumeLayout(false);
