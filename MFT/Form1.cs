@@ -234,6 +234,11 @@ namespace MFT
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var d = new AboutDialog();
+            d.ShowDialog();
+        }
     }
 
     public class ControlsAdjustedEventArgs : EventArgs
