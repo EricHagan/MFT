@@ -55,6 +55,11 @@ namespace Colorimetry
 
 		//_______________________________________________________________
 
+		public static List<double> LABtoXYZ(double L, double a, double b)
+        {
+			double[] Lab = new double[] { L, a, b };
+			return new List<double>(LABtoXYZ(Lab));
+		}
 		public static double[] LABtoXYZ(double[] LAB)
 		{
 			double Y = (LAB[0] + 16) / 116;
@@ -201,6 +206,39 @@ namespace Colorimetry
 		}
 
 		//_______________________________________________________________
+
+		public enum DeltaEcalcTypes { E76, E00, E94, CMC }
+
+		public struct LabPoint
+        {
+			public LabPoint(double _L, double _a, double _b)
+            {
+				L = _L;
+				a = _a;
+				b = _b;
+            }
+
+			public double L, a, b;
+
+			public double[] ToArray()
+            {
+				return new double[3] {L, a, b};
+            }
+        }
+
+		public static double DeltaE(LabPoint reference, LabPoint compare, DeltaEcalcTypes calcMethod = DeltaEcalcTypes.E00)
+        {
+			switch (calcMethod)
+            {
+				case DeltaEcalcTypes.E00:
+					return DeltaE00(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.E94:
+					throw new Exception("E94 not implemented");
+					//return DeltaE94(reference.ToArray(), compare.ToArray());
+				default:
+					throw new Exception($"Unknown calcMethod '{calcMethod}'");
+            }
+        }
 
 		public static double DeltaE76(double[] LAB1, double[] LAB2)
 		{
