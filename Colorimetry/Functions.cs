@@ -100,7 +100,11 @@ namespace Colorimetry
 		}
 
 		//_________________________________________________________
-
+		public static List<int> XYZtoRGB(double X, double Y, double Z)
+		{
+			double[] XYZ = new double[] { X, Y, Z };
+			return new List<int>(XYZtoRGB(XYZ));
+		}
 		public static int[] XYZtoRGB(double[] XYZ)
 		{
 			double X = XYZ[0] / 100;
@@ -162,7 +166,11 @@ namespace Colorimetry
 		}
 
 		//_______________________________________________________________
-
+		public static List<double> RGBtoXYZ(int R, int G, int B)
+		{
+			int[] RGB = new int[] { R, G, B };
+			return new List<double>(RGBtoXYZ(RGB));
+		}
 		public static double[] RGBtoXYZ(int[] RGB)
 		{
 			double[] XYZ = new double[3];
@@ -207,7 +215,7 @@ namespace Colorimetry
 
 		//_______________________________________________________________
 
-		public enum DeltaEcalcTypes { E76, E00, E94, CMC }
+		public enum DeltaEcalcTypes { DE76, DE94_T, DE94_GA, DE00, HyAB }
 
 		public struct LabPoint
         {
@@ -226,21 +234,29 @@ namespace Colorimetry
             }
         }
 
-		public static double DeltaE(LabPoint reference, LabPoint compare, DeltaEcalcTypes calcMethod = DeltaEcalcTypes.E00)
+		public static double DeltaE(LabPoint reference, LabPoint compare, DeltaEcalcTypes calcMethod = DeltaEcalcTypes.DE00)
         {
 			switch (calcMethod)
             {
-				case DeltaEcalcTypes.E00:
-					return DeltaE00(reference.ToArray(), compare.ToArray());
-				case DeltaEcalcTypes.E94:
-					throw new Exception("E94 not implemented");
-					//return DeltaE94(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.DE76:
+					return DE76(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.DE94_T:
+					return DE94_T(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.DE94_GA:
+					return DE94_GA(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.DE00:
+					return DE00(reference.ToArray(), compare.ToArray());
+				case DeltaEcalcTypes.HyAB:
+					//throw new Exception("HyAB not implemented");
+					return HyAB(reference.ToArray(), compare.ToArray());
 				default:
 					throw new Exception($"Unknown calcMethod '{calcMethod}'");
             }
         }
 
-		public static double DeltaE76(double[] LAB1, double[] LAB2)
+		//_______________________________________________________________
+
+		public static double DE76(double[] LAB1, double[] LAB2)
 		{
 			double DE = Math.Pow(Math.Pow(LAB1[0] - LAB2[0], 2) + Math.Pow(LAB1[1] - LAB2[1], 2) + Math.Pow(LAB1[2] - LAB2[2], 2), (1 / 2));
 			return DE;
@@ -248,7 +264,37 @@ namespace Colorimetry
 
 		//_______________________________________________________________
 
-		public static double DeltaE00(double[] LAB1, double[] LAB2)
+		public static double DE94_T(double[] LAB1, double[] LAB2)
+		{
+			double DL = (LAB1[0] - LAB2[0]);
+			double C1 = Math.Sqrt(Math.Pow(LAB1[1], 2) + Math.Pow(LAB1[2], 2));
+			double C2 = Math.Sqrt(Math.Pow(LAB2[1], 2) + Math.Pow(LAB2[2], 2));
+			double DCab = C1 - C2;
+			double DHab = Math.Sqrt(Math.Pow(LAB1[1] - LAB2[1], 2) + Math.Pow(LAB1[2] - LAB2[2], 2) - Math.Pow(C1 - C2, 2));
+			double SC = 1 + (0.048 * C1);
+			double SH = 1 + (0.014 * C1);
+			double DE = Math.Sqrt(Math.Pow(DL / 2, 2) + Math.Pow(DCab / SC, 2) + Math.Pow(DHab / SH, 2));
+			return DE;
+		}
+
+		//_______________________________________________________________
+
+		public static double DE94_GA(double[] LAB1, double[] LAB2)
+		{
+			double DL = (LAB1[0] - LAB2[0]);
+			double C1 = Math.Sqrt(Math.Pow(LAB1[1], 2) + Math.Pow(LAB1[2], 2));
+			double C2 = Math.Sqrt(Math.Pow(LAB2[1], 2) + Math.Pow(LAB2[2], 2));
+			double DCab = C1 - C2;
+			double DHab = Math.Sqrt(Math.Pow(LAB1[1] - LAB2[1], 2) + Math.Pow(LAB1[2] - LAB2[2], 2) - Math.Pow(C1 - C2, 2));
+			double SC = 1 + (0.045 * C1);
+			double SH = 1 + (0.015 * C1);
+			double DE = Math.Sqrt(Math.Pow(DL, 2) + Math.Pow(DCab / SC, 2) + Math.Pow(DHab / SH, 2));
+			return DE;
+		}
+
+		//_______________________________________________________________
+
+		public static double DE00(double[] LAB1, double[] LAB2)
 		{
 			double L1 = LAB1[0];
 			double a1 = LAB1[1];
@@ -328,9 +374,17 @@ namespace Colorimetry
 			// radians = (Math.PI / 180) * degrees;
 		}
 
+		//_______________________________________________________________
+
+		public static double HyAB(double[] LAB1, double[] LAB2)
+		{
+			double DE = Math.Abs(LAB1[0]-LAB2[0]) + Math.Sqrt(Math.Pow(LAB1[1]-LAB2[1],2) + Math.Pow(LAB1[2] - LAB2[2], 2));
+			return DE;
+		}
+
 		//__________________________________________________________________
 
-		public static double[] SpectrumToXYZ(double[] spectrum)
+		public static double[] SpectrumToXYZ(double[] wavelengths, double[] spectrum)
 		{
 			//This function requires a input spectrum of sample reflectance from 390 to 830 nm, in 1 nm increments
 			double[] XYZ = new double[] { 0, 0, 0 };
