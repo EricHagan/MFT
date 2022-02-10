@@ -8,9 +8,20 @@ namespace Colorimetry
 {
     public static class Functions
     {
-		public static double[] SpectrumAverage(double[] spectrum, int points, int recursions)
+		public static double[] SmoothSpectrum(double[] spectrum, int points, int iterations)
 		{
 			//returns spectrum array of the same size (unaveraged ends included)
+			if (points < 1) {
+				throw new ArgumentOutOfRangeException("Number of averaging points must be greater than 0");
+					}
+			if (iterations < 1)
+			{
+				throw new ArgumentOutOfRangeException("Averaging iterations must be greater than 0");
+			}
+			if (spectrum.Length < points)
+			{
+				throw new ArgumentOutOfRangeException("Averaging window exceeds data points in the spectrum");
+			}
 
 			int N = 1;
 
@@ -29,7 +40,7 @@ namespace Colorimetry
 			int startIndex = halfWindow;
 			int endIndex = spectrum.Length - (N - 1) / 2 - 1;
 
-			for (int i = 1; i <= recursions; i++)
+			for (int i = 1; i <= iterations; i++)
 			{
 				for (int j = startIndex; j <= endIndex; j++)
 				{
@@ -46,39 +57,36 @@ namespace Colorimetry
 
 		//___________________________________________________________________________________
 
-		public static double[] Resample(double[] reflectance1, double[] lambda1)
+		public static double[] ResampleSpectrum(double[] spectrum, double[] wavelengths, int minWavelength, int maxWavelength, int nmIncrement)
 		{
-			//This function resamples a reflectance spectrum collected by the spectrometer to match wavelengths used in colour matching functions
-			double[] reflectance2 = new double[441];
-			double lower = 0;
-			double upper = 0;
-			int target = 390;
-			int j = 0;
-			foreach (int i in lambda1)
-			{
-				if (i == 0)
-				{
-					continue;
-				}
 
-				lower = lambda1[i - 1];
-				upper = lambda1[i];
-				if ((target >= lower) && (target <= upper))
-				{
-					reflectance2[j] = ((target - lambda1[i - 1]) / (lambda1[i] - lambda1[i - 1])) * (reflectance1[i] - reflectance1[i - 1]) + reflectance1[i];
-					if (target == 830)
-					{
-						break;
-					}
-					else
-					{
-						j = j + 1;
-						target = target + 1;
-					}
-				}
+			int newLength = (int)(1 + (minWavelength - maxWavelength) / nmIncrement);
+
+			int[] newWavelengths = new int[newLength]; 
+			double[] newSpectrum = new double[newLength];
+
+			int index = 0;
+
+			for (int i = 0; i < newWavelengths.Length; i++)
+            {
+				newWavelengths[i] = minWavelength + i * nmIncrement;
+				newSpectrum[i] = 0;
 			}
 
-			return reflectance2;
+			for (int i = 1; i < wavelengths.Length; i++)
+			{
+				if (newWavelengths[index] >= wavelengths[i-1] && newWavelengths[index] <= wavelengths[i])
+                {
+					newSpectrum[index] = (spectrum[i] - spectrum[i - 1]) * (newWavelengths[index] - wavelengths[i - 1]) / (wavelengths[i] - wavelengths[i - 1]) + spectrum[i - 1];
+					index = index + 1;
+                }
+				if (index >= newLength)
+                {
+					break;
+                }
+			}
+
+			return newSpectrum;
 		} 
 
 		//___________________________________________________________________________________
