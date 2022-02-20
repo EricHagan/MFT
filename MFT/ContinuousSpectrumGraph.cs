@@ -15,6 +15,17 @@ namespace MFT
         public ContinuousSpectrumGraph()
         {
             InitializeComponent();
+            ContinuousExposureSettings = new ContinuousExposureSettings();
+        }
+
+        public ContinuousExposureSettings ContinuousExposureSettings { get; set; }
+
+        public override List<Control> SecondaryControls
+        {
+            get
+            {
+                return new List<Control>() { ContinuousExposureSettings };
+            }
         }
 
         public ExposureStream ExposureStream
