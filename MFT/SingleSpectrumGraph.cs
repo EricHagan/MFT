@@ -19,9 +19,10 @@ namespace MFT
             exposureSettings = new ExposureSettings();
         }
 
-        private void SingleSpectrumGraph_Load(object sender, EventArgs e)
+        protected void SingleSpectrumGraph_Load(object sender, EventArgs e)
         {
-            Dock = DockStyle.Fill;
+            if (!DesignTimeHelper.IsInDesignMode)
+                Dock = DockStyle.Fill;
         }
 
         const int YAxisTicks = 10;

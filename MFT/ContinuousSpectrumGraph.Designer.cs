@@ -34,8 +34,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ContinuousSpectrumGraph";
-            this.Size = new System.Drawing.Size(953, 1010);
+            this.Size = new System.Drawing.Size(973, 602);
+            this.Load += new System.EventHandler(this.ContinuousSpectrumGraph_Load);
             this.ResumeLayout(false);
 
         }

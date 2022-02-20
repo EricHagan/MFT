@@ -39,5 +39,11 @@ namespace MFT
         {
             Exposure = e.Exposure; // this will trigger Update() in SingleSpectrumGraph
         }
+
+        private void ContinuousSpectrumGraph_Load(object sender, EventArgs e)
+        {
+            SingleSpectrumGraph_Load(sender, e);
+            Dock = DockStyle.Fill;
+        }
     }
 }
