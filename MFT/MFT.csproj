@@ -77,7 +77,10 @@
       <DependentUpon>ExposureSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="ExposureStream.cs" />
+    <Compile Include="ISpectrumProcessor.cs" />
     <Compile Include="ISecondaryControlsHolder.cs" />
+    <Compile Include="MovingAverage.cs" />
+    <Compile Include="Resample.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
     <Compile Include="SpectrometerFactory.cs" />
