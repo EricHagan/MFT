@@ -11,16 +11,12 @@ namespace MFT
         public int MaxWavelength_nm { get; set; } = 750;
         public int Increment_nm { get; set; } = 5;
 
-
-        public List<double> Process(List<double> data)
+        public Spectrum Process(Spectrum data)
         {
             (int[] newWavelengths, double[] newSpectrum) = 
-                Functions.ResampleSpectrum(data.ToArray(),
-                Wavelengths.ToArray(), MinWavelength_nm, MaxWavelength_nm, Increment_nm);
-            Wavelengths = new List<double>(newWavelengths.Select(x => (double)x));
-            return new List<double>(newSpectrum);
+                Functions.ResampleSpectrum(data.Values.ToArray(),
+                data.WavelengthsNm.ToArray(), MinWavelength_nm, MaxWavelength_nm, Increment_nm);
+            return new Spectrum(new List<double>(newWavelengths.Select(x => (double)x)), new List<double>(newSpectrum));
         }
-
-        public List<double> Wavelengths { get; set; }
     }
 }

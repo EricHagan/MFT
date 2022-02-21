@@ -340,23 +340,6 @@ namespace Colorimetry
 
         public enum DeltaEcalcTypes { DE76, DE94_T, DE94_GA, DE00, HyAB }
 
-        public struct LabPoint
-        {
-            public LabPoint(double _L, double _a, double _b)
-            {
-                L = _L;
-                a = _a;
-                b = _b;
-            }
-
-            public double L, a, b;
-
-            public double[] ToArray()
-            {
-                return new double[3] { L, a, b };
-            }
-        }
-
         public static double DeltaE(LabPoint reference, LabPoint compare, DeltaEcalcTypes calcMethod = DeltaEcalcTypes.DE00)
         {
             switch (calcMethod)

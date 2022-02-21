@@ -56,6 +56,7 @@
     <Compile Include="AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Color.cs" />
     <Compile Include="ContinuousExposureSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +96,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Qmini.cs" />
+    <Compile Include="Spectrum.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestManager.cs" />
     <Compile Include="SingleSpectrumGraph.cs">
