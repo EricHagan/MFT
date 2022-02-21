@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class ContinuousSpectrumGraph
+    partial class ContinuousExposureSettings
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,20 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // ContinuousSpectrumGraph
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(115, 85);
+            this.panel1.TabIndex = 7;
+            // 
+            // ContinuousExposureSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "ContinuousSpectrumGraph";
-            this.Size = new System.Drawing.Size(973, 602);
-            this.Load += new System.EventHandler(this.ContinuousSpectrumGraph_Load);
+            this.Controls.Add(this.panel1);
+            this.Name = "ContinuousExposureSettings";
+            this.Controls.SetChildIndex(this.panel1, 0);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel panel1;
     }
 }

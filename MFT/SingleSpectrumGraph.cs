@@ -16,12 +16,13 @@ namespace MFT
         public SingleSpectrumGraph()
         {
             InitializeComponent();
-            exposureSettings = new ExposureSettings();
+            ExposureSettings = new ExposureSettings();
         }
 
-        private void SingleSpectrumGraph_Load(object sender, EventArgs e)
+        protected void SingleSpectrumGraph_Load(object sender, EventArgs e)
         {
-            Dock = DockStyle.Fill;
+            if (!DesignTimeHelper.IsInDesignMode)
+                Dock = DockStyle.Fill;
         }
 
         const int YAxisTicks = 10;
@@ -40,17 +41,12 @@ namespace MFT
         }
         Exposure exposure;
 
-        public ExposureSettings ExposureSettings
-        {
-            get => exposureSettings;
-            set => exposureSettings = value;
-        }
-        ExposureSettings exposureSettings;
-
         public void ExposureResampledHandler(object sender, ExposureResampledEventArgs e)
         {
             Exposure = e.ResampledExposure;
         }
+
+        public ExposureSettings ExposureSettings { get; set; }
 
         public virtual List<Control> SecondaryControls
         {

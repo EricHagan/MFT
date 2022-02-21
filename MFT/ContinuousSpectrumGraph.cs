@@ -15,6 +15,17 @@ namespace MFT
         public ContinuousSpectrumGraph()
         {
             InitializeComponent();
+            ContinuousExposureSettings = new ContinuousExposureSettings();
+        }
+
+        public ContinuousExposureSettings ContinuousExposureSettings { get; set; }
+
+        public override List<Control> SecondaryControls
+        {
+            get
+            {
+                return new List<Control>() { ContinuousExposureSettings };
+            }
         }
 
         public ExposureStream ExposureStream
@@ -38,6 +49,12 @@ namespace MFT
         void ExposureAvailableEventHandler(object sender, ExposureEventArgs e)
         {
             Exposure = e.Exposure; // this will trigger Update() in SingleSpectrumGraph
+        }
+
+        private void ContinuousSpectrumGraph_Load(object sender, EventArgs e)
+        {
+            SingleSpectrumGraph_Load(sender, e);
+            Dock = DockStyle.Fill;
         }
     }
 }
