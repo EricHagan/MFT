@@ -12,12 +12,10 @@ namespace MFT
         public int WindowPoints { get; set; } = 1;
         public int Iterations { get; set; } = 1;
 
-
-        public List<double> Process(List<double> data)
+        public Spectrum Process(Spectrum data)
         {
-            return new List<double>(Functions.SmoothSpectrum(data.ToArray(), WindowPoints, Iterations));
+            var values = new List<double>(Functions.SmoothSpectrum(data.Values.ToArray(), WindowPoints, Iterations));
+            return new Spectrum(data.WavelengthsNm, values);
         }
-
-        public List<double> Wavelengths { get; set; }
     }
 }

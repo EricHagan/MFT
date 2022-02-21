@@ -8,7 +8,6 @@ namespace MFT
 {
     internal interface ISpectrumProcessor
     {
-        List<double> Process(List<double> data);
-        List<double> Wavelengths { get; set; } 
+        Spectrum Process(Spectrum data);
     }
 }
