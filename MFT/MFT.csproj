@@ -97,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Qmini.cs" />
     <Compile Include="Spectrum.cs" />
+    <Compile Include="SpectrumProcessorChain.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestManager.cs" />
     <Compile Include="SingleSpectrumGraph.cs">
@@ -106,6 +107,7 @@
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
+    <Compile Include="Workspace.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
