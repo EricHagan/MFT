@@ -36,6 +36,11 @@ namespace MFT
             }
         }
 
+        public virtual SpectrometerTypes GetDeviceType()
+        {
+            return SpectrometerTypes.BROADCOM;
+        }
+
         public string GetDeviceDescription()
         {
             if (spectrometer == null)

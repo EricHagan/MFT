@@ -81,10 +81,12 @@
     <Compile Include="ExposureStream.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
     <Compile Include="ISecondaryControlsHolder.cs" />
+    <Compile Include="Measurement.cs" />
     <Compile Include="MovingAverage.cs" />
     <Compile Include="Resample.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
+    <Compile Include="SpectrometerSelectionView.cs" />
     <Compile Include="SpectrometerFactory.cs" />
     <Compile Include="SpectrometerTypes.cs" />
     <Compile Include="Form1.cs">
@@ -100,6 +102,7 @@
     <Compile Include="Spectrum.cs" />
     <Compile Include="SpectrumProcessorChain.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
     <Compile Include="SingleSpectrumGraph.cs">
       <SubType>UserControl</SubType>

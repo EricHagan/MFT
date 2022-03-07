@@ -6,6 +6,7 @@ namespace MFT
     public interface ISpectrometer
     {
         bool Connect(out string ErrMsg);
+        SpectrometerTypes GetDeviceType();
         string GetDeviceDescription();
         List<double> GetWavelengths();
         int StartWavelengthIndex { get; }

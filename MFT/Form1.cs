@@ -22,7 +22,7 @@ namespace MFT
             spectrometerComboBox.Items.Clear();
             foreach (var t in Enum.GetValues(typeof(SpectrometerTypes)))
             {
-                var d = new SpectrometerDescription();
+                var d = new SpectrometerSelectionView();
                 d.Type = (SpectrometerTypes)t; //explicit cast
                 spectrometerComboBox.Items.Add(d);
             }
@@ -42,7 +42,7 @@ namespace MFT
         private void connectButton_Click(object sender, EventArgs e)
         {
             ResetSpectrometer();
-            var selected = (SpectrometerDescription)spectrometerComboBox.SelectedItem;
+            var selected = (SpectrometerSelectionView)spectrometerComboBox.SelectedItem;
             try
             {
                 spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);

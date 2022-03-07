@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    internal class SpectrometerDescription
+    internal class SpectrometerSelectionView
     {
         public SpectrometerTypes Type { get; set; }
 

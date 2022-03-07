@@ -10,7 +10,7 @@ namespace MFT
     {
         ISpectrometer spectrometer { get; set; }
         Dictionary<int, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
-        Dictionary<int, Test> Tests { get; set; }
+        Dictionary<int, TestCollection> TestCollections { get; set; }
         ExposureSettings CurrentExposureSettings { get; set; }
 
     }
