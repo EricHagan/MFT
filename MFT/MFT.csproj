@@ -108,7 +108,7 @@
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
-    <Compile Include="Workspace.cs" />
+    <Compile Include="IWorkspace.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
