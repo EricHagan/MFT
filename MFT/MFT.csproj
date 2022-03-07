@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="DesignTimeHelper.cs" />
     <Compile Include="Exposure.cs" />
+    <Compile Include="ExposureSettings.cs" />
     <Compile Include="ExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
