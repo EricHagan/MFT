@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class ContinuousExposureSettings : ExposureSettingsControl
+    public partial class ContinuousExposureSettingsControl : ExposureSettingsControl
     {
-        public ContinuousExposureSettings()
+        public ContinuousExposureSettingsControl()
         {
             InitializeComponent();
         }

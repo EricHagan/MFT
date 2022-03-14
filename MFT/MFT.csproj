@@ -57,11 +57,11 @@
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Color.cs" />
-    <Compile Include="ContinuousExposureSettings.cs">
+    <Compile Include="ContinuousExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ContinuousExposureSettings.Designer.cs">
-      <DependentUpon>ContinuousExposureSettings.cs</DependentUpon>
+    <Compile Include="ContinuousExposureSettingsControl.Designer.cs">
+      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ContinuousSpectrumGraph.cs">
       <SubType>UserControl</SubType>
@@ -115,8 +115,8 @@
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContinuousExposureSettings.resx">
-      <DependentUpon>ContinuousExposureSettings.cs</DependentUpon>
+    <EmbeddedResource Include="ContinuousExposureSettingsControl.resx">
+      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
