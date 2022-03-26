@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class ContinuousExposureSettings
+    partial class ContinuousExposureSettingsControl
     {
         /// <summary> 
         /// Required designer variable.

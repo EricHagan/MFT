@@ -57,11 +57,11 @@
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Color.cs" />
-    <Compile Include="ContinuousExposureSettings.cs">
+    <Compile Include="ContinuousExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ContinuousExposureSettings.Designer.cs">
-      <DependentUpon>ContinuousExposureSettings.cs</DependentUpon>
+    <Compile Include="ContinuousExposureSettingsControl.Designer.cs">
+      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ContinuousSpectrumGraph.cs">
       <SubType>UserControl</SubType>
@@ -71,19 +71,22 @@
     </Compile>
     <Compile Include="DesignTimeHelper.cs" />
     <Compile Include="Exposure.cs" />
-    <Compile Include="ExposureSettings.cs">
+    <Compile Include="ExposureSettings.cs" />
+    <Compile Include="ExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ExposureSettings.Designer.cs">
-      <DependentUpon>ExposureSettings.cs</DependentUpon>
+    <Compile Include="ExposureSettingsControl.Designer.cs">
+      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ExposureStream.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
     <Compile Include="ISecondaryControlsHolder.cs" />
+    <Compile Include="Measurement.cs" />
     <Compile Include="MovingAverage.cs" />
     <Compile Include="Resample.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
+    <Compile Include="SpectrometerSelectionView.cs" />
     <Compile Include="SpectrometerFactory.cs" />
     <Compile Include="SpectrometerTypes.cs" />
     <Compile Include="Form1.cs">
@@ -99,6 +102,7 @@
     <Compile Include="Spectrum.cs" />
     <Compile Include="SpectrumProcessorChain.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
     <Compile Include="SingleSpectrumGraph.cs">
       <SubType>UserControl</SubType>
@@ -107,18 +111,18 @@
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
-    <Compile Include="Workspace.cs" />
+    <Compile Include="IWorkspace.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContinuousExposureSettings.resx">
-      <DependentUpon>ContinuousExposureSettings.cs</DependentUpon>
+    <EmbeddedResource Include="ContinuousExposureSettingsControl.resx">
+      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExposureSettings.resx">
-      <DependentUpon>ExposureSettings.cs</DependentUpon>
+    <EmbeddedResource Include="ExposureSettingsControl.resx">
+      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

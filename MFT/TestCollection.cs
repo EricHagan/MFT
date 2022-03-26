@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    public class SpectrometerDescription
+    internal class TestCollection
     {
-        SpectrometerTypes Type { get; set; }
-        string Description { get; set; }
+        public Dictionary<int, Test> Tests { get; set; }
     }
 }

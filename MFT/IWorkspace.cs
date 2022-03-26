@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    public class Workspace
+    internal interface IWorkspace
     {
         ISpectrometer spectrometer { get; set; }
         Dictionary<int, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
-        // todo: Dictionary<int, Test>
+        Dictionary<int, TestCollection> TestCollections { get; set; }
+        ExposureSettings CurrentExposureSettings { get; set; }
+
     }
 }

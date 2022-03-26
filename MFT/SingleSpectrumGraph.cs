@@ -16,7 +16,7 @@ namespace MFT
         public SingleSpectrumGraph()
         {
             InitializeComponent();
-            ExposureSettings = new ExposureSettings();
+            ExposureSettings = new ExposureSettingsControl();
         }
 
         protected void SingleSpectrumGraph_Load(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace MFT
             Exposure = e.ResampledExposure;
         }
 
-        public ExposureSettings ExposureSettings { get; set; }
+        public ExposureSettingsControl ExposureSettings { get; set; }
 
         public virtual List<Control> SecondaryControls
         {

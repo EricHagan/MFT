@@ -20,5 +20,10 @@ namespace MFT
                 return false;
             }
         }
+
+        public override SpectrometerTypes GetDeviceType()
+        {
+            return SpectrometerTypes.SIMULATED;
+        }
     }
 }
