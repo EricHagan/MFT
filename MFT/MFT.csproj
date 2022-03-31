@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="WavelengthMasker.cs" />
     <Compile Include="IWorkspace.cs" />
+    <Compile Include="SpectrumWindow.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
