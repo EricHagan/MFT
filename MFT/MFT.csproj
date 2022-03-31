@@ -110,7 +110,6 @@
     <Compile Include="SingleSpectrumGraph.Designer.cs">
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
-    <Compile Include="WavelengthMasker.cs" />
     <Compile Include="IWorkspace.cs" />
     <Compile Include="SpectrumWindow.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
