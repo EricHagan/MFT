@@ -58,16 +58,8 @@ namespace MFT
             }
             if (wavelengths != null)
                 return wavelengths;
-            var rawWavelengths = new List<double>(spectrometer.GetWavelengths());
-            (startwaveindex, endwaveindex) = WavelengthMasker.GetStartAndEndIndex(rawWavelengths);
-            wavelengths = rawWavelengths.GetRange(startwaveindex, endwaveindex - startwaveindex);
-            return wavelengths;
+            return new List<double>(spectrometer.GetWavelengths()); ;
         }
-
-        public int StartWavelengthIndex { get => startwaveindex; }
-        int startwaveindex;
-        public int EndWavelengthIndex { get => endwaveindex; }
-        int endwaveindex;
 
         public Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
         {
@@ -78,12 +70,10 @@ namespace MFT
                 {
                     return null;
                 }
-                var RawSpectrum = spectrometer.GetSpectrum().ToList();
-                var Spectrum = RawSpectrum.GetRange(StartWavelengthIndex, EndWavelengthIndex - StartWavelengthIndex);
+                var Spectrum = spectrometer.GetSpectrum().ToList();
                 var TimeStamp = GetTimeStamp();
                 return new Exposure(this, Spectrum.Select(x => (double)x), TimeStamp, false);
             }
-
         }
 
         private static readonly object collectLock = new object();

@@ -20,14 +20,24 @@ namespace MFT
         public List<double> WavelengthsNm { get; private set; }
         public List<double> Values { get; private set; }
 
-        public bool IsGood()
+        public bool IsGood(out string errMsg)
         {
+            errMsg = "";
             if (WavelengthsNm == null)
+            {
+                errMsg = "WavelengthsNm list is null";
                 return false;
+            }
             if (Values == null)
+            {
+                errMsg = "Values list is null";
                 return false;
+            }
             if (WavelengthsNm.Count != Values.Count)
+            {
+                errMsg = "WavelengthsNm.Count != Values.Count";
                 return false;
+            }
             return true;
         }
     }
