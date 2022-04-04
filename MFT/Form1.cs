@@ -253,15 +253,6 @@ namespace MFT
             d.ShowDialog();
         }
 
-        private void workspaceTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            //// right-click dispatch table
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    if (e.Node == spectrometerNode)
-            //}
-        }
-
         private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             ResetSpectrometer();

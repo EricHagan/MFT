@@ -653,7 +653,6 @@
             this.workspaceTreeView.Name = "workspaceTreeView";
             this.workspaceTreeView.Size = new System.Drawing.Size(340, 602);
             this.workspaceTreeView.TabIndex = 0;
-            this.workspaceTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.workspaceTreeView_NodeMouseClick);
             // 
             // spectrometerContextMenuStrip
             // 
