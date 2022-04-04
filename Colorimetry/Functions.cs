@@ -66,8 +66,8 @@ namespace Colorimetry
         public static Tuple<int[], double[]> ResampleSpectrum(double[] spectrum, double[] wavelengths, int minWavelength, int maxWavelength, int nmIncrement)
         {
 
-            int newLength = (int)(1 + (minWavelength - maxWavelength) / nmIncrement);
-
+            int newLength = (int)(1 + (maxWavelength - minWavelength) / nmIncrement);
+            
             int[] newWavelengths = new int[newLength];
             double[] newSpectrum = new double[newLength];
 
