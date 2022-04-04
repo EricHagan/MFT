@@ -19,50 +19,63 @@ namespace MFT
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            spectrometerComboBox.Items.Clear();
-            foreach (var t in Enum.GetValues(typeof(SpectrometerTypes)))
-            {
-                var d = new SpectrometerSelectionView();
-                d.Type = (SpectrometerTypes)t; //explicit cast
-                spectrometerComboBox.Items.Add(d);
-            }
-            spectrometerComboBox.SelectedIndex = 0;
             averagingNumericUpDown.Value = 10;
             integrationTimeMsNumericUpDown.Value = 50;
             dwellTimeNumericUpDown.Value = 100;
             ResetSpectrometer();
+
+            workspace = new Workspace();
+            workspace.Spectrometer = new Qmini();
+            UpdateFormFromWorkspace();
         }
+
+        Workspace workspace { get; set; }
+
+        TreeNode root;
+        TreeNode spectrometerNode;
+        List<SpectrometerSelectionView> listedSpectrometers = new List<SpectrometerSelectionView>();
+        TreeNode exposureSetttingsNode;
+        TreeNode spectrumProcessorChainsNode;
+        TreeNode testsNode;
+
+        void UpdateFormFromWorkspace()
+        {
+            workspaceTreeView.Nodes.Clear();
+
+            // root node
+            root = workspaceTreeView.Nodes.Add("Workspace");
+
+            // second-level nodes
+            spectrometerNode = root.Nodes.Add("Spectrometer");
+            spectrometerNode.ContextMenuStrip = spectrometerContextMenuStrip;
+            spectrometerContextMenuStrip.Items.Clear();
+            listedSpectrometers.Clear();
+            foreach (var t in Enum.GetValues(typeof(SpectrometerTypes)))
+            {
+                var d = new SpectrometerSelectionView();
+                d.Type = (SpectrometerTypes)t; //explicit cast
+                spectrometerContextMenuStrip.Items.Add("Connect " + d.ToString());
+                listedSpectrometers.Add(d);
+            }
+
+            exposureSetttingsNode = root.Nodes.Add("Exposure Settings");
+            spectrumProcessorChainsNode = root.Nodes.Add("Spectrum Processor Chains");
+            testsNode = root.Nodes.Add("Tests");
+
+            // spectrometer
+            if (workspace.Spectrometer != null)
+                spectrometerNode.Nodes.Add(workspace.Spectrometer.GetDeviceDescription());
+
+            root.Expand();
+        }
+
+
 
         ISpectrometer spectrometer { get; set; }
         public event EventHandler<ControlsAdjustedEventArgs> ControlsAdjusted;
 
         private TabPage DarkSpectrum { get; set; }
         private TabPage WhiteSpectrum { get; set; }
-
-        private void connectButton_Click(object sender, EventArgs e)
-        {
-            ResetSpectrometer();
-            var selected = (SpectrometerSelectionView)spectrometerComboBox.SelectedItem;
-            try
-            {
-                spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);
-            }
-            catch (NotImplementedException)
-            {
-                MessageBox.Show(this, $"Internal error: unknown device", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            
-            string ErrMsg;
-            if (!spectrometer.Connect(out ErrMsg))
-                MessageBox.Show(this, $"Problem connecting: {ErrMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-            {
-                spectrometerLabel.Text = spectrometer.GetDeviceDescription();
-                spectrometer.NormalizeAllowedChanged += HandleAllowNormalizedChanged;
-                SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs() { Spectrometer = spectrometer});
-            }
-        }
 
         void ResetSpectrometer()
         {
@@ -238,6 +251,45 @@ namespace MFT
         {
             var d = new AboutDialog();
             d.ShowDialog();
+        }
+
+        private void workspaceTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            //// right-click dispatch table
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    if (e.Node == spectrometerNode)
+            //}
+        }
+
+        private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var menuItem = e.ClickedItem;
+            int i = spectrometerContextMenuStrip.Items.IndexOf(menuItem);
+
+            ResetSpectrometer();
+            var selected = listedSpectrometers[i];
+            try
+            {
+                spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);
+            }
+            catch (NotImplementedException)
+            {
+                MessageBox.Show(this, $"Internal error: unknown device", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string ErrMsg;
+            if (!spectrometer.Connect(out ErrMsg))
+                MessageBox.Show(this, $"Problem connecting: {ErrMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                spectrometerLabel.Text = spectrometer.GetDeviceDescription();
+                spectrometer.NormalizeAllowedChanged += HandleAllowNormalizedChanged;
+                SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs() { Spectrometer = spectrometer });
+            }
+
+
         }
     }
 

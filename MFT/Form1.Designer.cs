@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.connectButton = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -50,7 +50,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.spectrometerLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.spectrometerComboBox = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -74,13 +73,15 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.workspaceTreeView = new System.Windows.Forms.TreeView();
+            this.spectrometerContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).BeginInit();
-            this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dwellTimeNumericUpDown)).BeginInit();
             this.panel3.SuspendLayout();
@@ -94,24 +95,14 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // connectButton
-            // 
-            this.connectButton.Location = new System.Drawing.Point(8, 149);
-            this.connectButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(145, 25);
-            this.connectButton.TabIndex = 0;
-            this.connectButton.Text = "Connect Spectrometer";
-            this.connectButton.UseVisualStyleBackColor = true;
-            this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(16, 101);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(145, 25);
             this.button2.TabIndex = 1;
@@ -121,7 +112,7 @@
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(19, 49);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(145, 25);
             this.button3.TabIndex = 2;
@@ -131,7 +122,7 @@
             // averagingNumericUpDown
             // 
             this.averagingNumericUpDown.Location = new System.Drawing.Point(108, 54);
-            this.averagingNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.averagingNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.averagingNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -175,7 +166,7 @@
             0,
             0});
             this.integrationTimeMsNumericUpDown.Location = new System.Drawing.Point(108, 80);
-            this.integrationTimeMsNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.integrationTimeMsNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.integrationTimeMsNumericUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -199,7 +190,7 @@
             // darkRefButton
             // 
             this.darkRefButton.Location = new System.Drawing.Point(15, 275);
-            this.darkRefButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.darkRefButton.Margin = new System.Windows.Forms.Padding(2);
             this.darkRefButton.Name = "darkRefButton";
             this.darkRefButton.Size = new System.Drawing.Size(145, 25);
             this.darkRefButton.TabIndex = 8;
@@ -210,7 +201,7 @@
             // whiteRefButton
             // 
             this.whiteRefButton.Location = new System.Drawing.Point(15, 305);
-            this.whiteRefButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.whiteRefButton.Margin = new System.Windows.Forms.Padding(2);
             this.whiteRefButton.Name = "whiteRefButton";
             this.whiteRefButton.Size = new System.Drawing.Size(145, 25);
             this.whiteRefButton.TabIndex = 9;
@@ -221,7 +212,7 @@
             // numericUpDown3
             // 
             this.numericUpDown3.Location = new System.Drawing.Point(116, 640);
-            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown3.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown3.Minimum = new decimal(new int[] {
             1,
             0,
@@ -249,7 +240,7 @@
             // numericUpDown4
             // 
             this.numericUpDown4.Location = new System.Drawing.Point(116, 613);
-            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown4.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown4.Minimum = new decimal(new int[] {
             1,
             0,
@@ -267,7 +258,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(19, 702);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(146, 20);
             this.textBox1.TabIndex = 15;
@@ -295,7 +286,7 @@
             // numericUpDown5
             // 
             this.numericUpDown5.Location = new System.Drawing.Point(116, 664);
-            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown5.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown5.Minimum = new decimal(new int[] {
             1,
             0,
@@ -319,7 +310,7 @@
             0,
             65536});
             this.numericUpDown6.Location = new System.Drawing.Point(113, 344);
-            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDown6.Margin = new System.Windows.Forms.Padding(2);
             this.numericUpDown6.Maximum = new decimal(new int[] {
             5,
             0,
@@ -381,27 +372,16 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.spectrometerComboBox);
-            this.panel1.Controls.Add(this.connectButton);
             this.panel1.Location = new System.Drawing.Point(9, 38);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(165, 201);
             this.panel1.TabIndex = 25;
             // 
-            // spectrometerComboBox
-            // 
-            this.spectrometerComboBox.FormattingEnabled = true;
-            this.spectrometerComboBox.Location = new System.Drawing.Point(12, 124);
-            this.spectrometerComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.spectrometerComboBox.Name = "spectrometerComboBox";
-            this.spectrometerComboBox.Size = new System.Drawing.Size(141, 21);
-            this.spectrometerComboBox.TabIndex = 24;
-            // 
             // panel2
             // 
             this.panel2.Location = new System.Drawing.Point(9, 264);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(165, 110);
             this.panel2.TabIndex = 26;
@@ -438,7 +418,7 @@
             this.panel6.Controls.Add(this.label1);
             this.panel6.Controls.Add(this.integrationTimeMsNumericUpDown);
             this.panel6.Location = new System.Drawing.Point(9, 400);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(165, 156);
             this.panel6.TabIndex = 36;
@@ -461,7 +441,7 @@
             0,
             0});
             this.dwellTimeNumericUpDown.Location = new System.Drawing.Point(91, 107);
-            this.dwellTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dwellTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.dwellTimeNumericUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -481,7 +461,7 @@
             // 
             this.normalizedCheckBox.AutoSize = true;
             this.normalizedCheckBox.Location = new System.Drawing.Point(36, 137);
-            this.normalizedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.normalizedCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.normalizedCheckBox.Name = "normalizedCheckBox";
             this.normalizedCheckBox.Size = new System.Drawing.Size(118, 17);
             this.normalizedCheckBox.TabIndex = 9;
@@ -491,7 +471,7 @@
             // button8
             // 
             this.button8.Location = new System.Drawing.Point(91, 16);
-            this.button8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button8.Margin = new System.Windows.Forms.Padding(2);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(63, 25);
             this.button8.TabIndex = 8;
@@ -502,7 +482,7 @@
             // singleSpectrumButton
             // 
             this.singleSpectrumButton.Location = new System.Drawing.Point(9, 16);
-            this.singleSpectrumButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.singleSpectrumButton.Margin = new System.Windows.Forms.Padding(2);
             this.singleSpectrumButton.Name = "singleSpectrumButton";
             this.singleSpectrumButton.Size = new System.Drawing.Size(63, 25);
             this.singleSpectrumButton.TabIndex = 7;
@@ -523,7 +503,7 @@
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(8, 14);
-            this.button6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(146, 25);
             this.button6.TabIndex = 10;
@@ -556,7 +536,7 @@
             this.panel3.Controls.Add(this.label13);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Location = new System.Drawing.Point(9, 560);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(165, 174);
             this.panel3.TabIndex = 30;
@@ -567,7 +547,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(750, 618);
+            this.tabControl1.Size = new System.Drawing.Size(674, 521);
             this.tabControl1.TabIndex = 38;
             this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             this.tabControl1.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.tabControl1_ControlAdded);
@@ -587,8 +567,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.flowLayoutPanel1);
-            this.splitContainer1.Size = new System.Drawing.Size(752, 875);
-            this.splitContainer1.SplitterDistance = 620;
+            this.splitContainer1.Size = new System.Drawing.Size(676, 738);
+            this.splitContainer1.SplitterDistance = 523;
             this.splitContainer1.TabIndex = 39;
             // 
             // flowLayoutPanel1
@@ -596,7 +576,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(750, 249);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(674, 209);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // menuStrip1
@@ -608,7 +588,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(1358, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1245, 24);
             this.menuStrip1.TabIndex = 40;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -648,8 +628,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer2.Size = new System.Drawing.Size(1133, 875);
-            this.splitContainer2.SplitterDistance = 377;
+            this.splitContainer2.Size = new System.Drawing.Size(1020, 738);
+            this.splitContainer2.SplitterDistance = 340;
             this.splitContainer2.TabIndex = 41;
             // 
             // splitContainer3
@@ -658,15 +638,39 @@
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.splitContainer3.Size = new System.Drawing.Size(377, 875);
-            this.splitContainer3.SplitterDistance = 714;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.workspaceTreeView);
+            this.splitContainer3.Size = new System.Drawing.Size(340, 738);
+            this.splitContainer3.SplitterDistance = 602;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // workspaceTreeView
+            // 
+            this.workspaceTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.workspaceTreeView.Location = new System.Drawing.Point(0, 0);
+            this.workspaceTreeView.Name = "workspaceTreeView";
+            this.workspaceTreeView.Size = new System.Drawing.Size(340, 602);
+            this.workspaceTreeView.TabIndex = 0;
+            this.workspaceTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.workspaceTreeView_NodeMouseClick);
+            // 
+            // spectrometerContextMenuStrip
+            // 
+            this.spectrometerContextMenuStrip.Name = "spectrometerContextMenuStrip";
+            this.spectrometerContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            this.spectrometerContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerContextMenuStrip_ItemClicked);
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1358, 925);
+            this.ClientSize = new System.Drawing.Size(1245, 788);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.spectrometerLabel);
@@ -693,7 +697,7 @@
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -703,7 +707,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
-            this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dwellTimeNumericUpDown)).EndInit();
@@ -719,6 +722,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -727,8 +731,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button connectButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.NumericUpDown averagingNumericUpDown;
@@ -761,7 +763,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox spectrometerComboBox;
         private System.Windows.Forms.CheckBox normalizedCheckBox;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.NumericUpDown dwellTimeNumericUpDown;
@@ -774,6 +775,9 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.TreeView workspaceTreeView;
+        private System.Windows.Forms.ContextMenuStrip spectrometerContextMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
     }
 }
 

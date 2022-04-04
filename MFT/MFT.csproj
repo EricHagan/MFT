@@ -110,7 +110,7 @@
     <Compile Include="SingleSpectrumGraph.Designer.cs">
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </Compile>
-    <Compile Include="IWorkspace.cs" />
+    <Compile Include="Workspace.cs" />
     <Compile Include="SpectrumWindow.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
