@@ -8,12 +8,28 @@ namespace MFT
 {
     internal class Workspace
     {
+        public Workspace()
+        {
+            Clear();
+        }
+
         public ISpectrometer Spectrometer { get; set; }
-        public Dictionary<int, SpectrumProcessorChain> SpectrumProcessorChains { get; set; } = new Dictionary<int, SpectrumProcessorChain>();
-        public int CurrentSpectrumProcessorChain { get; set; } = -1;
-        public Dictionary<int, TestCollection> TestCollections { get; set; } = new Dictionary<int, TestCollection>();
-        public Dictionary<int, ExposureSettings> ExposureSettings { get; set; } = new Dictionary<int, ExposureSettings>();
-        public ExposureSettings DefaultExposureSettings { get; set; } = null;
-        public int CurrentExposureSettings { get; set; } = -1;
+        public Dictionary<int, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
+        public int CurrentSpectrumProcessorChain { get; set; }
+        public Dictionary<int, TestCollection> TestCollections { get; set; }
+        public Dictionary<int, ExposureSettings> ExposureSettings { get; set; }
+        public ExposureSettings DefaultExposureSettings { get; set; }
+        public int CurrentExposureSettings { get; set; }
+
+        public void Clear()
+        {
+            Spectrometer = null;
+            SpectrumProcessorChains = new Dictionary<int, SpectrumProcessorChain>();
+            CurrentSpectrumProcessorChain = -1;
+            TestCollections = new Dictionary<int, TestCollection>();
+            ExposureSettings = new Dictionary<int, ExposureSettings>();
+            DefaultExposureSettings = null;
+            CurrentExposureSettings = -1;
+        }
     }
 }

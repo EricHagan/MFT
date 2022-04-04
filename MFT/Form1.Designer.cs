@@ -48,7 +48,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.spectrometerLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
@@ -74,7 +73,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.workspaceTreeView = new System.Windows.Forms.TreeView();
-            this.spectrometerContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.spectrometerTitleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).BeginInit();
@@ -360,16 +359,6 @@
             this.label9.TabIndex = 22;
             this.label9.Text = "No light source connected";
             // 
-            // spectrometerLabel
-            // 
-            this.spectrometerLabel.AutoSize = true;
-            this.spectrometerLabel.Location = new System.Drawing.Point(23, 217);
-            this.spectrometerLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.spectrometerLabel.Name = "spectrometerLabel";
-            this.spectrometerLabel.Size = new System.Drawing.Size(139, 13);
-            this.spectrometerLabel.TabIndex = 23;
-            this.spectrometerLabel.Text = "No spectrometer connected";
-            // 
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(9, 38);
@@ -654,11 +643,11 @@
             this.workspaceTreeView.Size = new System.Drawing.Size(340, 602);
             this.workspaceTreeView.TabIndex = 0;
             // 
-            // spectrometerContextMenuStrip
+            // spectrometerTitleContextMenuStrip
             // 
-            this.spectrometerContextMenuStrip.Name = "spectrometerContextMenuStrip";
-            this.spectrometerContextMenuStrip.Size = new System.Drawing.Size(61, 4);
-            this.spectrometerContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerContextMenuStrip_ItemClicked);
+            this.spectrometerTitleContextMenuStrip.Name = "spectrometerContextMenuStrip";
+            this.spectrometerTitleContextMenuStrip.Size = new System.Drawing.Size(181, 26);
+            this.spectrometerTitleContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerContextMenuStrip_ItemClicked);
             // 
             // contextMenuStrip2
             // 
@@ -672,7 +661,6 @@
             this.ClientSize = new System.Drawing.Size(1245, 788);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.spectrometerLabel);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label9);
@@ -749,7 +737,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label spectrometerLabel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label11;
@@ -775,7 +762,7 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView workspaceTreeView;
-        private System.Windows.Forms.ContextMenuStrip spectrometerContextMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip spectrometerTitleContextMenuStrip;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
     }
 }
