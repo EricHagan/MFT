@@ -33,7 +33,6 @@ namespace MFT
 
         TreeNode root;
         TreeNode spectrometerNode;
-        List<SpectrometerSelectionView> listedSpectrometers = new List<SpectrometerSelectionView>();
         TreeNode exposureSetttingsNode;
         TreeNode spectrumProcessorChainsNode;
         TreeNode testsNode;
@@ -49,13 +48,14 @@ namespace MFT
             spectrometerNode = root.Nodes.Add("Spectrometer");
             spectrometerNode.ContextMenuStrip = spectrometerContextMenuStrip;
             spectrometerContextMenuStrip.Items.Clear();
-            listedSpectrometers.Clear();
             foreach (var t in Enum.GetValues(typeof(SpectrometerTypes)))
             {
                 var d = new SpectrometerSelectionView();
                 d.Type = (SpectrometerTypes)t; //explicit cast
-                spectrometerContextMenuStrip.Items.Add("Connect " + d.ToString());
-                listedSpectrometers.Add(d);
+                var toolStripItem = new ToolStripMenuItem();
+                toolStripItem.Tag = d;
+                toolStripItem.Text = "Connect " + d.ToString();
+                spectrometerContextMenuStrip.Items.Add(toolStripItem);
             }
 
             exposureSetttingsNode = root.Nodes.Add("Exposure Settings");
@@ -264,11 +264,8 @@ namespace MFT
 
         private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            var menuItem = e.ClickedItem;
-            int i = spectrometerContextMenuStrip.Items.IndexOf(menuItem);
-
             ResetSpectrometer();
-            var selected = listedSpectrometers[i];
+            var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
             try
             {
                 spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);
