@@ -548,7 +548,6 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(1868, 33);
             this.menuStrip1.TabIndex = 40;
             this.menuStrip1.Text = "menuStrip1";
@@ -638,6 +637,7 @@
             this.camerasContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.camerasContextMenuStrip.Name = "camerasContextMenuStrip";
             this.camerasContextMenuStrip.Size = new System.Drawing.Size(241, 37);
+            this.camerasContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.camerasContextMenuStrip_ItemClicked);
             // 
             // Form1
             // 

@@ -314,6 +314,16 @@ namespace MFT
             }
             spectrometerNode.EnsureVisible();
         }
+
+        private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var selected = (ICamera)e.ClickedItem.Tag;
+            var camNode = new TreeNode();
+            camNode.Tag = selected;
+            camNode.Text = selected.Name;
+            camerasNode.Nodes.Add(camNode);
+            camNode.EnsureVisible();
+        }
     }
 
     public class ControlsAdjustedEventArgs : EventArgs
