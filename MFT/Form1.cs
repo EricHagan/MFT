@@ -47,7 +47,14 @@ namespace MFT
 
             // cameras
             camerasNode = root.Nodes.Add("Cameras");
-
+            camerasNode.ContextMenuStrip = camerasContextMenuStrip;
+            foreach (var camera in CameraCollection.GetCameras())
+            {
+                var t = new ToolStripMenuItem();
+                t.Tag = camera;
+                t.Text = camera.Name;
+                camerasContextMenuStrip.Items.Add(t);
+            }
 
             // spectrometer
             var spectrometerTitleNode = root.Nodes.Add("Spectrometer");

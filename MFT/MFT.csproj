@@ -65,6 +65,8 @@
     <Compile Include="AboutDialog.Designer.cs">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CameraCollection.cs" />
+    <Compile Include="AForgeCamera.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ContinuousExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
@@ -88,6 +90,7 @@
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ExposureStream.cs" />
+    <Compile Include="ICamera.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
     <Compile Include="ISecondaryControlsHolder.cs" />
     <Compile Include="Measurement.cs" />
