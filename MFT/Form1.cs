@@ -52,7 +52,7 @@ namespace MFT
             {
                 var t = new ToolStripMenuItem();
                 t.Tag = camera;
-                t.Text = camera.Name;
+                t.Text = "Connect " + camera.Name;
                 camerasContextMenuStrip.Items.Add(t);
             }
 
