@@ -32,6 +32,7 @@ namespace MFT
         Workspace workspace { get; set; }
 
         TreeNode root;
+        TreeNode camerasNode;
         TreeNode spectrometerNode;
         const string noSpectrometerMessage = "No spectrometer connected";
         TreeNode exposureSetttingsNode;
@@ -43,6 +44,10 @@ namespace MFT
 
             // root node
             root = workspaceTreeView.Nodes.Add("Workspace");
+
+            // cameras
+            camerasNode = root.Nodes.Add("Cameras");
+
 
             // spectrometer
             var spectrometerTitleNode = root.Nodes.Add("Spectrometer");
