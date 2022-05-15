@@ -159,6 +159,15 @@ namespace MFT
             return new TabPage();
         }
 
+        TabPage AddTabpage(string name, Control control)
+        {
+            var tabPage = new TabPage(name);
+            tabPage.Controls.Add(control);
+            tabControl1.TabPages.Add(tabPage);
+            tabControl1.SelectedTab = tabPage;
+            return tabPage;
+        }
+
         private void darkRefButton_Click(object sender, EventArgs e)
         {
             //if (DarkSpectrum != null)
@@ -253,33 +262,6 @@ namespace MFT
             });
         }
 
-        private void tabControl1_Selected(object sender, TabControlEventArgs e)
-        {
-            SyncDataAndSettingsControls();
-        }
-
-        private void tabControl1_ControlAdded(object sender, ControlEventArgs e)
-        {
-            SyncDataAndSettingsControls();
-        }
-
-        void SyncDataAndSettingsControls()
-        {
-            flowLayoutPanel1.Controls.Clear();
-            if (tabControl1 == null || tabControl1.TabPages.Count == 0)
-                return;
-            foreach (Control mainControl in tabControl1.SelectedTab.Controls)
-            {
-                if (mainControl is ISecondaryControlsHolder)
-                {
-                    foreach (Control secondaryControl in ((ISecondaryControlsHolder)mainControl).SecondaryControls)
-                    {
-                        flowLayoutPanel1.Controls.Add(secondaryControl);
-                    }
-                }
-            }
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AboutDialog();
@@ -317,12 +299,34 @@ namespace MFT
 
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            var selected = (ICamera)e.ClickedItem.Tag;
+            var camera = (ICamera)e.ClickedItem.Tag;
+            string name = camera.Name;
             var camNode = new TreeNode();
-            camNode.Tag = selected;
-            camNode.Text = selected.Name;
+
+            var camDialog = new CameraDialog();
+            camDialog.SetCamera(camera);
+            var tabpage = AddTabpage(name, camDialog);
+
+            camNode.Tag = new ItemHolder(ItemHolder.ItemTypes.CAMERA, tabpage, camera);
+            camNode.Text = name;
             camerasNode.Nodes.Add(camNode);
             camNode.EnsureVisible();
+        }
+
+        private void workspaceTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                var tree = (TreeView)sender;
+                var node = tree?.GetNodeAt(new Point(e.X, e.Y));
+                if (node == null)
+                    return;
+                
+                
+                // camera
+                //var camera
+                //if (node.
+            }
         }
     }
 

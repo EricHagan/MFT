@@ -67,6 +67,12 @@
     </Compile>
     <Compile Include="CameraCollection.cs" />
     <Compile Include="AForgeCamera.cs" />
+    <Compile Include="CameraDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CameraDialog.Designer.cs">
+      <DependentUpon>CameraDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Color.cs" />
     <Compile Include="ContinuousExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
@@ -93,6 +99,7 @@
     <Compile Include="ICamera.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
     <Compile Include="ISecondaryControlsHolder.cs" />
+    <Compile Include="ItemHolder.cs" />
     <Compile Include="Measurement.cs" />
     <Compile Include="MovingAverage.cs" />
     <Compile Include="Resample.cs" />
@@ -126,6 +133,9 @@
     <Compile Include="SpectrumWindow.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CameraDialog.resx">
+      <DependentUpon>CameraDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContinuousExposureSettingsControl.resx">
       <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace MFT
 {
-    internal interface ICamera
+    public interface ICamera
     {
         string Name { get; }
         void Start();
