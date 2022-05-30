@@ -12,6 +12,13 @@ namespace MFT
             Name = name;
         }
 
+        ~AForgeCamera()
+        {
+            Camera.SignalToStop();
+            Camera.NewFrame -= InnerCameraNewFrameHandler;
+            Camera = null;
+        }
+
         public string Name { get; private set; }
 
         public event EventHandler<NewFrameEventArgs> NewFrame;
@@ -23,7 +30,8 @@ namespace MFT
 
         public void Stop()
         {
-            Camera.Stop();
+            Camera.SignalToStop();
+            Camera.WaitForStop();
         }
 
         VideoCaptureDevice Camera { get; set; }

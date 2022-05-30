@@ -321,11 +321,15 @@ namespace MFT
                 var node = tree?.GetNodeAt(new Point(e.X, e.Y));
                 if (node == null)
                     return;
-                
-                
-                // camera
-                //var camera
-                //if (node.
+
+                var itemHolder = (ItemHolder)node.Tag;
+                switch (itemHolder.Type)
+                {
+                    case ItemHolder.ItemTypes.CAMERA:
+                        //camera stuff
+                        tabControl1.SelectTab(itemHolder.Page);
+                        break;
+                }
             }
         }
     }
