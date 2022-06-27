@@ -332,6 +332,16 @@ namespace MFT
                 }
             }
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            foreach (TreeNode cameraNode in camerasNode.Nodes)
+            {
+                var itemHolder = (ItemHolder)cameraNode.Tag;
+                var camera = (ICamera)itemHolder.Object;
+                camera.Stop();
+            }
+        }
     }
 
     public class ControlsAdjustedEventArgs : EventArgs
