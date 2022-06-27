@@ -35,7 +35,10 @@ namespace MFT
 
         void NewFrameHandler(object sender, NewFrameEventArgs e)
         {
+            var oldImage = pictureBox1.Image;
             pictureBox1.Image = (Bitmap)e.Frame.Clone();
+            if (oldImage != null)
+                oldImage.Dispose();
         }
 
         private void startButton_Click(object sender, EventArgs e)
