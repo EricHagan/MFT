@@ -14,7 +14,7 @@ namespace MFT
 
         ~AForgeCamera()
         {
-            Camera.SignalToStop();
+            Stop();
             Camera.NewFrame -= InnerCameraNewFrameHandler;
             Camera = null;
         }
@@ -25,13 +25,17 @@ namespace MFT
 
         public void Start()
         {
-            Camera.Start();
+            if (!Camera.IsRunning)
+                Camera.Start();
         }
 
         public void Stop()
         {
-            Camera.SignalToStop();
-            Camera.WaitForStop();
+            if (Camera.IsRunning)
+            {
+                Camera.SignalToStop();
+                Camera.WaitForStop();
+            }
         }
 
         VideoCaptureDevice Camera { get; set; }
