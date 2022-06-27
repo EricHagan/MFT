@@ -8,9 +8,11 @@ namespace MFT
         public static IEnumerable<ICamera> GetCameras()
         {
             // AForge cameras
-            var filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
-            foreach (FilterInfo filterInfo in filterInfoCollection)
+            if (aForgeCameras == null)
+                aForgeCameras = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo filterInfo in aForgeCameras)
                 yield return new AForgeCamera(new VideoCaptureDevice(filterInfo.MonikerString), filterInfo.Name);
         }
+        static FilterInfoCollection aForgeCameras;
     }
 }
