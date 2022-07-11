@@ -300,6 +300,16 @@ namespace MFT
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             var camera = (ICamera)e.ClickedItem.Tag;
+
+            foreach (var node in camerasNode.Nodes)
+            {
+                var treeNode = (TreeNode)node;
+                var itemHolder = treeNode.Tag as ItemHolder;
+                var existingCamera = itemHolder.Object as ICamera;
+                if (existingCamera == camera)
+                    return;
+            }
+
             string name = camera.Name;
             var camNode = new TreeNode();
 
