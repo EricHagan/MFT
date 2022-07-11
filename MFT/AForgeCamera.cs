@@ -38,6 +38,8 @@ namespace MFT
             }
         }
 
+        public bool IsRunning => Camera.IsRunning;
+
         VideoCaptureDevice Camera { get; set; }
 
         void InnerCameraNewFrameHandler(object sender, AForge.Video.NewFrameEventArgs e)

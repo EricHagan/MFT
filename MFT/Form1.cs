@@ -300,6 +300,16 @@ namespace MFT
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             var camera = (ICamera)e.ClickedItem.Tag;
+            string name = camera.Name;
+
+            // todo: figure out how to synchronize AForge camera object with physical camera
+            // so we can tell if physical camera is running
+            if (camera.IsRunning)
+            {
+                MessageBox.Show(this, $"'{name}' appears to be running in another application.",
+                    "Problem adding camera", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             foreach (var node in camerasNode.Nodes)
             {
@@ -310,7 +320,7 @@ namespace MFT
                     return;
             }
 
-            string name = camera.Name;
+
             var camNode = new TreeNode();
 
             var camDialog = new CameraDialog();

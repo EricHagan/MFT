@@ -8,6 +8,7 @@ namespace MFT
         string Name { get; }
         void Start();
         void Stop();
+        bool IsRunning { get; }
         event EventHandler<NewFrameEventArgs> NewFrame;
     }
 
