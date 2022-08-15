@@ -118,37 +118,11 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            //var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
-            //    (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
-            //if (exposure != null)
-            //{
-            //    AddSingleSpectrumTab(exposure);
-            //}
-            //else
-            //    MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         TabPage AddSingleSpectrumTab(Exposure exposure, bool forbidNormalizing = false, string tabName = "")
         {
-            //if (tabName == "")
-            //    tabName = exposure.Name;
-            //var singleGraph = new SingleSpectrumGraph();
-            //singleGraph.Exposure = exposure;
-            //singleGraph.ExposureSettings.Spectrometer = spectrometer;
-            //singleGraph.ExposureSettings.ExposureResampled += singleGraph.ExposureResampledHandler;
-            //singleGraph.ExposureSettings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
-            //singleGraph.ExposureSettings.Averaging = (int)averagingNumericUpDown.Value;
-            //singleGraph.ExposureSettings.ForbidNormalizing = forbidNormalizing;
-            //singleGraph.ExposureSettings.AllowNormalize = normalizedCheckBox.Enabled;
-            //singleGraph.ExposureSettings.Normalize = normalizedCheckBox.Checked;
-            //if (!forbidNormalizing)
-            //    spectrometer.NormalizeAllowedChanged += singleGraph.ExposureSettings.HandleNormalizeAllowedChanged;
-            //SpectrometerChanged += singleGraph.ExposureSettings.HandleSpectrometerChanged;
-            //var tabPage = new TabPage(tabName);
-            //tabPage.Controls.Add(singleGraph);
-            //tabControl1.TabPages.Add(tabPage);
-            //tabControl1.SelectedTab = tabPage;
-            //return tabPage;
+          
             return new TabPage();
         }
 

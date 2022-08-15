@@ -143,6 +143,7 @@
             this.singleSpectrumButton.TabIndex = 7;
             this.singleSpectrumButton.Text = "Single";
             this.singleSpectrumButton.UseVisualStyleBackColor = true;
+            this.singleSpectrumButton.Click += new System.EventHandler(this.singleSpectrumButton_Click);
             // 
             // button8
             // 

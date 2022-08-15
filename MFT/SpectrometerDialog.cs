@@ -12,10 +12,13 @@ namespace MFT
 {
     public partial class SpectrometerDialog : UserControl
     {
-        public SpectrometerDialog()
+        public SpectrometerDialog(ISpectrometer _spectrometer)
         {
             InitializeComponent();
+            spectrometer = _spectrometer;
         }
+
+        ISpectrometer spectrometer;
 
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
@@ -33,6 +36,34 @@ namespace MFT
         {
             normalizedCheckBox.Checked = false;
             normalizedCheckBox.Enabled = false;
+        }
+
+        private void singleSpectrumButton_Click(object sender, EventArgs e)
+        {
+            var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
+                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
+            if (exposure != null)
+            {
+                var singleGraph = new SingleSpectrumGraph();
+                singleGraph.Exposure = exposure;
+                singleGraph.ExposureSettings.Spectrometer = spectrometer;
+                singleGraph.ExposureSettings.ExposureResampled += singleGraph.ExposureResampledHandler;
+                singleGraph.ExposureSettings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
+                singleGraph.ExposureSettings.Averaging = (int)averagingNumericUpDown.Value;
+                singleGraph.ExposureSettings.ForbidNormalizing = false;
+                singleGraph.ExposureSettings.AllowNormalize = true;
+                singleGraph.ExposureSettings.Normalize = normalizedCheckBox.Checked;
+
+                // todo: need to handle spectrometer changed in Form1
+                //SpectrometerChanged += singleGraph.ExposureSettings.HandleSpectrometerChanged;
+
+                splitContainer1.Panel1.Controls.Add(singleGraph);
+                singleGraph.Dock = DockStyle.Fill;
+            }
+            else
+                MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
         }
     }
 }
