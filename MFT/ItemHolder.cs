@@ -16,7 +16,7 @@ namespace MFT
             Object = _object;
         }
 
-        public enum ItemTypes { CAMERA }
+        public enum ItemTypes { CAMERA, SPECTROMETER }
 
         public ItemTypes Type { get; set; }
         public TabPage Page { get; set; }

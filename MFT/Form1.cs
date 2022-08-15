@@ -19,11 +19,6 @@ namespace MFT
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            averagingNumericUpDown.Value = 10;
-            integrationTimeMsNumericUpDown.Value = 50;
-            dwellTimeNumericUpDown.Value = 100;
-
-
             workspace = new Workspace();
             InitTreeView();
             ResetSpectrometer();
@@ -104,21 +99,19 @@ namespace MFT
                 workspace.Spectrometer = (ISpectrometer)spectrometerNode.Tag;
         }
 
-        public event EventHandler<ControlsAdjustedEventArgs> ControlsAdjusted;
-
         private TabPage DarkSpectrum { get; set; }
         private TabPage WhiteSpectrum { get; set; }
 
         void ResetSpectrometer()
         {
-            spectrometerNode.Tag = null;
-            spectrometerNode.Text = noSpectrometerMessage;
-            DisallowNormalized();
-            if (DarkSpectrum != null)
-                tabControl1.TabPages.Remove(DarkSpectrum);
-            if (WhiteSpectrum != null)
-                tabControl1.TabPages.Remove(WhiteSpectrum);
-            SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs()); // null spectrometer
+        //    spectrometerNode.Tag = null;
+        //    spectrometerNode.Text = noSpectrometerMessage;
+        //    DisallowNormalized();
+        //    if (DarkSpectrum != null)
+        //        tabControl1.TabPages.Remove(DarkSpectrum);
+        //    if (WhiteSpectrum != null)
+        //        tabControl1.TabPages.Remove(WhiteSpectrum);
+        //    SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs()); // null spectrometer
         }
 
         public event EventHandler<SpectrometerChangedEventArgs> SpectrometerChanged;
@@ -196,25 +189,6 @@ namespace MFT
             //WhiteSpectrum = AddSingleSpectrumTab(spectrometer.WhiteReference, forbidNormalizing: true, "White");
         }
 
-        void HandleAllowNormalizedChanged(object sender, NormalizeAllowedChangedEventArgs e)
-        {
-            if (e.NormalizeAllowed)
-                AllowNormalized();
-            else
-                DisallowNormalized();
-        }
-
-        void AllowNormalized()
-        {
-            normalizedCheckBox.Enabled = true;
-        }
-
-        void DisallowNormalized()
-        {
-            normalizedCheckBox.Checked = false;
-            normalizedCheckBox.Enabled = false;
-        }
-
         string GetNextContinuousName()
         {
             return "";
@@ -235,32 +209,7 @@ namespace MFT
             //exposureStream.Start();
         }
 
-        private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            RaiseControlsAdjustedEvent(averagingNumericUpDown);
-        }
 
-        private void integrationTimeMsNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            RaiseControlsAdjustedEvent(integrationTimeMsNumericUpDown);
-        }
-
-        private void dwellTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            RaiseControlsAdjustedEvent(dwellTimeNumericUpDown);
-        }
-
-        void RaiseControlsAdjustedEvent(object sender)
-        {
-            if (ControlsAdjusted == null)
-                return;
-            ControlsAdjusted(sender, new ControlsAdjustedEventArgs()
-            {
-                Averaging = (int)averagingNumericUpDown.Value,
-                DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
-                IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
-            });
-        }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -289,9 +238,9 @@ namespace MFT
                 MessageBox.Show(this, $"Problem connecting: {ErrMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
+                //var item = new ItemHolder()
                 spectrometerNode.Tag = spectrometer;
                 spectrometerNode.Text = spectrometer.GetDeviceDescription();
-                spectrometer.NormalizeAllowedChanged += HandleAllowNormalizedChanged;
                 SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs() { Spectrometer = spectrometer });
             }
             spectrometerNode.EnsureVisible();

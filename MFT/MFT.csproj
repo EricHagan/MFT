@@ -105,6 +105,12 @@
     <Compile Include="Resample.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
+    <Compile Include="SpectrometerDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpectrometerDialog.Designer.cs">
+      <DependentUpon>SpectrometerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpectrometerSelectionView.cs" />
     <Compile Include="SpectrometerFactory.cs" />
     <Compile Include="SpectrometerTypes.cs" />
@@ -160,6 +166,9 @@
     </Compile>
     <EmbeddedResource Include="SingleSpectrumGraph.resx">
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpectrometerDialog.resx">
+      <DependentUpon>SpectrometerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

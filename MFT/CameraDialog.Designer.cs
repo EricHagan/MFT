@@ -45,7 +45,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(711, 597);
+            this.pictureBox1.Size = new System.Drawing.Size(711, 604);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -67,7 +67,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.stopButton);
             this.splitContainer1.Panel2.Controls.Add(this.startButton);
             this.splitContainer1.Size = new System.Drawing.Size(711, 701);
-            this.splitContainer1.SplitterDistance = 597;
+            this.splitContainer1.SplitterDistance = 604;
             this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
             // 
