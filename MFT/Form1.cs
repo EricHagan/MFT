@@ -213,7 +213,7 @@ namespace MFT
             else
             {
                 var tabPage = new TabPage(spectrometer.GetDeviceDescription());
-                var control = new SpectrometerDialog(spectrometer);
+                var control = new SpectrometerControl(spectrometer);
                 control.Dock = DockStyle.Fill;
                 tabPage.Controls.Add(control);
                 tabControl1.TabPages.Add(tabPage);
@@ -252,7 +252,7 @@ namespace MFT
 
             var camNode = new TreeNode();
 
-            var camDialog = new CameraDialog();
+            var camDialog = new CameraControl();
             camDialog.SetCamera(camera);
             var tabpage = AddTabpage(name, camDialog);
 

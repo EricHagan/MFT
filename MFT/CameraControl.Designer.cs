@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class CameraDialog
+    partial class CameraControl
     {
         /// <summary> 
         /// Required designer variable.

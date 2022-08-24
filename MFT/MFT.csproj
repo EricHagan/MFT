@@ -67,11 +67,11 @@
     </Compile>
     <Compile Include="CameraCollection.cs" />
     <Compile Include="AForgeCamera.cs" />
-    <Compile Include="CameraDialog.cs">
+    <Compile Include="CameraControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CameraDialog.Designer.cs">
-      <DependentUpon>CameraDialog.cs</DependentUpon>
+    <Compile Include="CameraControl.Designer.cs">
+      <DependentUpon>CameraControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Color.cs" />
     <Compile Include="ContinuousExposureSettingsControl.cs">
@@ -105,11 +105,11 @@
     <Compile Include="Resample.cs" />
     <Compile Include="SimulatedSpectrometer.cs" />
     <Compile Include="SpectrometerDescription.cs" />
-    <Compile Include="SpectrometerDialog.cs">
+    <Compile Include="SpectrometerControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpectrometerDialog.Designer.cs">
-      <DependentUpon>SpectrometerDialog.cs</DependentUpon>
+    <Compile Include="SpectrometerControl.Designer.cs">
+      <DependentUpon>SpectrometerControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SpectrometerSelectionView.cs" />
     <Compile Include="SpectrometerFactory.cs" />
@@ -140,8 +140,8 @@
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CameraDialog.resx">
-      <DependentUpon>CameraDialog.cs</DependentUpon>
+    <EmbeddedResource Include="CameraControl.resx">
+      <DependentUpon>CameraControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ContinuousExposureSettingsControl.resx">
       <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
@@ -167,8 +167,8 @@
     <EmbeddedResource Include="SingleSpectrumGraph.resx">
       <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpectrometerDialog.resx">
-      <DependentUpon>SpectrometerDialog.cs</DependentUpon>
+    <EmbeddedResource Include="SpectrometerControl.resx">
+      <DependentUpon>SpectrometerControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

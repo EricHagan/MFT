@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class SpectrometerDialog
+    partial class SpectrometerControl
     {
         /// <summary> 
         /// Required designer variable.

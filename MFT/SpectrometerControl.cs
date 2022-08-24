@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class SpectrometerDialog : UserControl
+    public partial class SpectrometerControl : UserControl
     {
-        public SpectrometerDialog(ISpectrometer _spectrometer)
+        public SpectrometerControl(ISpectrometer _spectrometer)
         {
             InitializeComponent();
             spectrometer = _spectrometer;

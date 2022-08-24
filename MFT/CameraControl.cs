@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class CameraDialog : UserControl, ISecondaryControlsHolder
+    public partial class CameraControl : UserControl, ISecondaryControlsHolder
     {
-        public CameraDialog()
+        public CameraControl()
         {
             InitializeComponent();
         }
