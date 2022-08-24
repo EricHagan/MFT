@@ -168,23 +168,6 @@ namespace MFT
             return "";
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            //var exposureStream = new ExposureStream(spectrometer);
-            //ControlsAdjusted += exposureStream.ControlsAdjustedEventHandler;
-            //var graph = new ContinuousSpectrumGraph();
-            //graph.ExposureStream = exposureStream;
-
-            //var tabPage = new TabPage("Continuous");
-            //tabPage.Controls.Add(graph);
-            //tabControl1.TabPages.Add(tabPage);
-            //tabControl1.SelectedTab = tabPage;
-
-            //exposureStream.Start();
-        }
-
-
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AboutDialog();

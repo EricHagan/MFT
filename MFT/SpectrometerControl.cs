@@ -66,5 +66,17 @@ namespace MFT
             splitContainer1.Panel1.Controls.Clear();
             splitContainer1.Panel1.Controls.Add(control);
         }
+
+        private void ContinuousButton_Click(object sender, EventArgs e)
+        {
+            var exposureStream = new ExposureStream(spectrometer);
+            var graph = new ContinuousSpectrumGraph();
+            graph.ExposureStream = exposureStream;
+
+            var tabPage = new TabPage("Continuous");
+            SetMainControl(graph);
+
+            exposureStream.Start();
+        }
     }
 }
