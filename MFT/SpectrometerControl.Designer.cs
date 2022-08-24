@@ -100,6 +100,7 @@
             0,
             0,
             0});
+            this.dwellTimeNumericUpDown.ValueChanged += new System.EventHandler(this.dwellTimeNumericUpDown_ValueChanged);
             // 
             // singleSpectrumButton
             // 
@@ -150,6 +151,7 @@
             0,
             0,
             0});
+            this.integrationTimeMsNumericUpDown.ValueChanged += new System.EventHandler(this.integrationTimeMsNumericUpDown_ValueChanged);
             // 
             // ContinuousButton
             // 
@@ -189,6 +191,7 @@
             0,
             0,
             0});
+            this.averagingNumericUpDown.ValueChanged += new System.EventHandler(this.averagingNumericUpDown_ValueChanged);
             // 
             // label2
             // 

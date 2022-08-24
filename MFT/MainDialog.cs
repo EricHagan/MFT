@@ -116,10 +116,6 @@ namespace MFT
 
         public event EventHandler<SpectrometerChangedEventArgs> SpectrometerChanged;
 
-        private void singleSpectrumButton_Click(object sender, EventArgs e)
-        {
-        }
-
         TabPage AddSingleSpectrumTab(Exposure exposure, bool forbidNormalizing = false, string tabName = "")
         {
           
@@ -274,13 +270,6 @@ namespace MFT
                 camera.Stop();
             }
         }
-    }
-
-    public class ControlsAdjustedEventArgs : EventArgs
-    {
-        public float IntegrationTimeS { get; set; }
-        public int Averaging { get; set; }
-        public int DwellTimeMs { get; set; }
     }
 
     public class SpectrometerChangedEventArgs : EventArgs

@@ -31,7 +31,9 @@ namespace MFT
                 while (!PleaseStop)
                 {
                     string errMsg;
-                    var exposure = Spectrometer.CollectSpectrum(IntegrationTimeS, Averaging, out errMsg);
+                    //var exposure = Spectrometer.CollectSpectrum(IntegrationTimeS, Averaging, out errMsg);
+                    // todo: add Normalized support
+                    var exposure = Exposure.GetExposure(Spectrometer, IntegrationTimeS, Averaging, false, out errMsg);
                     if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)

@@ -19,6 +19,8 @@ namespace MFT
         }
 
         ISpectrometer spectrometer;
+        public event EventHandler<ControlsAdjustedEventArgs> ControlsAdjusted;
+
 
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
@@ -70,6 +72,7 @@ namespace MFT
         private void ContinuousButton_Click(object sender, EventArgs e)
         {
             var exposureStream = new ExposureStream(spectrometer);
+            ControlsAdjusted += exposureStream.ControlsAdjustedEventHandler;
             var graph = new ContinuousSpectrumGraph();
             graph.ExposureStream = exposureStream;
 
@@ -77,6 +80,33 @@ namespace MFT
             SetMainControl(graph);
 
             exposureStream.Start();
+        }
+
+        void RaiseControlsAdjustedEvent(object sender)
+        {
+            if (ControlsAdjusted == null)
+                return;
+            ControlsAdjusted(sender, new ControlsAdjustedEventArgs()
+            {
+                Averaging = (int)averagingNumericUpDown.Value,
+                DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
+                IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
+            });
+        }
+
+        private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            RaiseControlsAdjustedEvent(averagingNumericUpDown);
+        }
+
+        private void integrationTimeMsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            RaiseControlsAdjustedEvent(integrationTimeMsNumericUpDown);
+        }
+
+        private void dwellTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            RaiseControlsAdjustedEvent(dwellTimeNumericUpDown);
         }
     }
 }
