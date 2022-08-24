@@ -54,16 +54,17 @@ namespace MFT
                 singleGraph.ExposureSettings.AllowNormalize = true;
                 singleGraph.ExposureSettings.Normalize = normalizedCheckBox.Checked;
 
-                // todo: need to handle spectrometer changed in Form1
-                //SpectrometerChanged += singleGraph.ExposureSettings.HandleSpectrometerChanged;
-
-                splitContainer1.Panel1.Controls.Add(singleGraph);
+                SetMainControl(singleGraph);
                 singleGraph.Dock = DockStyle.Fill;
             }
             else
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
-
+        void SetMainControl(Control control)
+        {
+            splitContainer1.Panel1.Controls.Clear();
+            splitContainer1.Panel1.Controls.Add(control);
         }
     }
 }
