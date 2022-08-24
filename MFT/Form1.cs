@@ -212,8 +212,14 @@ namespace MFT
                 MessageBox.Show(this, $"Problem connecting: {ErrMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                //var item = new ItemHolder()
-                spectrometerNode.Tag = spectrometer;
+                var tabPage = new TabPage(spectrometer.GetDeviceDescription());
+                var control = new SpectrometerDialog(spectrometer);
+                control.Dock = DockStyle.Fill;
+                tabPage.Controls.Add(control);
+                tabControl1.TabPages.Add(tabPage);
+                tabControl1.SelectedIndex = tabControl1.TabCount - 1;
+                var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
+                spectrometerNode.Tag = item;
                 spectrometerNode.Text = spectrometer.GetDeviceDescription();
                 SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs() { Spectrometer = spectrometer });
             }
@@ -269,7 +275,7 @@ namespace MFT
                 switch (itemHolder.Type)
                 {
                     case ItemHolder.ItemTypes.CAMERA:
-                        //camera stuff
+                    case ItemHolder.ItemTypes.SPECTROMETER:
                         tabControl1.SelectTab(itemHolder.Page);
                         break;
                 }
