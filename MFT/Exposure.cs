@@ -8,20 +8,22 @@ namespace MFT
     public class Exposure
     {
         public static Exposure GetExposure(ISpectrometer spectrometer,
-            float TimeSeconds, int Averaging, bool Normalized, out string ErrMsg)
+            float _IntegrationTimeSeconds, int _AveragingNum, bool Normalized, out string ErrMsg)
         {
             if (spectrometer == null)
             {
                 ErrMsg = "Spectrometer not connected.";
                 return null;
             }
-            var exposure = spectrometer.CollectSpectrum(TimeSeconds, Averaging, out ErrMsg);
+            var exposure = spectrometer.CollectSpectrum(_IntegrationTimeSeconds, _AveragingNum, out ErrMsg);
             if (exposure == null)
                 return null;
             else
             {
                 if (Normalized)
                     exposure = exposure.GetNormalized();
+                exposure.IntegrationTimeSeconds = _IntegrationTimeSeconds;
+                exposure.AveragingNum = _AveragingNum;
                 return exposure;
             }
         }
@@ -44,13 +46,16 @@ namespace MFT
         public double MaxReflectance { get => Spectrum.Max(); }
         public double MinReflectance { get => Spectrum.Min(); }
         public DateTime TimeStamp { get; private set; }
+        public float IntegrationTimeSeconds { get; internal set; }
+        public int AveragingNum { get; internal set; }
         public bool Normalized { get; private set; }
         public string Name
         {
             get
             {
                 if (string.IsNullOrWhiteSpace(name))
-                    return TimeStamp.ToString();
+                    return string.Format("Averaging = {0}, Int. Time = {1} s, Time = {2}{3}",
+                        AveragingNum, IntegrationTimeSeconds, TimeStamp.ToString(), Normalized ? " (Normalized)" : "");
                 else
                     return name;
             }
@@ -58,7 +63,7 @@ namespace MFT
             {
                 name = value;
             }
-        }
+    }
         string name;
 
         public Exposure GetNormalized()
