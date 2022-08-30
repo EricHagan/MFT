@@ -38,6 +38,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.darkRefButton = new System.Windows.Forms.Button();
+            this.whiteRefButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -55,6 +57,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.whiteRefButton);
+            this.splitContainer1.Panel2.Controls.Add(this.darkRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
             this.splitContainer1.Panel2.Controls.Add(this.dwellTimeNumericUpDown);
             this.splitContainer1.Panel2.Controls.Add(this.singleSpectrumButton);
@@ -203,6 +207,25 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Integration time [ms]";
             // 
+            // darkRefButton
+            // 
+            this.darkRefButton.Location = new System.Drawing.Point(181, 12);
+            this.darkRefButton.Name = "darkRefButton";
+            this.darkRefButton.Size = new System.Drawing.Size(113, 23);
+            this.darkRefButton.TabIndex = 12;
+            this.darkRefButton.Text = "Collect Dark Ref";
+            this.darkRefButton.UseVisualStyleBackColor = true;
+            this.darkRefButton.Click += new System.EventHandler(this.darkRefButton_Click);
+            // 
+            // whiteRefButton
+            // 
+            this.whiteRefButton.Location = new System.Drawing.Point(181, 42);
+            this.whiteRefButton.Name = "whiteRefButton";
+            this.whiteRefButton.Size = new System.Drawing.Size(113, 23);
+            this.whiteRefButton.TabIndex = 13;
+            this.whiteRefButton.Text = "Collect White Ref";
+            this.whiteRefButton.UseVisualStyleBackColor = true;
+            // 
             // SpectrometerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -234,5 +257,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown averagingNumericUpDown;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button whiteRefButton;
+        private System.Windows.Forms.Button darkRefButton;
     }
 }

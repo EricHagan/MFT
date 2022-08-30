@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.darkRefButton = new System.Windows.Forms.Button();
-            this.whiteRefButton = new System.Windows.Forms.Button();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
@@ -71,28 +69,6 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // darkRefButton
-            // 
-            this.darkRefButton.Location = new System.Drawing.Point(15, 275);
-            this.darkRefButton.Margin = new System.Windows.Forms.Padding(2);
-            this.darkRefButton.Name = "darkRefButton";
-            this.darkRefButton.Size = new System.Drawing.Size(145, 25);
-            this.darkRefButton.TabIndex = 8;
-            this.darkRefButton.Text = "Collect Dark Reference";
-            this.darkRefButton.UseVisualStyleBackColor = true;
-            this.darkRefButton.Click += new System.EventHandler(this.darkRefButton_Click);
-            // 
-            // whiteRefButton
-            // 
-            this.whiteRefButton.Location = new System.Drawing.Point(15, 305);
-            this.whiteRefButton.Margin = new System.Windows.Forms.Padding(2);
-            this.whiteRefButton.Name = "whiteRefButton";
-            this.whiteRefButton.Size = new System.Drawing.Size(145, 25);
-            this.whiteRefButton.TabIndex = 9;
-            this.whiteRefButton.Text = "Collect White Reference";
-            this.whiteRefButton.UseVisualStyleBackColor = true;
-            this.whiteRefButton.Click += new System.EventHandler(this.whiteRefButton_Click);
             // 
             // numericUpDown3
             // 
@@ -405,8 +381,6 @@
             this.Controls.Add(this.numericUpDown4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDown3);
-            this.Controls.Add(this.whiteRefButton);
-            this.Controls.Add(this.darkRefButton);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.menuStrip1);
@@ -437,8 +411,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button darkRefButton;
-        private System.Windows.Forms.Button whiteRefButton;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
