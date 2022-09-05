@@ -21,7 +21,6 @@ namespace MFT
         {
             workspace = new Workspace();
             InitTreeView();
-            ResetSpectrometer();
         }
 
         Workspace workspace { get; set; }
@@ -100,29 +99,6 @@ namespace MFT
                 workspace.Spectrometer = (ISpectrometer)spectrometerNode.Tag;
         }
 
-        private TabPage DarkSpectrum { get; set; }
-        private TabPage WhiteSpectrum { get; set; }
-
-        void ResetSpectrometer()
-        {
-        //    spectrometerNode.Tag = null;
-        //    spectrometerNode.Text = noSpectrometerMessage;
-        //    DisallowNormalized();
-        //    if (DarkSpectrum != null)
-        //        tabControl1.TabPages.Remove(DarkSpectrum);
-        //    if (WhiteSpectrum != null)
-        //        tabControl1.TabPages.Remove(WhiteSpectrum);
-        //    SpectrometerChanged?.Invoke(this, new SpectrometerChangedEventArgs()); // null spectrometer
-        }
-
-        public event EventHandler<SpectrometerChangedEventArgs> SpectrometerChanged;
-
-        TabPage AddSingleSpectrumTab(Exposure exposure, bool forbidNormalizing = false, string tabName = "")
-        {
-          
-            return new TabPage();
-        }
-
         TabPage AddTabpage(string name, Control control)
         {
             var tabPage = new TabPage(name);
@@ -130,20 +106,6 @@ namespace MFT
             tabControl1.TabPages.Add(tabPage);
             tabControl1.SelectedTab = tabPage;
             return tabPage;
-        }
-
-        private void darkRefButton_Click(object sender, EventArgs e)
-        {
-            //if (DarkSpectrum != null)
-            //    tabControl1.TabPages.Remove(DarkSpectrum);
-            //if (spectrometer == null)
-            //{
-            //    MessageBox.Show(this, $"Problem collecting spectrum: Spectrometer not connected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-            //if (!spectrometer.CollectDarkReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000, (int)averagingNumericUpDown.Value, out string errMsg))
-            //    MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //DarkSpectrum = AddSingleSpectrumTab(spectrometer.DarkReference, forbidNormalizing: true, "Dark");
         }
 
         private void whiteRefButton_Click(object sender, EventArgs e)
@@ -160,11 +122,6 @@ namespace MFT
             //WhiteSpectrum = AddSingleSpectrumTab(spectrometer.WhiteReference, forbidNormalizing: true, "White");
         }
 
-        string GetNextContinuousName()
-        {
-            return "";
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AboutDialog();
@@ -174,7 +131,6 @@ namespace MFT
         private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             // assumes item clicked is a connect instruction
-            ResetSpectrometer();
             ISpectrometer spectrometer;
             var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
             try
