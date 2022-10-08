@@ -99,7 +99,6 @@
     <Compile Include="ExposureStream.cs" />
     <Compile Include="ICamera.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
-    <Compile Include="ISecondaryControlsHolder.cs" />
     <Compile Include="ItemHolder.cs" />
     <Compile Include="Measurement.cs" />
     <Compile Include="MovingAverage.cs" />

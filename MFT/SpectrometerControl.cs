@@ -48,13 +48,6 @@ namespace MFT
             {
                 var singleGraph = new SingleSpectrumGraph();
                 singleGraph.Exposure = exposure;
-                singleGraph.ExposureSettings.Spectrometer = spectrometer;
-                singleGraph.ExposureSettings.ExposureResampled += singleGraph.ExposureResampledHandler;
-                singleGraph.ExposureSettings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
-                singleGraph.ExposureSettings.Averaging = (int)averagingNumericUpDown.Value;
-                singleGraph.ExposureSettings.ForbidNormalizing = false;
-                singleGraph.ExposureSettings.AllowNormalize = true;
-                singleGraph.ExposureSettings.Normalize = normalizedCheckBox.Checked;
 
                 SetMainControl(singleGraph);
                 singleGraph.Dock = DockStyle.Fill;

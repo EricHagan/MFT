@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class CameraControl : UserControl, ISecondaryControlsHolder
+    public partial class CameraControl : UserControl
     {
         public CameraControl()
         {
@@ -30,8 +30,6 @@ namespace MFT
         }
 
         ICamera Camera;
-
-        public List<Control> SecondaryControls => throw new NotImplementedException();
 
         void NewFrameHandler(object sender, NewFrameEventArgs e)
         {
