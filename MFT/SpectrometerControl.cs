@@ -16,6 +16,10 @@ namespace MFT
         {
             InitializeComponent();
             spectrometer = _spectrometer;
+            if (spectrometer.NormalizeAllowed)
+                AllowNormalized();
+            else
+                DisallowNormalized();
         }
 
         ISpectrometer spectrometer;
