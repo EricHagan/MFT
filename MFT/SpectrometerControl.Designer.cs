@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.whiteRefButton = new System.Windows.Forms.Button();
+            this.darkRefButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.dwellTimeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.singleSpectrumButton = new System.Windows.Forms.Button();
@@ -38,8 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.darkRefButton = new System.Windows.Forms.Button();
-            this.whiteRefButton = new System.Windows.Forms.Button();
+            this.showDarkRefButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -57,6 +58,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.showDarkRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.whiteRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.darkRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.label1);
@@ -71,6 +73,25 @@
             this.splitContainer1.Size = new System.Drawing.Size(1077, 633);
             this.splitContainer1.SplitterDistance = 448;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // whiteRefButton
+            // 
+            this.whiteRefButton.Location = new System.Drawing.Point(181, 42);
+            this.whiteRefButton.Name = "whiteRefButton";
+            this.whiteRefButton.Size = new System.Drawing.Size(113, 23);
+            this.whiteRefButton.TabIndex = 13;
+            this.whiteRefButton.Text = "Collect White Ref";
+            this.whiteRefButton.UseVisualStyleBackColor = true;
+            // 
+            // darkRefButton
+            // 
+            this.darkRefButton.Location = new System.Drawing.Point(181, 12);
+            this.darkRefButton.Name = "darkRefButton";
+            this.darkRefButton.Size = new System.Drawing.Size(113, 23);
+            this.darkRefButton.TabIndex = 12;
+            this.darkRefButton.Text = "Collect Dark Ref";
+            this.darkRefButton.UseVisualStyleBackColor = true;
+            this.darkRefButton.Click += new System.EventHandler(this.darkRefButton_Click);
             // 
             // label1
             // 
@@ -159,10 +180,10 @@
             // 
             // ContinuousButton
             // 
-            this.ContinuousButton.Location = new System.Drawing.Point(97, 12);
+            this.ContinuousButton.Location = new System.Drawing.Point(82, 12);
             this.ContinuousButton.Margin = new System.Windows.Forms.Padding(2);
             this.ContinuousButton.Name = "ContinuousButton";
-            this.ContinuousButton.Size = new System.Drawing.Size(63, 25);
+            this.ContinuousButton.Size = new System.Drawing.Size(79, 25);
             this.ContinuousButton.TabIndex = 8;
             this.ContinuousButton.Text = "Continuous";
             this.ContinuousButton.UseVisualStyleBackColor = true;
@@ -207,24 +228,14 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Integration time [ms]";
             // 
-            // darkRefButton
+            // showDarkRefButton
             // 
-            this.darkRefButton.Location = new System.Drawing.Point(181, 12);
-            this.darkRefButton.Name = "darkRefButton";
-            this.darkRefButton.Size = new System.Drawing.Size(113, 23);
-            this.darkRefButton.TabIndex = 12;
-            this.darkRefButton.Text = "Collect Dark Ref";
-            this.darkRefButton.UseVisualStyleBackColor = true;
-            this.darkRefButton.Click += new System.EventHandler(this.darkRefButton_Click);
-            // 
-            // whiteRefButton
-            // 
-            this.whiteRefButton.Location = new System.Drawing.Point(181, 42);
-            this.whiteRefButton.Name = "whiteRefButton";
-            this.whiteRefButton.Size = new System.Drawing.Size(113, 23);
-            this.whiteRefButton.TabIndex = 13;
-            this.whiteRefButton.Text = "Collect White Ref";
-            this.whiteRefButton.UseVisualStyleBackColor = true;
+            this.showDarkRefButton.Location = new System.Drawing.Point(313, 12);
+            this.showDarkRefButton.Name = "showDarkRefButton";
+            this.showDarkRefButton.Size = new System.Drawing.Size(96, 23);
+            this.showDarkRefButton.TabIndex = 14;
+            this.showDarkRefButton.Text = "Show Dark Ref";
+            this.showDarkRefButton.UseVisualStyleBackColor = true;
             // 
             // SpectrometerControl
             // 
@@ -259,5 +270,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button whiteRefButton;
         private System.Windows.Forms.Button darkRefButton;
+        private System.Windows.Forms.Button showDarkRefButton;
     }
 }

@@ -28,7 +28,6 @@ namespace MFT
         TreeNode root;
         TreeNode camerasNode;
         TreeNode spectrometerNode;
-        TreeNode darkNode;
         const string noSpectrometerMessage = "No spectrometer connected";
         TreeNode exposureSetttingsNode;
         TreeNode spectrumProcessorChainsNode;
@@ -150,7 +149,6 @@ namespace MFT
             {
                 var tabPage = new TabPage(spectrometer.GetDeviceDescription());
                 var control = new SpectrometerControl(spectrometer);
-                control.ControlsChanged += UpdateSpectrometerNode;
                 control.Dock = DockStyle.Fill;
                 tabPage.Controls.Add(control);
                 tabControl1.TabPages.Add(tabPage);
@@ -161,30 +159,6 @@ namespace MFT
             }
             spectrometerNode.EnsureVisible();
         }
-
-        void UpdateSpectrometerNode(object sender, SpectrometerControlsChangedEventArgs e)
-        {
-            if (spectrometerNode == null)
-            {
-                // create a new node from e
-            }
-            spectrometerNode.Nodes.Clear();
-            var item = spectrometerNode.Tag as ItemHolder;
-            if (item == null)
-                return;
-            var spectrometer = item.Object as ISpectrometer;
-            if (spectrometer != e.Spectrometer)
-                MessageBox.Show(this, "Internal Error", "Spectrometer mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            spectrometerNode.Text = spectrometer.GetDeviceDescription();
-            if (spectrometer.DarkReference != null)
-            {
-                darkNode = new TreeNode("Dark Reference");
-                var itm = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, null, spectrometer.DarkReference);
-                darkNode.Tag = itm;
-                spectrometerNode.Nodes.Add(darkNode);
-            }
-        }
-
 
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {

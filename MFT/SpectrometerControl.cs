@@ -80,7 +80,6 @@ namespace MFT
                 Averaging = (int)averagingNumericUpDown.Value,
                 DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
                 IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
-                Spectrometer = spectrometer
             });
         }
 
