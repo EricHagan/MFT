@@ -74,12 +74,6 @@
       <DependentUpon>CameraControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Color.cs" />
-    <Compile Include="ContinuousExposureSettingsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ContinuousExposureSettingsControl.Designer.cs">
-      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="ContinuousSpectrumGraph.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,12 +84,6 @@
     <Compile Include="DesignTimeHelper.cs" />
     <Compile Include="Exposure.cs" />
     <Compile Include="ExposureSettings.cs" />
-    <Compile Include="ExposureSettingsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ExposureSettingsControl.Designer.cs">
-      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExposureStream.cs" />
     <Compile Include="ICamera.cs" />
     <Compile Include="ISpectrumProcessor.cs" />
@@ -143,14 +131,8 @@
     <EmbeddedResource Include="CameraControl.resx">
       <DependentUpon>CameraControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContinuousExposureSettingsControl.resx">
-      <DependentUpon>ContinuousExposureSettingsControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExposureSettingsControl.resx">
-      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainDialog.resx">
       <DependentUpon>MainDialog.cs</DependentUpon>
