@@ -150,7 +150,7 @@ namespace MFT
             {
                 var tabPage = new TabPage(spectrometer.GetDeviceDescription());
                 var control = new SpectrometerControl(spectrometer);
-                control.SpectrometerChanged += UpdateSpectrometerNode;
+                control.ControlsChanged += UpdateSpectrometerNode;
                 control.Dock = DockStyle.Fill;
                 tabPage.Controls.Add(control);
                 tabControl1.TabPages.Add(tabPage);
@@ -162,7 +162,7 @@ namespace MFT
             spectrometerNode.EnsureVisible();
         }
 
-        void UpdateSpectrometerNode(object sender, SpectrometerChangedEventArgs e)
+        void UpdateSpectrometerNode(object sender, SpectrometerControlsChangedEventArgs e)
         {
             if (spectrometerNode == null)
             {

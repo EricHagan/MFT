@@ -43,7 +43,7 @@ namespace MFT
             }    );
         }
 
-        public void ControlsAdjustedEventHandler(object sender, SpectrometerChangedEventArgs e)
+        public void ControlsAdjustedEventHandler(object sender, SpectrometerControlsChangedEventArgs e)
         {
             Averaging = e.Averaging;
             DwellTimeMs = e.DwellTimeMs;

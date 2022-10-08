@@ -2,7 +2,7 @@
 
 namespace MFT
 {
-    public class SpectrometerChangedEventArgs : EventArgs
+    public class SpectrometerControlsChangedEventArgs : EventArgs
     {
         public float IntegrationTimeS { get; set; }
         public int Averaging { get; set; }

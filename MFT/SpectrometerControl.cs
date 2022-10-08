@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MFT
@@ -23,8 +16,7 @@ namespace MFT
         }
 
         ISpectrometer spectrometer;
-        public event EventHandler<SpectrometerChangedEventArgs> SpectrometerChanged;
-
+        public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
@@ -69,7 +61,7 @@ namespace MFT
         private void ContinuousButton_Click(object sender, EventArgs e)
         {
             var exposureStream = new ExposureStream(spectrometer);
-            SpectrometerChanged += exposureStream.ControlsAdjustedEventHandler;
+            ControlsChanged += exposureStream.ControlsAdjustedEventHandler;
             var graph = new ContinuousSpectrumGraph();
             graph.ExposureStream = exposureStream;
 
@@ -79,11 +71,11 @@ namespace MFT
             exposureStream.Start();
         }
 
-        void RaiseSpectrometerChangedEvent(object sender)
+        void RaiseSpectrometerControlsChangedEvent(object sender)
         {
-            if (SpectrometerChanged == null)
+            if (ControlsChanged == null)
                 return;
-            SpectrometerChanged(sender, new SpectrometerChangedEventArgs()
+            ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
             {
                 Averaging = (int)averagingNumericUpDown.Value,
                 DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
@@ -94,24 +86,24 @@ namespace MFT
 
         private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            RaiseSpectrometerChangedEvent(averagingNumericUpDown);
+            RaiseSpectrometerControlsChangedEvent(averagingNumericUpDown);
         }
 
         private void integrationTimeMsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            RaiseSpectrometerChangedEvent(integrationTimeMsNumericUpDown);
+            RaiseSpectrometerControlsChangedEvent(integrationTimeMsNumericUpDown);
         }
 
         private void dwellTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            RaiseSpectrometerChangedEvent(dwellTimeNumericUpDown);
+            RaiseSpectrometerControlsChangedEvent(dwellTimeNumericUpDown);
         }
 
         private void darkRefButton_Click(object sender, EventArgs e)
         {
             spectrometer.CollectDarkReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, out string errMsg);
-            RaiseSpectrometerChangedEvent(darkRefButton);
+            RaiseSpectrometerControlsChangedEvent(darkRefButton);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
