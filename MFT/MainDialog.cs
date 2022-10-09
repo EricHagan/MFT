@@ -101,20 +101,6 @@ namespace MFT
             return tabPage;
         }
 
-        private void whiteRefButton_Click(object sender, EventArgs e)
-        {
-            //if (WhiteSpectrum != null)
-            //    tabControl1.TabPages.Remove(WhiteSpectrum);
-            //if (spectrometer == null)
-            //{
-            //    MessageBox.Show(this, $"Problem collecting spectrum: Spectrometer not connected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-            //if (!spectrometer.CollectWhiteReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000, (int)averagingNumericUpDown.Value, out string errMsg))
-            //    MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //WhiteSpectrum = AddSingleSpectrumTab(spectrometer.WhiteReference, forbidNormalizing: true, "White");
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AboutDialog();
