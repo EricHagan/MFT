@@ -118,9 +118,20 @@ namespace MFT
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private void showDarkRefButton_Click(object sender, EventArgs e)
+        {
+            var singleGraph = new SingleSpectrumGraph();
+            singleGraph.Exposure = spectrometer.DarkReference;
+            SetMainControl(singleGraph);
+            singleGraph.Dock = DockStyle.Fill;
+        }
+
         private void showWhiteRefButton_Click(object sender, EventArgs e)
         {
-
+            var singleGraph = new SingleSpectrumGraph();
+            singleGraph.Exposure = spectrometer.WhiteReference;
+            SetMainControl(singleGraph);
+            singleGraph.Dock = DockStyle.Fill;
         }
 
         private void HandleSpectrometerChanged(object sender, EventArgs e)

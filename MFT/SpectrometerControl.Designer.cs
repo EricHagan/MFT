@@ -240,6 +240,7 @@
             this.showDarkRefButton.TabIndex = 14;
             this.showDarkRefButton.Text = "Show Dark Ref";
             this.showDarkRefButton.UseVisualStyleBackColor = true;
+            this.showDarkRefButton.Click += new System.EventHandler(this.showDarkRefButton_Click);
             // 
             // showWhiteRefButton
             // 

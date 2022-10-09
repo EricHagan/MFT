@@ -81,9 +81,13 @@ namespace MFT
         public bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
         {
             WhiteReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
-            if (WhiteReference != null)
-                SpectrometerChanged?.Invoke(this, new EventArgs());
             UpdateNormalizeAllowed();
+            if (WhiteReference != null)
+            {
+                if (!WhiteReference.Name.Contains("White Reference: "))
+                    WhiteReference.Name = "White Reference: " + WhiteReference.Name;
+                SpectrometerChanged?.Invoke(this, new EventArgs());
+            }
             return WhiteReference != null;
         }
 
@@ -91,9 +95,13 @@ namespace MFT
         {
             TriedToGetDarkReference = true;
             DarkReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
-            if (DarkReference != null)
-                SpectrometerChanged?.Invoke(this, new EventArgs());
             UpdateNormalizeAllowed();
+            if (DarkReference != null)
+            {
+                if (!DarkReference.Name.Contains("Dark Reference: "))
+                    DarkReference.Name = "Dark Reference: " + DarkReference.Name;
+                SpectrometerChanged?.Invoke(this, new EventArgs());
+            }
             return DarkReference != null;
         }
 
