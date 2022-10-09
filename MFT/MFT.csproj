@@ -80,6 +80,12 @@
     <Compile Include="ContinuousSpectrumGraph.Designer.cs">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExposureSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ExposureSettingsControl.Designer.cs">
+      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpectrometerBase.cs" />
     <Compile Include="SpectrometerControlsChangedEventArgs.cs" />
     <Compile Include="DesignTimeHelper.cs" />
@@ -135,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExposureSettingsControl.resx">
+      <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainDialog.resx">
       <DependentUpon>MainDialog.cs</DependentUpon>

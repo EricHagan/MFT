@@ -25,5 +25,18 @@
             return new ExposureSettings(
                 Averaging, IntegrationTimeMs, DwellTimeMs, false, Name, Handle);
         }
+
+        public override string ToString()
+        {
+            string output = "";
+            string description = $"Avg: {Averaging}, Int: {IntegrationTimeMs} ms, Dwell: {DwellTimeMs} ms";
+            if (Normalized)
+                description = description + " (Normalized)";
+            if (!string.IsNullOrWhiteSpace(Name))
+                output = $"{Name}: {description}";
+            else
+                output = description;
+            return output;
+        }
     }
 }

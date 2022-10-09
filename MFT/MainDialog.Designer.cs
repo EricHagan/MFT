@@ -53,7 +53,7 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.workspaceTreeView = new System.Windows.Forms.TreeView();
             this.spectrometerTitleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exposureSettingsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.camerasContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
@@ -352,11 +352,11 @@
             this.spectrometerTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
             this.spectrometerTitleContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerContextMenuStrip_ItemClicked);
             // 
-            // contextMenuStrip2
+            // exposureSettingsContextMenuStrip
             // 
-            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(61, 4);
+            this.exposureSettingsContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.exposureSettingsContextMenuStrip.Name = "contextMenuStrip2";
+            this.exposureSettingsContextMenuStrip.Size = new System.Drawing.Size(181, 26);
             // 
             // camerasContextMenuStrip
             // 
@@ -435,7 +435,7 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView workspaceTreeView;
         private System.Windows.Forms.ContextMenuStrip spectrometerTitleContextMenuStrip;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ContextMenuStrip exposureSettingsContextMenuStrip;
         private System.Windows.Forms.ContextMenuStrip camerasContextMenuStrip;
     }
 }

@@ -23,6 +23,7 @@ namespace MFT
         TreeNode camerasNode;
         TreeNode spectrometerTitleNode;
         TreeNode spectrometerNode;
+        TreeNode exposureSettingsNode;
         TreeNode spectrumProcessorChainsNode;
         TreeNode testsNode;
         void InitTreeView()
@@ -35,6 +36,7 @@ namespace MFT
             // cameras
             camerasNode = root.Nodes.Add("Cameras");
             camerasNode.ContextMenuStrip = camerasContextMenuStrip;
+            camerasContextMenuStrip.Items.Clear();
             foreach (var camera in CameraCollection.GetCameras())
             {
                 var t = new ToolStripMenuItem();
@@ -58,7 +60,13 @@ namespace MFT
             }
 
             // exposure settings
-            exposureSetttingsNode = root.Nodes.Add("Exposure Settings");
+            exposureSettingsNode = root.Nodes.Add("Exposure Settings");
+            exposureSettingsNode.ContextMenuStrip = exposureSettingsContextMenuStrip;
+            exposureSettingsContextMenuStrip.Items.Clear();
+            var createExposureSettings = new ToolStripMenuItem();
+            createExposureSettings.Text = "Create Exposure Settings";
+            createExposureSettings.Click += CreateExposureSettings_Click;
+            exposureSettingsContextMenuStrip.Items.Add(createExposureSettings);
 
             // spectrum processor chains
             spectrumProcessorChainsNode = root.Nodes.Add("Spectrum Processor Chains");
@@ -104,6 +112,8 @@ namespace MFT
             var d = new AboutDialog();
             d.ShowDialog();
         }
+
+        #region Context Menu Item Clicked Handlers
 
         private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -166,7 +176,6 @@ namespace MFT
                     return;
             }
 
-
             var camNode = new TreeNode();
 
             var camDialog = new CameraControl();
@@ -178,6 +187,23 @@ namespace MFT
             camerasNode.Nodes.Add(camNode);
             camNode.EnsureVisible();
         }
+
+
+        private void CreateExposureSettings_Click(object sender, EventArgs e)
+        {
+            var settings = new ExposureSettings();
+            WorkspaceItem.Register(settings);
+            var control = new ExposureSettingsControl();
+            control.Settings = settings;
+            var tabpage = AddTabpage(settings.ToString(), control);
+            var node = new TreeNode();
+            node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
+            node.Text = settings.ToString();
+            exposureSettingsNode.Nodes.Add(node);
+            node.EnsureVisible();
+        }
+
+        #endregion
 
         private void workspaceTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -195,6 +221,7 @@ namespace MFT
                 {
                     case ItemHolder.ItemTypes.CAMERA:
                     case ItemHolder.ItemTypes.SPECTROMETER:
+                    case ItemHolder.ItemTypes.EXPOSURE_SETTINGS:
                         tabControl1.SelectTab(itemHolder.Page);
                         break;
                 }
