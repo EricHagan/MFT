@@ -15,6 +15,7 @@ namespace MFT
         public float IntegrationTimeS { get; set; } = 0.05f;
         public int Averaging { get; set; } = 10;
         public int DwellTimeMs { get; set; } = 150;
+        public bool Normalized { get; set; } = false;
         public event EventHandler<ExposureEventArgs> ExposureAvailable;
 
         bool PleaseStop;
@@ -31,9 +32,7 @@ namespace MFT
                 while (!PleaseStop)
                 {
                     string errMsg;
-                    //var exposure = Spectrometer.CollectSpectrum(IntegrationTimeS, Averaging, out errMsg);
-                    // todo: add Normalized support
-                    var exposure = Exposure.GetExposure(Spectrometer, IntegrationTimeS, Averaging, false, out errMsg);
+                    var exposure = Exposure.GetExposure(Spectrometer, IntegrationTimeS, Averaging, Normalized, out errMsg);
                     if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)
@@ -48,6 +47,7 @@ namespace MFT
             Averaging = e.Averaging;
             DwellTimeMs = e.DwellTimeMs;
             IntegrationTimeS = e.IntegrationTimeS;
+            Normalized = e.Normalize;
         }
 
         public void Stop()

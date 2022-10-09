@@ -106,7 +106,6 @@ namespace MFT
         {
             spectrometer.CollectDarkReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, out string errMsg);
-            //RaiseSpectrometerControlsChangedEvent(darkRefButton);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -115,7 +114,6 @@ namespace MFT
         {
             spectrometer.CollectWhiteReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, out string errMsg);
-            //RaiseSpectrometerControlsChangedEvent(whiteRefButton);
             if (spectrometer.WhiteReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
