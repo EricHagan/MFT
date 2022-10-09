@@ -21,9 +21,8 @@ namespace MFT
 
         TreeNode root;
         TreeNode camerasNode;
+        TreeNode spectrometerTitleNode;
         TreeNode spectrometerNode;
-        const string noSpectrometerMessage = "No spectrometer connected";
-        TreeNode exposureSetttingsNode;
         TreeNode spectrumProcessorChainsNode;
         TreeNode testsNode;
         void InitTreeView()
@@ -45,7 +44,7 @@ namespace MFT
             }
 
             // spectrometer
-            var spectrometerTitleNode = root.Nodes.Add("Spectrometer");
+            spectrometerTitleNode = root.Nodes.Add("Spectrometer");
             spectrometerTitleNode.ContextMenuStrip = spectrometerTitleContextMenuStrip;
             spectrometerTitleContextMenuStrip.Items.Clear();
             foreach (var t in Enum.GetValues(typeof(SpectrometerTypes)))
@@ -57,7 +56,6 @@ namespace MFT
                 toolStripItem.Text = "Connect " + d.ToString();
                 spectrometerTitleContextMenuStrip.Items.Add(toolStripItem);
             }
-            spectrometerNode = spectrometerTitleNode.Nodes.Add(noSpectrometerMessage);
 
             // exposure settings
             exposureSetttingsNode = root.Nodes.Add("Exposure Settings");
@@ -134,6 +132,11 @@ namespace MFT
                 tabControl1.TabPages.Add(tabPage);
                 tabControl1.SelectedIndex = tabControl1.TabCount - 1;
                 var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
+                if (spectrometerNode == null)
+                {
+                    spectrometerNode = new TreeNode();
+                    spectrometerTitleNode.Nodes.Add(spectrometerNode);
+                }
                 spectrometerNode.Tag = item;
                 spectrometerNode.Text = spectrometer.GetDeviceDescription();
             }
