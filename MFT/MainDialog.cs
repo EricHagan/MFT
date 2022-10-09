@@ -206,6 +206,8 @@ namespace MFT
                     return;
 
                 var itemHolder = (ItemHolder)node.Tag;
+                if (itemHolder == null)
+                    return;
                 switch (itemHolder.Type)
                 {
                     case ItemHolder.ItemTypes.CAMERA:
