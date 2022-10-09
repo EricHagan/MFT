@@ -61,12 +61,12 @@ namespace MFT
             return new List<double>(spectrometer.GetWavelengths()); ;
         }
 
-        public override Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
+        public override Exposure CollectSpectrum(ExposureSettings settings, out string ErrMsg)
         {
             lock (collectLock)
             {
                 ErrMsg = string.Empty;
-                if (!PerformExposure(TimeSeconds, Averaging, out ErrMsg))
+                if (!PerformExposure(settings, out ErrMsg))
                 {
                     return null;
                 }
@@ -81,7 +81,7 @@ namespace MFT
         protected Spectrometer spectrometer;
         protected List<double> wavelengths;
 
-        protected bool PerformExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        protected bool PerformExposure(ExposureSettings settings, out string ErrMsg)
         {
             ErrMsg = string.Empty;
             if (spectrometer == null)
@@ -92,10 +92,10 @@ namespace MFT
 
             try
             {
-                spectrometer.ExposureTime = TimeSeconds;
-                spectrometer.Averaging = Averaging;
+                spectrometer.ExposureTime = settings.IntegrationTimeMs/1000f;
+                spectrometer.Averaging = settings.Averaging;
                 spectrometer.StartExposure();
-                int waitTimeMs = Math.Max(10, (int)(1000 * TimeSeconds / 10));
+                int waitTimeMs = Math.Max(10, (int)(settings.IntegrationTimeMs / 10));
                 while (spectrometer.Status > SpectrometerStatus.Idle)
                     System.Threading.Thread.Sleep(waitTimeMs);
                 return true;

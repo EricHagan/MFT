@@ -28,7 +28,7 @@ namespace MFT
             CurrentSpectrumProcessorChain = -1;
             TestCollections = new Dictionary<int, TestCollection>();
             ExposureSettings = new Dictionary<int, ExposureSettings>();
-            DefaultExposureSettings = null;
+            DefaultExposureSettings = new ExposureSettings();
             CurrentExposureSettings = -1;
         }
     }

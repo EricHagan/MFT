@@ -1,29 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MFT
 {
     public class Exposure
     {
         public static Exposure GetExposure(ISpectrometer spectrometer,
-            float _IntegrationTimeSeconds, int _AveragingNum, bool Normalized, out string ErrMsg)
+            ExposureSettings settings, out string ErrMsg)
         {
             if (spectrometer == null)
             {
                 ErrMsg = "Spectrometer not connected.";
                 return null;
             }
-            var exposure = spectrometer.CollectSpectrum(_IntegrationTimeSeconds, _AveragingNum, out ErrMsg);
+            var exposure = spectrometer.CollectSpectrum(settings, out ErrMsg);
             if (exposure == null)
                 return null;
             else
             {
-                if (Normalized)
+                if (settings.Normalized)
                     exposure = exposure.GetNormalized();
-                exposure.IntegrationTimeSeconds = _IntegrationTimeSeconds;
-                exposure.AveragingNum = _AveragingNum;
+                exposure.IntegrationTimeSeconds = settings.IntegrationTimeMs/1000;
+                exposure.AveragingNum = settings.Averaging;
                 return exposure;
             }
         }

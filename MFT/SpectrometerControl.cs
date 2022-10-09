@@ -16,6 +16,18 @@ namespace MFT
         ISpectrometer spectrometer;
         public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
+        ExposureSettings ExposureControls
+        {
+            get
+            {
+                return new ExposureSettings(
+                    (int)averagingNumericUpDown.Value,
+                    (int)integrationTimeMsNumericUpDown.Value,
+                    (int)dwellTimeNumericUpDown.Value,
+                    normalizedCheckBox.Checked);
+            }
+        }
+
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
             averagingNumericUpDown.Value = 10;
@@ -36,8 +48,7 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = Exposure.GetExposure(spectrometer, (float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, normalizedCheckBox.Checked, out string errMsg);
+            var exposure = Exposure.GetExposure(spectrometer, ExposureControls, out string errMsg);
             if (exposure != null)
             {
                 var singleGraph = new SingleSpectrumGraph();
@@ -76,10 +87,7 @@ namespace MFT
                 return;
             ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
             {
-                Averaging = (int)averagingNumericUpDown.Value,
-                DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
-                IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
-                Normalize = normalizedCheckBox.Checked,
+                Settings = ExposureControls
             });
         }
 
@@ -105,8 +113,7 @@ namespace MFT
 
         private void darkRefButton_Click(object sender, EventArgs e)
         {
-            spectrometer.CollectDarkReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out string errMsg);
+            spectrometer.CollectDarkReferenceExposure(ExposureControls.Unnormalized(), out string errMsg);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -115,8 +122,7 @@ namespace MFT
 
         private void whiteRefButton_Click(object sender, EventArgs e)
         {
-            spectrometer.CollectWhiteReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
-                (int)averagingNumericUpDown.Value, out string errMsg);
+            spectrometer.CollectWhiteReferenceExposure(ExposureControls.Unnormalized(), out string errMsg);
             if (spectrometer.WhiteReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else

@@ -9,9 +9,9 @@ namespace MFT
         SpectrometerTypes GetDeviceType();
         string GetDeviceDescription();
         List<double> GetWavelengths();    
-        Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg);
-        bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg);
-        bool CollectDarkReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg);
+        Exposure CollectSpectrum(ExposureSettings Setttings, out string ErrMsg);
+        bool CollectWhiteReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
+        bool CollectDarkReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
         Exposure WhiteReference { get; set; }
         Exposure DarkReference { get; set; }
         bool NormalizeAllowed { get; }

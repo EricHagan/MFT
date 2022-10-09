@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Workspace.cs" />
     <Compile Include="SpectrumWindow.cs" />
+    <Compile Include="WorkspaceItem.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>

@@ -9,13 +9,11 @@ namespace MFT
         public ExposureStream(ISpectrometer s)
         {
             Spectrometer = s;
+            Settings = new ExposureSettings();
         }
 
         public ISpectrometer Spectrometer { get; set; }
-        public float IntegrationTimeS { get; set; } = 0.05f;
-        public int Averaging { get; set; } = 10;
-        public int DwellTimeMs { get; set; } = 150;
-        public bool Normalized { get; set; } = false;
+        public ExposureSettings Settings { get; set; }
         public event EventHandler<ExposureEventArgs> ExposureAvailable;
 
         bool PleaseStop;
@@ -32,22 +30,19 @@ namespace MFT
                 while (!PleaseStop)
                 {
                     string errMsg;
-                    var exposure = Exposure.GetExposure(Spectrometer, IntegrationTimeS, Averaging, Normalized, out errMsg);
+                    var exposure = Exposure.GetExposure(Spectrometer, Settings, out errMsg);
                     if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)
                         ExposureAvailable(this, new ExposureEventArgs(exposure));
-                    Thread.Sleep(DwellTimeMs);
+                    Thread.Sleep(Settings.DwellTimeMs);
                 }
             }    );
         }
 
         public void ControlsAdjustedEventHandler(object sender, SpectrometerControlsChangedEventArgs e)
         {
-            Averaging = e.Averaging;
-            DwellTimeMs = e.DwellTimeMs;
-            IntegrationTimeS = e.IntegrationTimeS;
-            Normalized = e.Normalize;
+            Settings = e.Settings;
         }
 
         public void Stop()

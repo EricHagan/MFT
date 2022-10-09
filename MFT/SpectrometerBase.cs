@@ -14,10 +14,12 @@ namespace MFT
 
         public event EventHandler SpectrometerChanged;
 
-        public bool CollectDarkReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        public bool CollectDarkReferenceExposure(ExposureSettings settings, out string ErrMsg)
         {
             TriedToGetDarkReference = true;
-            DarkReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            if (settings.Normalized == true)
+                throw new Exception("settings.Normalized must be false for a reference exposure.");
+            DarkReference = Exposure.GetExposure(this, settings, out ErrMsg);
             UpdateNormalizeAllowed();
             if (DarkReference != null)
             {
@@ -28,9 +30,11 @@ namespace MFT
             return DarkReference != null;
         }
 
-        public bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
+        public bool CollectWhiteReferenceExposure(ExposureSettings settings, out string ErrMsg)
         {
-            WhiteReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            if (settings.Normalized == true)
+                throw new Exception("settings.Normalized must be false for a reference exposure.");
+            WhiteReference = Exposure.GetExposure(this, settings, out ErrMsg);
             UpdateNormalizeAllowed();
             if (WhiteReference != null)
             {
@@ -41,7 +45,7 @@ namespace MFT
             return WhiteReference != null;
         }
 
-        public abstract Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg);
+        public abstract Exposure CollectSpectrum(ExposureSettings settings, out string ErrMsg);
         public abstract bool Connect(out string ErrMsg);
         public abstract string GetDeviceDescription();
         public abstract SpectrometerTypes GetDeviceType();
