@@ -108,6 +108,8 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, out string errMsg);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                showDarkRefButton_Click(sender, e);
         }
 
         private void whiteRefButton_Click(object sender, EventArgs e)
@@ -116,6 +118,8 @@ namespace MFT
                 (int)averagingNumericUpDown.Value, out string errMsg);
             if (spectrometer.WhiteReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                showWhiteRefButton_Click(sender, e);
         }
 
         private void showDarkRefButton_Click(object sender, EventArgs e)
