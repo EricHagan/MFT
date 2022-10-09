@@ -60,6 +60,7 @@ namespace MFT
         {
             var exposureStream = new ExposureStream(spectrometer);
             ControlsChanged += exposureStream.ControlsAdjustedEventHandler;
+            RaiseSpectrometerControlsChangedEvent(ContinuousButton);
             var graph = new ContinuousSpectrumGraph();
             graph.ExposureStream = exposureStream;
 
