@@ -7,5 +7,6 @@ namespace MFT
         public float IntegrationTimeS { get; set; }
         public int Averaging { get; set; }
         public int DwellTimeMs { get; set; }
+        public bool Normalize { get; set; }
     }
 }

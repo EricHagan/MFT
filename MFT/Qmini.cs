@@ -81,6 +81,8 @@ namespace MFT
         public bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
         {
             WhiteReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            if (WhiteReference != null)
+                SpectrometerChanged?.Invoke(this, new EventArgs());
             UpdateNormalizeAllowed();
             return WhiteReference != null;
         }
@@ -89,6 +91,8 @@ namespace MFT
         {
             TriedToGetDarkReference = true;
             DarkReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
+            if (DarkReference != null)
+                SpectrometerChanged?.Invoke(this, new EventArgs());
             UpdateNormalizeAllowed();
             return DarkReference != null;
         }
@@ -97,9 +101,7 @@ namespace MFT
         public Exposure DarkReference { get; set; }
 
         public bool NormalizeAllowed { get; private set; }
-        public event EventHandler<NormalizeAllowedChangedEventArgs> NormalizeAllowedChanged;
-
-
+        public event EventHandler SpectrometerChanged;
 
         protected bool TriedToGetDarkReference { get; set; }
 
@@ -114,8 +116,7 @@ namespace MFT
 
             if (NormalizeAllowed != oldValue)
             {
-                NormalizeAllowedChanged?.Invoke(
-                    this, new NormalizeAllowedChangedEventArgs() { NormalizeAllowed = this.NormalizeAllowed });
+                SpectrometerChanged?.Invoke(this, new EventArgs());
             }
         }
 
@@ -164,6 +165,5 @@ namespace MFT
             }
             return spectrometer.TimeStamp;
         }
-
     }
 }

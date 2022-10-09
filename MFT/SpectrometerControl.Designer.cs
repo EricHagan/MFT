@@ -41,6 +41,7 @@
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.showDarkRefButton = new System.Windows.Forms.Button();
+            this.showWhiteRefButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -58,6 +59,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.showWhiteRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.showDarkRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.whiteRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.darkRefButton);
@@ -82,6 +84,7 @@
             this.whiteRefButton.TabIndex = 13;
             this.whiteRefButton.Text = "Collect White Ref";
             this.whiteRefButton.UseVisualStyleBackColor = true;
+            this.whiteRefButton.Click += new System.EventHandler(this.whiteRefButton_Click);
             // 
             // darkRefButton
             // 
@@ -148,6 +151,7 @@
             this.normalizedCheckBox.TabIndex = 9;
             this.normalizedCheckBox.Text = "Normalize spectrum";
             this.normalizedCheckBox.UseVisualStyleBackColor = true;
+            this.normalizedCheckBox.CheckedChanged += new System.EventHandler(this.normalizedCheckBox_CheckedChanged);
             // 
             // integrationTimeMsNumericUpDown
             // 
@@ -237,6 +241,16 @@
             this.showDarkRefButton.Text = "Show Dark Ref";
             this.showDarkRefButton.UseVisualStyleBackColor = true;
             // 
+            // showWhiteRefButton
+            // 
+            this.showWhiteRefButton.Location = new System.Drawing.Point(313, 41);
+            this.showWhiteRefButton.Name = "showWhiteRefButton";
+            this.showWhiteRefButton.Size = new System.Drawing.Size(96, 23);
+            this.showWhiteRefButton.TabIndex = 15;
+            this.showWhiteRefButton.Text = "Show White Ref";
+            this.showWhiteRefButton.UseVisualStyleBackColor = true;
+            this.showWhiteRefButton.Click += new System.EventHandler(this.showWhiteRefButton_Click);
+            // 
             // SpectrometerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -271,5 +285,6 @@
         private System.Windows.Forms.Button whiteRefButton;
         private System.Windows.Forms.Button darkRefButton;
         private System.Windows.Forms.Button showDarkRefButton;
+        private System.Windows.Forms.Button showWhiteRefButton;
     }
 }

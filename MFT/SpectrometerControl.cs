@@ -9,10 +9,8 @@ namespace MFT
         {
             InitializeComponent();
             spectrometer = _spectrometer;
-            if (spectrometer.NormalizeAllowed)
-                AllowNormalized();
-            else
-                DisallowNormalized();
+            spectrometer.SpectrometerChanged += HandleSpectrometerChanged;
+            UpdateFromSpectrometer();
         }
 
         ISpectrometer spectrometer;
@@ -80,6 +78,7 @@ namespace MFT
                 Averaging = (int)averagingNumericUpDown.Value,
                 DwellTimeMs = (int)dwellTimeNumericUpDown.Value,
                 IntegrationTimeS = (float)(integrationTimeMsNumericUpDown.Value / 1000),
+                Normalize = normalizedCheckBox.Checked,
             });
         }
 
@@ -98,13 +97,53 @@ namespace MFT
             RaiseSpectrometerControlsChangedEvent(dwellTimeNumericUpDown);
         }
 
+        private void normalizedCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RaiseSpectrometerControlsChangedEvent(normalizedCheckBox);
+        }
+
         private void darkRefButton_Click(object sender, EventArgs e)
         {
             spectrometer.CollectDarkReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
                 (int)averagingNumericUpDown.Value, out string errMsg);
-            RaiseSpectrometerControlsChangedEvent(darkRefButton);
+            //RaiseSpectrometerControlsChangedEvent(darkRefButton);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void whiteRefButton_Click(object sender, EventArgs e)
+        {
+            spectrometer.CollectWhiteReferenceExposure((float)integrationTimeMsNumericUpDown.Value / 1000,
+                (int)averagingNumericUpDown.Value, out string errMsg);
+            //RaiseSpectrometerControlsChangedEvent(whiteRefButton);
+            if (spectrometer.WhiteReference == null)
+                MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void showWhiteRefButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HandleSpectrometerChanged(object sender, EventArgs e)
+        {
+            var sentSpectrometer = sender as ISpectrometer;
+            if (sentSpectrometer == null)
+                throw new Exception("Internal error. Sender was not an ISpectrometer.");
+            if (sentSpectrometer != spectrometer)
+                throw new Exception("Internal error. Sender ISpectrometer doesn't match the existing spectrometer.");
+            UpdateFromSpectrometer();
+        }
+
+        private void UpdateFromSpectrometer()
+        {
+            if (spectrometer.NormalizeAllowed)
+                AllowNormalized();
+            else
+                DisallowNormalized();
+
+            showDarkRefButton.Enabled = spectrometer.DarkReference != null;
+            showWhiteRefButton.Enabled = spectrometer.WhiteReference != null;
         }
     }
 }
