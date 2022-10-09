@@ -5,9 +5,9 @@ using RgbDriverKit;
 
 namespace MFT
 {
-    internal class Qmini : ISpectrometer
+    internal class Qmini : SpectrometerBase
     {
-        public virtual bool Connect(out string ErrMsg)
+        public override bool Connect(out string ErrMsg)
         {
             ErrMsg = string.Empty;
             try
@@ -35,13 +35,13 @@ namespace MFT
                 return false;
             }
         }
-
-        public virtual SpectrometerTypes GetDeviceType()
+        
+        public override SpectrometerTypes GetDeviceType()
         {
             return SpectrometerTypes.BROADCOM;
         }
 
-        public string GetDeviceDescription()
+        public override string GetDeviceDescription()
         {
             if (spectrometer == null)
                 return "No device connected.";
@@ -49,7 +49,7 @@ namespace MFT
     
         }
 
-        public List<double> GetWavelengths()
+        public override List<double> GetWavelengths()
         {
             if (spectrometer == null)
             {
@@ -61,7 +61,7 @@ namespace MFT
             return new List<double>(spectrometer.GetWavelengths()); ;
         }
 
-        public Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
+        public override Exposure CollectSpectrum(float TimeSeconds, int Averaging, out string ErrMsg)
         {
             lock (collectLock)
             {
@@ -77,56 +77,6 @@ namespace MFT
         }
 
         private static readonly object collectLock = new object();
-
-        public bool CollectWhiteReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
-        {
-            WhiteReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
-            UpdateNormalizeAllowed();
-            if (WhiteReference != null)
-            {
-                if (!WhiteReference.Name.Contains("White Reference: "))
-                    WhiteReference.Name = "White Reference: " + WhiteReference.Name;
-                SpectrometerChanged?.Invoke(this, new EventArgs());
-            }
-            return WhiteReference != null;
-        }
-
-        public bool CollectDarkReferenceExposure(float TimeSeconds, int Averaging, out string ErrMsg)
-        {
-            TriedToGetDarkReference = true;
-            DarkReference = Exposure.GetExposure(this, TimeSeconds, Averaging, false, out ErrMsg);
-            UpdateNormalizeAllowed();
-            if (DarkReference != null)
-            {
-                if (!DarkReference.Name.Contains("Dark Reference: "))
-                    DarkReference.Name = "Dark Reference: " + DarkReference.Name;
-                SpectrometerChanged?.Invoke(this, new EventArgs());
-            }
-            return DarkReference != null;
-        }
-
-        public Exposure WhiteReference { get; set; }
-        public Exposure DarkReference { get; set; }
-
-        public bool NormalizeAllowed { get; private set; }
-        public event EventHandler SpectrometerChanged;
-
-        protected bool TriedToGetDarkReference { get; set; }
-
-        protected void UpdateNormalizeAllowed()
-        {
-            bool oldValue = NormalizeAllowed;
-            if (WhiteReference == null
-                || (TriedToGetDarkReference && DarkReference == null))
-                NormalizeAllowed = false;
-            else
-                NormalizeAllowed = true;
-
-            if (NormalizeAllowed != oldValue)
-            {
-                SpectrometerChanged?.Invoke(this, new EventArgs());
-            }
-        }
 
         protected Spectrometer spectrometer;
         protected List<double> wavelengths;

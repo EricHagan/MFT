@@ -80,6 +80,7 @@
     <Compile Include="ContinuousSpectrumGraph.Designer.cs">
       <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpectrometerBase.cs" />
     <Compile Include="SpectrometerControlsChangedEventArgs.cs" />
     <Compile Include="DesignTimeHelper.cs" />
     <Compile Include="Exposure.cs" />
