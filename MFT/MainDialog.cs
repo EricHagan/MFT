@@ -31,35 +31,43 @@ namespace MFT
 
         void UpdateExposureSettings(object sender, ExposureSettings settings)
         {
-            long handle = settings.Handle;
-            // if it's in the tree, update it:
-            foreach (var o in exposureSettingsNode.Nodes)
+            if (InvokeRequired)
             {
-                var t = o as TreeNode;
-                var h = t.Tag as ItemHolder;
-                var s = h.Object as ExposureSettings;
-                if (s.Handle == handle)
-                {
-                    h.Object = settings;
-                    t.Text = settings.ToString();
-                    h.Page.Text = settings.ToString();
-                    var c = h.Page.Controls[0] as ExposureSettingsControl;
-                    if (sender != c)
-                        c.Settings = settings;
-                    return;
-                }
+                Action safeUpdate = delegate { UpdateExposureSettings(sender, settings); };
+                Invoke(safeUpdate);
             }
-            // if not, add it to the tree:
-            var control = new ExposureSettingsControl();
-            control.Quiet = true; // otherwise stack overflow
-            control.Settings = settings;
-            var tabpage = AddTabpage(settings.ToString(), control);
-            var node = new TreeNode();
-            node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
-            node.Text = settings.ToString();
-            exposureSettingsNode.Nodes.Add(node);
-            node.EnsureVisible();
-            control.Quiet = false;
+            else
+            {
+                long handle = settings.Handle;
+                // if it's in the tree, update it:
+                foreach (var o in exposureSettingsNode.Nodes)
+                {
+                    var t = o as TreeNode;
+                    var h = t.Tag as ItemHolder;
+                    var s = h.Object as ExposureSettings;
+                    if (s.Handle == handle)
+                    {
+                        h.Object = settings;
+                        t.Text = settings.ToString();
+                        h.Page.Text = settings.ToString();
+                        var c = h.Page.Controls[0] as ExposureSettingsControl;
+                        if (sender != c)
+                            c.Settings = settings;
+                        return;
+                    }
+                }
+                // if not, add it to the tree:
+                var control = new ExposureSettingsControl();
+                control.Quiet = true; // otherwise stack overflow
+                control.Settings = settings;
+                var tabpage = AddTabpage(settings.ToString(), control);
+                var node = new TreeNode();
+                node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
+                node.Text = settings.ToString();
+                exposureSettingsNode.Nodes.Add(node);
+                node.EnsureVisible();
+                control.Quiet = false;
+            }
         }
 
         TreeNode root;
