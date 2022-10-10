@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MFT
@@ -52,7 +51,7 @@ namespace MFT
             }
             // if not, add it to the tree:
             var control = new ExposureSettingsControl();
-            control.Quiet = true;
+            control.Quiet = true; // otherwise stack overflow
             control.Settings = settings;
             var tabpage = AddTabpage(settings.ToString(), control);
             var node = new TreeNode();
