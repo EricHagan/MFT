@@ -86,6 +86,8 @@
     <Compile Include="ExposureSettingsControl.Designer.cs">
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs" />
+    <Compile Include="Messenger.cs" />
     <Compile Include="SpectrometerBase.cs" />
     <Compile Include="SpectrometerControlsChangedEventArgs.cs" />
     <Compile Include="DesignTimeHelper.cs" />
