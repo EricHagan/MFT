@@ -74,6 +74,7 @@
             0,
             0,
             0});
+            this.dwellTimeNumericUpDown.ValueChanged += new System.EventHandler(this.dwellTimeNumericUpDown_ValueChanged);
             // 
             // normalizedCheckBox
             // 
@@ -85,6 +86,7 @@
             this.normalizedCheckBox.TabIndex = 16;
             this.normalizedCheckBox.Text = "Normalize spectrum";
             this.normalizedCheckBox.UseVisualStyleBackColor = true;
+            this.normalizedCheckBox.CheckedChanged += new System.EventHandler(this.normalizedCheckBox_CheckedChanged);
             // 
             // integrationTimeMsNumericUpDown
             // 
@@ -113,6 +115,7 @@
             0,
             0,
             0});
+            this.integrationTimeMsNumericUpDown.ValueChanged += new System.EventHandler(this.integrationTimeMsNumericUpDown_ValueChanged);
             // 
             // label3
             // 
@@ -141,6 +144,7 @@
             0,
             0,
             0});
+            this.averagingNumericUpDown.ValueChanged += new System.EventHandler(this.averagingNumericUpDown_ValueChanged);
             // 
             // label2
             // 
@@ -167,6 +171,7 @@
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(202, 20);
             this.nameTextBox.TabIndex = 20;
+            this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
             // ExposureSettingsControl
             // 

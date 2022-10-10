@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MFT
@@ -13,11 +14,54 @@ namespace MFT
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            workspace = new Workspace();
+            Messenger.MessageAvailable += OnMessageReceived;
             InitTreeView();
         }
 
-        Workspace workspace { get; set; }
+        void OnMessageReceived(object sender, Message msg)
+        {
+            switch (msg.Type)
+            {
+                case Message.Types.EXPOSURE_SETTINGS_UPDATED:
+                    UpdateExposureSettings(sender, msg.Object as ExposureSettings);
+                    break;
+                case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
+                    break;
+            }
+        }
+
+        void UpdateExposureSettings(object sender, ExposureSettings settings)
+        {
+            long handle = settings.Handle;
+            // if it's in the tree, update it:
+            foreach (var o in exposureSettingsNode.Nodes)
+            {
+                var t = o as TreeNode;
+                var h = t.Tag as ItemHolder;
+                var s = h.Object as ExposureSettings;
+                if (s.Handle == handle)
+                {
+                    h.Object = settings;
+                    t.Text = settings.ToString();
+                    h.Page.Text = settings.ToString();
+                    var c = h.Page.Controls[0] as ExposureSettingsControl;
+                    if (sender != c)
+                        c.Settings = settings;
+                    return;
+                }
+            }
+            // if not, add it to the tree:
+            var control = new ExposureSettingsControl();
+            control.Quiet = true;
+            control.Settings = settings;
+            var tabpage = AddTabpage(settings.ToString(), control);
+            var node = new TreeNode();
+            node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
+            node.Text = settings.ToString();
+            exposureSettingsNode.Nodes.Add(node);
+            node.EnsureVisible();
+            control.Quiet = false;
+        }
 
         TreeNode root;
         TreeNode camerasNode;
@@ -75,27 +119,6 @@ namespace MFT
             testsNode = root.Nodes.Add("Tests");
 
             root.Expand();
-        }
-
-        void UpdateFormFromWorkspace()
-        {
-            InitTreeView();
-
-            // spectrometer
-            if (workspace.Spectrometer != null)
-            {
-                spectrometerNode.Tag = workspace.Spectrometer;
-                spectrometerNode.Text = workspace.Spectrometer.GetDeviceDescription();
-            }
-        }
-
-        void UpdateWorkspaceFromForm()
-        {
-            workspace.Clear();
-
-            // spectrometer
-            if (spectrometerNode.Tag != null)
-                workspace.Spectrometer = (ISpectrometer)spectrometerNode.Tag;
         }
 
         TabPage AddTabpage(string name, Control control)
@@ -191,16 +214,8 @@ namespace MFT
 
         private void CreateExposureSettings_Click(object sender, EventArgs e)
         {
-            var settings = new ExposureSettings();
-            WorkspaceItem.Register(settings);
-            var control = new ExposureSettingsControl();
-            control.Settings = settings;
-            var tabpage = AddTabpage(settings.ToString(), control);
-            var node = new TreeNode();
-            node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
-            node.Text = settings.ToString();
-            exposureSettingsNode.Nodes.Add(node);
-            node.EnsureVisible();
+            Messenger.SendMessage(
+                this, new Message(Message.Types.EXPOSURE_SETTINGS_CREATE, null));
         }
 
         #endregion

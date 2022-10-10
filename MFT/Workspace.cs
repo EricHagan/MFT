@@ -14,22 +14,22 @@ namespace MFT
         }
 
         public ISpectrometer Spectrometer { get; set; }
-        public Dictionary<int, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
+        public Dictionary<long, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
         public int CurrentSpectrumProcessorChain { get; set; }
-        public Dictionary<int, TestCollection> TestCollections { get; set; }
-        public Dictionary<int, ExposureSettings> ExposureSettings { get; set; }
+        public Dictionary<long, TestCollection> TestCollections { get; set; }
+        public Dictionary<long, ExposureSettings> ExposureSettings { get; set; }
         public ExposureSettings DefaultExposureSettings { get; set; }
         public int CurrentExposureSettings { get; set; }
 
         public void Clear()
         {
             Spectrometer = null;
-            SpectrumProcessorChains = new Dictionary<int, SpectrumProcessorChain>();
-            CurrentSpectrumProcessorChain = -1;
-            TestCollections = new Dictionary<int, TestCollection>();
-            ExposureSettings = new Dictionary<int, ExposureSettings>();
+            SpectrumProcessorChains = new Dictionary<long, SpectrumProcessorChain>();
+            CurrentSpectrumProcessorChain = 0;
+            TestCollections = new Dictionary<long, TestCollection>();
+            ExposureSettings = new Dictionary<long, ExposureSettings>();
             DefaultExposureSettings = new ExposureSettings();
-            CurrentExposureSettings = -1;
+            CurrentExposureSettings = 0;
         }
     }
 }

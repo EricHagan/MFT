@@ -14,6 +14,7 @@ namespace MFT
         [STAThread]
         static void Main()
         {
+            var workspaceManager = WorkspaceManager.GetWorkspaceManager();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainDialog());

@@ -13,7 +13,16 @@
         }
 
         public ExposureSettings()
-            : this(10, 50, 100, false, "") { }
+            : this(10, 50, 100, false, "", 0) { }
+
+        public ExposureSettings(ExposureSettings source)
+            : base(source.Name, 0)
+        {
+            Averaging = source.Averaging;
+            IntegrationTimeMs = source.IntegrationTimeMs;
+            DwellTimeMs = source.DwellTimeMs;
+            Normalized = source.Normalized;
+        }
 
         public int Averaging { get; private set; }
         public int IntegrationTimeMs { get; private set; }

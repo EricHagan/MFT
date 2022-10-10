@@ -17,6 +17,8 @@ namespace MFT
             InitializeComponent();
         }
 
+        public bool Quiet { get; set; }
+
         long settingsHandle { get; set; }
 
         public ExposureSettings Settings
@@ -40,6 +42,37 @@ namespace MFT
                 nameTextBox.Text = value.Name;
                 settingsHandle = value.Handle;
             }
+        }
+
+        void OnSettingsChanged()
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, new Message(Message.Types.EXPOSURE_SETTINGS_UPDATED, Settings));
+        }
+
+        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            OnSettingsChanged();
+        }
+
+        private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            OnSettingsChanged();
+        }
+
+        private void integrationTimeMsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            OnSettingsChanged();
+        }
+
+        private void dwellTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            OnSettingsChanged();
+        }
+
+        private void normalizedCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            OnSettingsChanged();
         }
     }
 }
