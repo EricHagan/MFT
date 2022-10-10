@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MFT.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -21,12 +22,23 @@ namespace MFT
         {
             switch (msg.Type)
             {
+                case Message.Types.ERROR:
+                    OnError(msg.Object as string);
+                    break;
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
                     break;
+                case Message.Types.SPECTROMETER_UPDATED:
+                    UpdateSpectrometer(sender, msg.Object as ISpectrometer);
+                    break;
             }
+        }
+
+        void OnError(string msg)
+        {
+            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         void UpdateExposureSettings(object sender, ExposureSettings settings)
@@ -67,6 +79,47 @@ namespace MFT
                 exposureSettingsNode.Nodes.Add(node);
                 node.EnsureVisible();
                 control.Quiet = false;
+            }
+        }
+
+        void UpdateSpectrometer(object sender, ISpectrometer spectrometer)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { UpdateSpectrometer(sender, spectrometer); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                // if it's in the tree, update it:
+                if (spectrometerNode != null)
+                {
+                    var h = spectrometerNode.Tag as ItemHolder;
+                    var t = h.Page;
+                    var c = t.Controls[0] as SpectrometerControl;
+                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
+                    h.Object = spectrometer;
+                    c.SetSpectrometer(spectrometer);
+                }
+                // if not, add it to the tree:
+                else
+                {
+                    var tabPage = new TabPage(spectrometer.GetDeviceDescription());
+                    var control = new SpectrometerControl(spectrometer);
+                    control.Dock = DockStyle.Fill;
+                    tabPage.Controls.Add(control);
+                    tabControl1.TabPages.Add(tabPage);
+                    tabControl1.SelectedIndex = tabControl1.TabCount - 1;
+                    var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
+                    if (spectrometerNode == null)
+                    {
+                        spectrometerNode = new TreeNode();
+                        spectrometerTitleNode.Nodes.Add(spectrometerNode);
+                    }
+                    spectrometerNode.Tag = item;
+                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
+                    spectrometerNode.EnsureVisible();
+                }
             }
         }
 
@@ -148,41 +201,12 @@ namespace MFT
         private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             // assumes item clicked is a connect instruction
-            ISpectrometer spectrometer;
             var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
-            try
-            {
-                spectrometer = SpectrometerFactory.GetSpectrometer(selected.Type);
-            }
-            catch (NotImplementedException)
-            {
-                MessageBox.Show(this, $"Internal error: unknown device", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string ErrMsg;
-            if (!spectrometer.Connect(out ErrMsg))
-                MessageBox.Show(this, $"Problem connecting: {ErrMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            else
-            {
-                var tabPage = new TabPage(spectrometer.GetDeviceDescription());
-                var control = new SpectrometerControl(spectrometer);
-                control.Dock = DockStyle.Fill;
-                tabPage.Controls.Add(control);
-                tabControl1.TabPages.Add(tabPage);
-                tabControl1.SelectedIndex = tabControl1.TabCount - 1;
-                var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
-                if (spectrometerNode == null)
-                {
-                    spectrometerNode = new TreeNode();
-                    spectrometerTitleNode.Nodes.Add(spectrometerNode);
-                }
-                spectrometerNode.Tag = item;
-                spectrometerNode.Text = spectrometer.GetDeviceDescription();
-            }
-            spectrometerNode.EnsureVisible();
+            Messenger.SendMessage(this, new Message(
+                Message.Types.SPECTROMETER_CONNECT, selected.Type));
         }
 
+        // todo: refactor with Messages:
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             var camera = (ICamera)e.ClickedItem.Tag;

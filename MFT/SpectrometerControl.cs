@@ -13,7 +13,14 @@ namespace MFT
             UpdateFromSpectrometer();
         }
 
+        public void SetSpectrometer(ISpectrometer s)
+        {
+            spectrometer = s;
+        }
+
         ISpectrometer spectrometer;
+
+        // todo: rethink this with Messages:
         public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
         ExposureSettings ExposureControls

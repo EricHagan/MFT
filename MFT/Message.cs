@@ -15,9 +15,12 @@ namespace MFT
 
         public enum Types
         {
+            ERROR,
             EXPOSURE_SETTINGS_CREATE,
             EXPOSURE_SETTINGS_UPDATED,
-            EXPOSURE_SETTINGS_SET_DEFAULT
+            EXPOSURE_SETTINGS_SET_DEFAULT,
+            SPECTROMETER_CONNECT,
+            SPECTROMETER_UPDATED,
         }
     }
 }
