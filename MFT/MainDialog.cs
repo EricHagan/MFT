@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MFT.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace MFT
 {
@@ -21,6 +23,9 @@ namespace MFT
         {
             switch (msg.Type)
             {
+                case Message.Types.CAMERA_UPDATED:
+                    OnCameraUpdated(sender, msg.Object as ICamera);
+                    break;
                 case Message.Types.ERROR:
                     OnError(msg.Object as string);
                     break;
@@ -33,6 +38,41 @@ namespace MFT
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
+            }
+        }
+
+        void OnCameraUpdated(object sender, ICamera camera)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { OnCameraUpdated(sender, camera); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                foreach (var node in camerasNode.Nodes)
+                {
+                    var treeNode = (TreeNode)node;
+                    var itemHolder = treeNode.Tag as ItemHolder;
+                    var existingCamera = itemHolder.Object as ICamera;
+                    if (existingCamera == camera)
+                    {
+                        treeNode.EnsureVisible();
+                        return;
+                    }
+                }
+
+                string name = camera.Name;
+                var camNode = new TreeNode();
+
+                var camDialog = new CameraControl();
+                camDialog.SetCamera(camera);
+                var tabpage = AddTabpage(name, camDialog);
+
+                camNode.Tag = new ItemHolder(ItemHolder.ItemTypes.CAMERA, tabpage, camera);
+                camNode.Text = name;
+                camerasNode.Nodes.Add(camNode);
+                camNode.EnsureVisible();
             }
         }
 
@@ -240,38 +280,8 @@ namespace MFT
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             var camera = (ICamera)e.ClickedItem.Tag;
-            string name = camera.Name;
-
-            // todo: figure out how to synchronize AForge camera object with physical camera
-            // so we can tell if physical camera is running
-            if (camera.IsRunning)
-            {
-                MessageBox.Show(this, $"'{name}' appears to be running in another application.",
-                    "Problem adding camera", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            foreach (var node in camerasNode.Nodes)
-            {
-                var treeNode = (TreeNode)node;
-                var itemHolder = treeNode.Tag as ItemHolder;
-                var existingCamera = itemHolder.Object as ICamera;
-                if (existingCamera == camera)
-                    return;
-            }
-
-            var camNode = new TreeNode();
-
-            var camDialog = new CameraControl();
-            camDialog.SetCamera(camera);
-            var tabpage = AddTabpage(name, camDialog);
-
-            camNode.Tag = new ItemHolder(ItemHolder.ItemTypes.CAMERA, tabpage, camera);
-            camNode.Text = name;
-            camerasNode.Nodes.Add(camNode);
-            camNode.EnsureVisible();
+            Messenger.SendMessage(this, Message.Types.CAMERA_CONNECT, camera);
         }
-
 
         private void CreateExposureSettings_Click(object sender, EventArgs e)
         {
@@ -284,9 +294,7 @@ namespace MFT
             // make sure that we select the node we right-click, so context menus know
             // what node opened them
             if (e.Button == MouseButtons.Right)
-            {
                 workspaceTreeView.SelectedNode = e.Node;
-            }
         }
 
         private void setAsDefaultExposureSettingsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace MFT
 {
@@ -24,6 +25,9 @@ namespace MFT
         {
             switch (msg.Type)
             {
+                case Message.Types.CAMERA_CONNECT:
+                    ConnectCamera(msg.Object as ICamera);
+                    break;
                 case Message.Types.EXPOSURE_SETTINGS_CREATE:
                     CreateExposureSettings();
                     break;
@@ -37,6 +41,29 @@ namespace MFT
                     ConnectSpectrometer((SpectrometerTypes)msg.Object);
                     break;
             }
+        }
+
+        void ConnectCamera(ICamera camera)
+        {
+            string name = camera.Name;
+
+            if (workspace.Cameras.Contains(camera))
+            {
+                Messenger.SendMessage(this, Message.Types.CAMERA_UPDATED, camera);
+                return;
+            }
+
+            // todo: figure out how to synchronize AForge camera object with physical camera
+            // so we can tell if physical camera is running
+            if (camera.IsRunning)
+            {
+                Messenger.SendMessage(this, Message.Types.ERROR,
+                    $"'{name}' appears to be running in another application.");
+                return;
+            }
+
+            workspace.Cameras.Add(camera);
+            Messenger.SendMessage(this, Message.Types.CAMERA_UPDATED, camera);
         }
 
         void CreateExposureSettings()

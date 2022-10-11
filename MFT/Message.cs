@@ -15,6 +15,8 @@ namespace MFT
 
         public enum Types
         {
+            CAMERA_CONNECT,
+            CAMERA_UPDATED,
             ERROR,
             EXPOSURE_SETTINGS_CREATE,
             EXPOSURE_SETTINGS_UPDATED,

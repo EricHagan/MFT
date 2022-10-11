@@ -7,16 +7,16 @@ namespace MFT
     {
         public AForgeCamera(VideoCaptureDevice camera, string name)
         {
-            Camera = camera;
-            Camera.NewFrame += InnerCameraNewFrameHandler;
+            this.camera = camera;
+            this.camera.NewFrame += InnerCameraNewFrameHandler;
             Name = name;
         }
 
         ~AForgeCamera()
         {
             Stop();
-            Camera.NewFrame -= InnerCameraNewFrameHandler;
-            Camera = null;
+            camera.NewFrame -= InnerCameraNewFrameHandler;
+            camera = null;
         }
 
         public string Name { get; private set; }
@@ -25,22 +25,22 @@ namespace MFT
 
         public void Start()
         {
-            if (!Camera.IsRunning)
-                Camera.Start();
+            if (!camera.IsRunning)
+                camera.Start();
         }
 
         public void Stop()
         {
-            if (Camera.IsRunning)
+            if (camera.IsRunning)
             {
-                Camera.SignalToStop();
-                Camera.WaitForStop();
+                camera.SignalToStop();
+                camera.WaitForStop();
             }
         }
 
-        public bool IsRunning => Camera.IsRunning;
+        public bool IsRunning => camera.IsRunning;
 
-        VideoCaptureDevice Camera { get; set; }
+        VideoCaptureDevice camera { get; set; }
 
         void InnerCameraNewFrameHandler(object sender, AForge.Video.NewFrameEventArgs e)
         {

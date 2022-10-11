@@ -9,7 +9,5 @@
         }
         public string Name { get; private set; }
         public long Handle { get; internal set; }
-
-
     }
 }

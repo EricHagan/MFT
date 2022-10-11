@@ -13,6 +13,7 @@ namespace MFT
             Clear();
         }
 
+        public HashSet<ICamera> Cameras { get; set; }
         public ISpectrometer Spectrometer { get; set; }
         public Dictionary<long, SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
         public int CurrentSpectrumProcessorChain { get; set; }
@@ -22,6 +23,7 @@ namespace MFT
 
         public void Clear()
         {
+            Cameras = new HashSet<ICamera>();
             Spectrometer = null;
             SpectrumProcessorChains = new Dictionary<long, SpectrumProcessorChain>();
             CurrentSpectrumProcessorChain = 0;
