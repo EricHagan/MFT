@@ -1,6 +1,4 @@
-﻿using RgbDriverKit;
-using System.Windows.Forms;
-using System;
+﻿using System;
 
 namespace MFT
 {
@@ -29,8 +27,11 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_CREATE:
                     CreateExposureSettings();
                     break;
+                case Message.Types.EXPOSURE_SETTINGS_UPDATED:
+                    UpdateExposureSettings(sender, msg.Object as ExposureSettings);
+                    break;
                 case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
-                    // todo
+                    SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
                 case Message.Types.SPECTROMETER_CONNECT:
                     ConnectSpectrometer((SpectrometerTypes)msg.Object);
@@ -45,6 +46,23 @@ namespace MFT
             workspace.ExposureSettings.Add(s.Handle, s);
             Messenger.SendMessage(this, new Message(
                 Message.Types.EXPOSURE_SETTINGS_UPDATED, s));
+        }
+
+        void UpdateExposureSettings(object sender, ExposureSettings settings)
+        {
+            if (sender == this)
+                return;
+            if (workspace.ExposureSettings.ContainsKey(settings.Handle))
+                workspace.ExposureSettings[settings.Handle] = settings;
+            if (workspace.DefaultExposureSettings.Handle == settings.Handle)
+                workspace.DefaultExposureSettings = settings;
+        }
+
+        void SetDefaultExposureSettings(ExposureSettings settings)
+        {
+            workspace.DefaultExposureSettings = settings;
+            Messenger.SendMessage(this, new Message(
+                Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET, settings));
         }
 
         void ConnectSpectrometer(SpectrometerTypes type)

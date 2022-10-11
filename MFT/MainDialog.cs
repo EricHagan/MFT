@@ -27,7 +27,8 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
                     break;
-                case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
+                case Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET:
+                    SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
@@ -75,9 +76,39 @@ namespace MFT
                 var node = new TreeNode();
                 node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, tabpage, settings);
                 node.Text = settings.ToString();
+                node.ContextMenuStrip = exposureSettingsItemContextMenuStrip;
                 exposureSettingsNode.Nodes.Add(node);
                 node.EnsureVisible();
                 control.Quiet = false;
+            }
+        }
+
+        void SetDefaultExposureSettings(ExposureSettings settings)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { SetDefaultExposureSettings(settings); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                long handle = settings.Handle;
+                bool success = false;
+                foreach (var o in exposureSettingsNode.Nodes)
+                {
+                    var t = o as TreeNode;
+                    var h = t.Tag as ItemHolder;
+                    var s = h.Object as ExposureSettings;
+                    t.NodeFont = new Font(workspaceTreeView.Font, FontStyle.Regular);
+                    if (s.Handle == handle)
+                    {
+                        t.NodeFont = new Font(workspaceTreeView.Font, FontStyle.Underline);
+                        success = true;
+                    }
+                }
+                if (!success)
+                    Messenger.SendMessage(this, new Message(Message.Types.ERROR,
+                        "Internal error. Can't find ExposureSettings in view."));
             }
         }
 
@@ -164,12 +195,12 @@ namespace MFT
 
             // exposure settings
             exposureSettingsNode = root.Nodes.Add("Exposure Settings");
-            exposureSettingsNode.ContextMenuStrip = exposureSettingsContextMenuStrip;
-            exposureSettingsContextMenuStrip.Items.Clear();
+            exposureSettingsNode.ContextMenuStrip = exposureSettingsTitleContextMenuStrip;
+            exposureSettingsTitleContextMenuStrip.Items.Clear();
             var createExposureSettings = new ToolStripMenuItem();
             createExposureSettings.Text = "Create Exposure Settings";
             createExposureSettings.Click += CreateExposureSettings_Click;
-            exposureSettingsContextMenuStrip.Items.Add(createExposureSettings);
+            exposureSettingsTitleContextMenuStrip.Items.Add(createExposureSettings);
 
             // spectrum processor chains
             spectrumProcessorChainsNode = root.Nodes.Add("Spectrum Processor Chains");
@@ -248,6 +279,25 @@ namespace MFT
                 this, new Message(Message.Types.EXPOSURE_SETTINGS_CREATE, null));
         }
 
+        private void workspaceTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            // make sure that we select the node we right-click, so context menus know
+            // what node opened them
+            if (e.Button == MouseButtons.Right)
+            {
+                workspaceTreeView.SelectedNode = e.Node;
+            }
+        }
+
+        private void setAsDefaultExposureSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var n = workspaceTreeView.SelectedNode;
+            var h = n.Tag as ItemHolder;
+            var settings = h.Object as ExposureSettings;
+            Messenger.SendMessage(
+                this, new Message(Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings));
+        }
+
         #endregion
 
         private void workspaceTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -282,5 +332,7 @@ namespace MFT
                 camera.Stop();
             }
         }
+
+
     }
 }

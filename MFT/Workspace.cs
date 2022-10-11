@@ -19,7 +19,6 @@ namespace MFT
         public Dictionary<long, TestCollection> TestCollections { get; set; }
         public Dictionary<long, ExposureSettings> ExposureSettings { get; set; }
         public ExposureSettings DefaultExposureSettings { get; set; }
-        public int CurrentExposureSettings { get; set; }
 
         public void Clear()
         {
@@ -29,7 +28,6 @@ namespace MFT
             TestCollections = new Dictionary<long, TestCollection>();
             ExposureSettings = new Dictionary<long, ExposureSettings>();
             DefaultExposureSettings = new ExposureSettings();
-            CurrentExposureSettings = 0;
         }
     }
 }
