@@ -1,8 +1,6 @@
-﻿using MFT.Properties;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace MFT
 {
@@ -276,7 +274,6 @@ namespace MFT
                 Message.Types.SPECTROMETER_CONNECT, selected.Type));
         }
 
-        // todo: refactor with Messages:
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             var camera = (ICamera)e.ClickedItem.Tag;
