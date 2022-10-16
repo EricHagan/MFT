@@ -30,7 +30,7 @@ namespace MFT
                 while (!PleaseStop)
                 {
                     string errMsg;
-                    var exposure = Exposure.GetExposure(Spectrometer, Settings, out errMsg);
+                    var exposure = Spectrometer.CollectSpectrum(Settings, out errMsg);
                     if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MFT.Properties;
+using RgbDriverKit;
+using System;
 using System.Collections.Generic;
 
 namespace MFT
@@ -19,7 +21,7 @@ namespace MFT
             TriedToGetDarkReference = true;
             if (settings.Normalized == true)
                 throw new Exception("settings.Normalized must be false for a reference exposure.");
-            DarkReference = Exposure.GetExposure(this, settings, out ErrMsg);
+            DarkReference = CollectSpectrum(settings, out ErrMsg);
             UpdateNormalizeAllowed();
             if (DarkReference != null)
             {
@@ -34,7 +36,7 @@ namespace MFT
         {
             if (settings.Normalized == true)
                 throw new Exception("settings.Normalized must be false for a reference exposure.");
-            WhiteReference = Exposure.GetExposure(this, settings, out ErrMsg);
+            WhiteReference = CollectSpectrum(settings, out ErrMsg);
             UpdateNormalizeAllowed();
             if (WhiteReference != null)
             {

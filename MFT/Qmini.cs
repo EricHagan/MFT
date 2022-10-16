@@ -72,7 +72,12 @@ namespace MFT
                 }
                 var Spectrum = spectrometer.GetSpectrum().ToList();
                 var TimeStamp = GetTimeStamp();
-                return new Exposure(this, Spectrum.Select(x => (double)x), TimeStamp, false);
+                var exposure = new Exposure(this, Spectrum.Select(x => (double)x), TimeStamp, false);
+                if (settings.Normalized)
+                    exposure = exposure.GetNormalized();
+                exposure.IntegrationTimeSeconds = settings.IntegrationTimeMs / 1000;
+                exposure.AveragingNum = settings.Averaging;
+                return exposure;
             }
         }
 

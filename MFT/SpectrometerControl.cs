@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MFT.Properties;
+using System;
 using System.Windows.Forms;
 
 namespace MFT
@@ -55,7 +56,7 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = Exposure.GetExposure(spectrometer, ExposureControls, out string errMsg);
+            var exposure = spectrometer.CollectSpectrum(ExposureControls, out string errMsg);
             if (exposure != null)
             {
                 var singleGraph = new SingleSpectrumGraph();

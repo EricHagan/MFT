@@ -6,28 +6,6 @@ namespace MFT
 {
     public class Exposure
     {
-        public static Exposure GetExposure(ISpectrometer spectrometer,
-            ExposureSettings settings, out string ErrMsg)
-        {
-            if (spectrometer == null)
-            {
-                ErrMsg = "Spectrometer not connected.";
-                return null;
-            }
-            var exposure = spectrometer.CollectSpectrum(settings, out ErrMsg);
-            if (exposure == null)
-                return null;
-            else
-            {
-                if (settings.Normalized)
-                    exposure = exposure.GetNormalized();
-                exposure.IntegrationTimeSeconds = settings.IntegrationTimeMs/1000;
-                exposure.AveragingNum = settings.Averaging;
-                return exposure;
-            }
-        }
-
-        // constructor:
         public Exposure(ISpectrometer s, IEnumerable<double> spectrum, DateTime timeStamp, bool normalized)
         {
             Spectrometer = s;
