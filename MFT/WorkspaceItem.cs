@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    public class WorkspaceItem
+    public class WorkspaceItem : IWorkspaceItem
     {
         public WorkspaceItem(string name, long handle)
         {

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Xml.Linq;
 
 namespace MFT
 {
@@ -26,6 +29,9 @@ namespace MFT
                     break;
                 case Message.Types.ERROR:
                     OnError(msg.Object as string);
+                    break;
+                case Message.Types.EXPOSURE_SETTINGS_CREATED:
+                    CreateExposureSettings(sender, msg.Object as ExposureSettings);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
@@ -79,34 +85,19 @@ namespace MFT
             MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        void UpdateExposureSettings(object sender, ExposureSettings settings)
+        void CreateExposureSettings(object sender, ExposureSettings settings)
         {
             if (InvokeRequired)
             {
-                Action safeUpdate = delegate { UpdateExposureSettings(sender, settings); };
+                Action safeUpdate = delegate { CreateExposureSettings(sender, settings); };
                 Invoke(safeUpdate);
             }
             else
             {
                 long handle = settings.Handle;
-                // if it's in the tree, update it:
-                foreach (var o in exposureSettingsNode.Nodes)
-                {
-                    var t = o as TreeNode;
-                    var h = t.Tag as ItemHolder;
-                    var s = h.Object as ExposureSettings;
-                    if (s.Handle == handle)
-                    {
-                        h.Object = settings;
-                        t.Text = settings.ToString();
-                        h.Page.Text = settings.ToString();
-                        var c = h.Page.Controls[0] as ExposureSettingsControl;
-                        if (sender != c)
-                            c.Settings = settings;
-                        return;
-                    }
-                }
-                // if not, add it to the tree:
+                var t = FindTreeNode(workspaceTreeView.TopNode, handle);
+                if (t != null)
+                    throw new Exception($"Internal error. There's already an ExposureSettings object with handle {handle} in the tree.");
                 var control = new ExposureSettingsControl();
                 control.Quiet = true; // otherwise stack overflow
                 control.Settings = settings;
@@ -118,6 +109,39 @@ namespace MFT
                 exposureSettingsNode.Nodes.Add(node);
                 node.EnsureVisible();
                 control.Quiet = false;
+            }
+        }
+
+
+        void UpdateExposureSettings(object sender, ExposureSettings settings)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { UpdateExposureSettings(sender, settings); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                long handle = settings.Handle;
+                var t = FindTreeNode(workspaceTreeView.TopNode, handle);
+                if (t != null)
+                {
+                    var h = t.Tag as ItemHolder;
+                    var s = h.Object as ExposureSettings;
+                    if (s.Handle == handle)
+                    {
+                        h.Object = settings;
+                        t.Text = settings.ToString();
+                        if (h.Page != null)
+                        {
+                            h.Page.Text = settings.ToString();
+                            var c = h.Page.Controls[0] as ExposureSettingsControl;
+                            if (sender != c)
+                                c.Settings = settings;
+                        }
+                        return;
+                    }
+                }
             }
         }
 
@@ -172,6 +196,12 @@ namespace MFT
                 // if not, add it to the tree:
                 else
                 {
+                    if (spectrometerNode == null)
+                    {
+                        spectrometerNode = new TreeNode();
+                        spectrometerTitleNode.Nodes.Add(spectrometerNode);
+                    }
+
                     var tabPage = new TabPage(spectrometer.GetDeviceDescription());
                     var control = new SpectrometerControl(spectrometer);
                     control.Dock = DockStyle.Fill;
@@ -179,14 +209,17 @@ namespace MFT
                     tabControl1.TabPages.Add(tabPage);
                     tabControl1.SelectedIndex = tabControl1.TabCount - 1;
                     var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
-                    if (spectrometerNode == null)
-                    {
-                        spectrometerNode = new TreeNode();
-                        spectrometerTitleNode.Nodes.Add(spectrometerNode);
-                    }
+
                     spectrometerNode.Tag = item;
                     spectrometerNode.Text = spectrometer.GetDeviceDescription();
-                    spectrometerNode.EnsureVisible();
+
+                    var settingsNode = new TreeNode();
+                    spectrometerNode.Nodes.Add(settingsNode);
+                    var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, null, spectrometer.Settings);
+                    settingsNode.Tag = settingsItem;
+                    settingsNode.Text = spectrometer.Settings.ToString();
+
+                    settingsNode.EnsureVisible();
                 }
             }
         }
@@ -317,6 +350,8 @@ namespace MFT
                 var itemHolder = (ItemHolder)node.Tag;
                 if (itemHolder == null)
                     return;
+                if (itemHolder.Page == null)
+                    return;
                 switch (itemHolder.Type)
                 {
                     case ItemHolder.ItemTypes.CAMERA:
@@ -328,6 +363,33 @@ namespace MFT
             }
         }
 
+        List<TreeNode> FlattenTreeView(TreeNode topNode)
+        {
+            var nodes = new List<TreeNode>();
+            nodes.Add(topNode);
+            foreach (var node in topNode.Nodes)
+                nodes.AddRange(FlattenTreeView((TreeNode)node));
+            return nodes;
+        }
+
+        TreeNode FindTreeNode(TreeNode baseNode, long handle)
+        {
+            foreach (var node in FlattenTreeView(baseNode))
+            {
+                var itemHolder = (ItemHolder)node.Tag;
+                if (itemHolder != null)
+                {
+                    var o = itemHolder.Object as IWorkspaceItem;
+                    if (o != null)
+                    {
+                        if (o.Handle == handle)
+                            return node;
+                    }
+                }
+            }
+            return null;
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             foreach (TreeNode cameraNode in camerasNode.Nodes)
@@ -337,7 +399,5 @@ namespace MFT
                 camera.Stop();
             }
         }
-
-
     }
 }

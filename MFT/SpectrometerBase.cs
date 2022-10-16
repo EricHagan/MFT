@@ -9,6 +9,8 @@ namespace MFT
     {
         #region ISpectrometer
 
+        public ExposureSettings Settings { get; set; } = new ExposureSettings();
+
         public Exposure WhiteReference { get; set; }
         public Exposure DarkReference { get; set; }
 

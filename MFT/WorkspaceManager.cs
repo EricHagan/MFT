@@ -71,7 +71,7 @@ namespace MFT
             Register(s);
             workspace.ExposureSettings.Add(s.Handle, s);
             Messenger.SendMessage(this, new Message(
-                Message.Types.EXPOSURE_SETTINGS_UPDATED, s));
+                Message.Types.EXPOSURE_SETTINGS_CREATED, s));
         }
 
         void UpdateExposureSettings(object sender, ExposureSettings settings)
@@ -110,6 +110,8 @@ namespace MFT
                     Message.Types.ERROR, $"Problem connecting: {ErrMsg}"));
                 return;
             }
+            workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
+            Register(workspace.Spectrometer.Settings);
             Messenger.SendMessage(this, new Message(
                 Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer));
         }

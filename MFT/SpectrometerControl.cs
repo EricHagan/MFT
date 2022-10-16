@@ -9,7 +9,7 @@ namespace MFT
         public SpectrometerControl(ISpectrometer _spectrometer)
         {
             InitializeComponent();
-            spectrometer = _spectrometer;
+            SetSpectrometer(_spectrometer);
             spectrometer.SpectrometerChanged += HandleSpectrometerChanged;
             UpdateFromSpectrometer();
         }
@@ -17,6 +17,7 @@ namespace MFT
         public void SetSpectrometer(ISpectrometer s)
         {
             spectrometer = s;
+            ExposureControls = s.Settings;
         }
 
         ISpectrometer spectrometer;
@@ -24,7 +25,9 @@ namespace MFT
         // todo: rethink this with Messages:
         public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
-        ExposureSettings ExposureControls
+        string ExposureSettingsName = null;
+        long ExposureSettingsHandle = 0;
+        public ExposureSettings ExposureControls
         {
             get
             {
@@ -32,7 +35,18 @@ namespace MFT
                     (int)averagingNumericUpDown.Value,
                     (int)integrationTimeMsNumericUpDown.Value,
                     (int)dwellTimeNumericUpDown.Value,
-                    normalizedCheckBox.Checked);
+                    normalizedCheckBox.Checked,
+                    ExposureSettingsName,
+                    ExposureSettingsHandle);
+            }
+            internal set
+            {
+                averagingNumericUpDown.Value = value.Averaging;
+                integrationTimeMsNumericUpDown.Value = value.IntegrationTimeMs;
+                dwellTimeNumericUpDown.Value = value.DwellTimeMs;
+                normalizedCheckBox.Checked = value.Normalized;
+                ExposureSettingsName = value.Name;
+                ExposureSettingsHandle = value.Handle;
             }
         }
 
@@ -91,6 +105,7 @@ namespace MFT
 
         void RaiseSpectrometerControlsChangedEvent(object sender)
         {
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
             if (ControlsChanged == null)
                 return;
             ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()

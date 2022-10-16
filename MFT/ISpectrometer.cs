@@ -8,7 +8,8 @@ namespace MFT
         bool Connect(out string ErrMsg);
         SpectrometerTypes GetDeviceType();
         string GetDeviceDescription();
-        List<double> GetWavelengths();    
+        List<double> GetWavelengths();
+        ExposureSettings Settings { get; set; }
         Exposure CollectSpectrum(ExposureSettings Setttings, out string ErrMsg);
         bool CollectWhiteReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
         bool CollectDarkReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
