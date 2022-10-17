@@ -57,6 +57,7 @@
             this.camerasContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exposureSettingsItemContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setAsDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyToSpectrometerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -372,16 +373,24 @@
             // exposureSettingsItemContextMenuStrip
             // 
             this.exposureSettingsItemContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.applyToSpectrometerToolStripMenuItem,
             this.setAsDefaultToolStripMenuItem});
             this.exposureSettingsItemContextMenuStrip.Name = "exposureSettingsItemContextMenuStrip";
-            this.exposureSettingsItemContextMenuStrip.Size = new System.Drawing.Size(181, 48);
+            this.exposureSettingsItemContextMenuStrip.Size = new System.Drawing.Size(195, 70);
             // 
             // setAsDefaultToolStripMenuItem
             // 
             this.setAsDefaultToolStripMenuItem.Name = "setAsDefaultToolStripMenuItem";
-            this.setAsDefaultToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setAsDefaultToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.setAsDefaultToolStripMenuItem.Text = "Set As Default";
             this.setAsDefaultToolStripMenuItem.Click += new System.EventHandler(this.setAsDefaultExposureSettingsToolStripMenuItem_Click);
+            // 
+            // applyToSpectrometerToolStripMenuItem
+            // 
+            this.applyToSpectrometerToolStripMenuItem.Name = "applyToSpectrometerToolStripMenuItem";
+            this.applyToSpectrometerToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.applyToSpectrometerToolStripMenuItem.Text = "Apply To Spectrometer";
+            this.applyToSpectrometerToolStripMenuItem.Click += new System.EventHandler(this.applyToSpectrometerExposureSettingsToolStripMenuItem_Click);
             // 
             // MainDialog
             // 
@@ -458,6 +467,7 @@
         private System.Windows.Forms.ContextMenuStrip camerasContextMenuStrip;
         private System.Windows.Forms.ContextMenuStrip exposureSettingsItemContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem setAsDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyToSpectrometerToolStripMenuItem;
     }
 }
 

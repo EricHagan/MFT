@@ -33,6 +33,9 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
                     break;
+                case Message.Types.EXPOSURE_SETTINGS_APPLY:
+                    ApplyExposureSettingsToSpectrometer(msg.Object as ExposureSettings);
+                    break;
                 case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
                     SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
@@ -82,6 +85,19 @@ namespace MFT
                 workspace.ExposureSettings[settings.Handle] = settings;
             if (workspace.DefaultExposureSettings.Handle == settings.Handle)
                 workspace.DefaultExposureSettings = settings;
+        }
+
+        void ApplyExposureSettingsToSpectrometer(ExposureSettings settings)
+        {
+            if (workspace.Spectrometer == null)
+            {
+                Messenger.SendMessage(this, Message.Types.ERROR, "No spectrometer connected.");
+                return;
+            }
+            long oldHandle = workspace.Spectrometer.Settings.Handle;
+            workspace.Spectrometer.Settings = new ExposureSettings(settings);
+            workspace.Spectrometer.Settings.Handle = oldHandle;
+            Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer);
         }
 
         void SetDefaultExposureSettings(ExposureSettings settings)

@@ -336,6 +336,15 @@ namespace MFT
                 this, new Message(Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings));
         }
 
+
+        private void applyToSpectrometerExposureSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var n = workspaceTreeView.SelectedNode;
+            var h = n.Tag as ItemHolder;
+            var settings = h.Object as ExposureSettings;
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_APPLY, settings);
+        }
+
         #endregion
 
         private void workspaceTreeView_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -399,5 +408,6 @@ namespace MFT
                 camera.Stop();
             }
         }
+
     }
 }
