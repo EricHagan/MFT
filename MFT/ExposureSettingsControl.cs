@@ -74,5 +74,11 @@ namespace MFT
         {
             OnSettingsChanged();
         }
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_APPLY, Settings);
+        }
     }
 }

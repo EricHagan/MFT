@@ -37,6 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.applyButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dwellTimeNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).BeginInit();
@@ -173,10 +174,21 @@
             this.nameTextBox.TabIndex = 20;
             this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
             // 
+            // applyButton
+            // 
+            this.applyButton.Location = new System.Drawing.Point(19, 157);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(139, 23);
+            this.applyButton.TabIndex = 21;
+            this.applyButton.Text = "Apply to Spectrometer";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.applyButton_Click);
+            // 
             // ExposureSettingsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.applyButton);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
@@ -187,7 +199,7 @@
             this.Controls.Add(this.averagingNumericUpDown);
             this.Controls.Add(this.label2);
             this.Name = "ExposureSettingsControl";
-            this.Size = new System.Drawing.Size(288, 170);
+            this.Size = new System.Drawing.Size(288, 191);
             ((System.ComponentModel.ISupportInitialize)(this.dwellTimeNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.integrationTimeMsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.averagingNumericUpDown)).EndInit();
@@ -207,5 +219,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox nameTextBox;
+        private System.Windows.Forms.Button applyButton;
     }
 }
