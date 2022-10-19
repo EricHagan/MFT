@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MFT
@@ -47,7 +40,7 @@ namespace MFT
         void OnSettingsChanged()
         {
             if (!Quiet)
-                Messenger.SendMessage(this, new Message(Message.Types.EXPOSURE_SETTINGS_UPDATED, Settings));
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, Settings);
         }
 
         private void nameTextBox_TextChanged(object sender, EventArgs e)

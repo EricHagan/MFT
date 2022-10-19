@@ -73,8 +73,7 @@ namespace MFT
             var s = new ExposureSettings(workspace.DefaultExposureSettings);
             Register(s);
             workspace.ExposureSettings.Add(s.Handle, s);
-            Messenger.SendMessage(this, new Message(
-                Message.Types.EXPOSURE_SETTINGS_CREATED, s));
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATED, s);
         }
 
         void UpdateExposureSettings(object sender, ExposureSettings settings)
@@ -103,8 +102,7 @@ namespace MFT
         void SetDefaultExposureSettings(ExposureSettings settings)
         {
             workspace.DefaultExposureSettings = settings;
-            Messenger.SendMessage(this, new Message(
-                Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET, settings));
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET, settings);
         }
 
         void ConnectSpectrometer(SpectrometerTypes type)
@@ -115,21 +113,18 @@ namespace MFT
             }
             catch (NotImplementedException)
             {
-                Messenger.SendMessage(this, new Message(Message.Types.ERROR,
-                    $"Internal error: unknown device '{type}'"));
+                Messenger.SendMessage(this, Message.Types.ERROR, $"Internal error: unknown device '{type}'");
                 return;
             }
             string ErrMsg;
             if (!workspace.Spectrometer.Connect(out ErrMsg))
             {
-                Messenger.SendMessage(this, new Message(
-                    Message.Types.ERROR, $"Problem connecting: {ErrMsg}"));
+                Messenger.SendMessage(this, Message.Types.ERROR, $"Problem connecting: {ErrMsg}");
                 return;
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
             Register(workspace.Spectrometer.Settings);
-            Messenger.SendMessage(this, new Message(
-                Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer));
+            Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer);
         }
 
         long Register(WorkspaceItem item)

@@ -169,8 +169,8 @@ namespace MFT
                     }
                 }
                 if (!success)
-                    Messenger.SendMessage(this, new Message(Message.Types.ERROR,
-                        "Internal error. Can't find ExposureSettings in view."));
+                    Messenger.SendMessage(this, Message.Types.ERROR,
+                        "Internal error. Can't find ExposureSettings in view.");
             }
         }
 
@@ -303,8 +303,7 @@ namespace MFT
         {
             // assumes item clicked is a connect instruction
             var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
-            Messenger.SendMessage(this, new Message(
-                Message.Types.SPECTROMETER_CONNECT, selected.Type));
+            Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECT, selected.Type);
         }
 
         private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -315,8 +314,7 @@ namespace MFT
 
         private void CreateExposureSettings_Click(object sender, EventArgs e)
         {
-            Messenger.SendMessage(
-                this, new Message(Message.Types.EXPOSURE_SETTINGS_CREATE, null));
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, null);
         }
 
         private void workspaceTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -332,8 +330,7 @@ namespace MFT
             var n = workspaceTreeView.SelectedNode;
             var h = n.Tag as ItemHolder;
             var settings = h.Object as ExposureSettings;
-            Messenger.SendMessage(
-                this, new Message(Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings));
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings);
         }
 
 
