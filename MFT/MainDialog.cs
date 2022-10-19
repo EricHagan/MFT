@@ -183,15 +183,18 @@ namespace MFT
             }
             else
             {
+                TreeNode settingsNode;
+                TabPage tabPage;
                 // if it's in the tree, update it:
                 if (spectrometerNode != null)
                 {
                     var h = spectrometerNode.Tag as ItemHolder;
-                    var t = h.Page;
-                    var c = t.Controls[0] as SpectrometerControl;
+                    tabPage = h.Page;
+                    var c = tabPage.Controls[0] as SpectrometerControl;
                     spectrometerNode.Text = spectrometer.GetDeviceDescription();
                     h.Object = spectrometer;
                     c.SetSpectrometer(spectrometer);
+                    settingsNode = spectrometerNode.Nodes[0];
                 }
                 // if not, add it to the tree:
                 else
@@ -202,25 +205,24 @@ namespace MFT
                         spectrometerTitleNode.Nodes.Add(spectrometerNode);
                     }
 
-                    var tabPage = new TabPage(spectrometer.GetDeviceDescription());
+                    tabPage = new TabPage(spectrometer.GetDeviceDescription());
                     var control = new SpectrometerControl(spectrometer);
                     control.Dock = DockStyle.Fill;
                     tabPage.Controls.Add(control);
                     tabControl1.TabPages.Add(tabPage);
-                    tabControl1.SelectedIndex = tabControl1.TabCount - 1;
                     var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
 
                     spectrometerNode.Tag = item;
                     spectrometerNode.Text = spectrometer.GetDeviceDescription();
 
-                    var settingsNode = new TreeNode();
+                    settingsNode = new TreeNode();
                     spectrometerNode.Nodes.Add(settingsNode);
                     var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, null, spectrometer.Settings);
                     settingsNode.Tag = settingsItem;
                     settingsNode.Text = spectrometer.Settings.ToString();
-
-                    settingsNode.EnsureVisible();
                 }
+                settingsNode.EnsureVisible();
+                tabControl1.SelectTab(tabPage);
             }
         }
 
