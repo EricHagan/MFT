@@ -35,7 +35,7 @@ namespace MFT
                     (int)averagingNumericUpDown.Value,
                     (int)integrationTimeMsNumericUpDown.Value,
                     (int)dwellTimeNumericUpDown.Value,
-                    normalizedCheckBox.Checked,
+                    normalizedCheckBox.Enabled && normalizedCheckBox.Checked,
                     ExposureSettingsName,
                     ExposureSettingsHandle);
             }
@@ -59,13 +59,18 @@ namespace MFT
 
         void AllowNormalized()
         {
+            bool oldValue = normalizedCheckBox.Enabled;
             normalizedCheckBox.Enabled = true;
+            if (normalizedCheckBox.Enabled != oldValue)
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
         }
 
         void DisallowNormalized()
         {
-            normalizedCheckBox.Checked = false;
+            bool oldValue = normalizedCheckBox.Enabled;
             normalizedCheckBox.Enabled = false;
+            if (normalizedCheckBox.Enabled != oldValue)
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
         }
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
