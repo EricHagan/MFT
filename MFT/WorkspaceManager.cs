@@ -28,7 +28,7 @@ namespace MFT
                     ConnectCamera(msg.Object as ICamera);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_CREATE:
-                    CreateExposureSettings();
+                    CreateExposureSettings(msg.Object as ExposureSettings);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
@@ -68,9 +68,13 @@ namespace MFT
             Messenger.SendMessage(this, Message.Types.CAMERA_UPDATED, camera);
         }
 
-        void CreateExposureSettings()
+        void CreateExposureSettings(ExposureSettings settings)
         {
-            var s = new ExposureSettings(workspace.DefaultExposureSettings);
+            ExposureSettings s;
+            if (settings == null)
+                s = new ExposureSettings(workspace.DefaultExposureSettings);
+            else
+                s = settings;
             Register(s);
             workspace.ExposureSettings.Add(s.Handle, s);
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATED, s);

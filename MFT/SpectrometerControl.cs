@@ -50,6 +50,21 @@ namespace MFT
             }
         }
 
+        // same as ExposureControls, except doesn't care if normalized is allowed
+        ExposureSettings ExposureControlsRawNormalized
+        {
+            get
+            {
+                return new ExposureSettings(
+                    (int)averagingNumericUpDown.Value,
+                    (int)integrationTimeMsNumericUpDown.Value,
+                    (int)dwellTimeNumericUpDown.Value,
+                    normalizedCheckBox.Checked,
+                    ExposureSettingsName,
+                    ExposureSettingsHandle);
+            }
+        }
+
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
             averagingNumericUpDown.Value = 10;
@@ -192,6 +207,11 @@ namespace MFT
 
             showDarkRefButton.Enabled = spectrometer.DarkReference != null;
             showWhiteRefButton.Enabled = spectrometer.WhiteReference != null;
+        }
+
+        private void saveExposureSettingsButton_Click(object sender, EventArgs e)
+        {
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, ExposureControlsRawNormalized);
         }
     }
 }

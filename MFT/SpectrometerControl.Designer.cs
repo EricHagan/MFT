@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.showWhiteRefButton = new System.Windows.Forms.Button();
+            this.showDarkRefButton = new System.Windows.Forms.Button();
             this.whiteRefButton = new System.Windows.Forms.Button();
             this.darkRefButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,8 +42,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.showDarkRefButton = new System.Windows.Forms.Button();
-            this.showWhiteRefButton = new System.Windows.Forms.Button();
+            this.saveExposureSettingsButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -59,6 +60,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.saveExposureSettingsButton);
             this.splitContainer1.Panel2.Controls.Add(this.showWhiteRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.showDarkRefButton);
             this.splitContainer1.Panel2.Controls.Add(this.whiteRefButton);
@@ -72,9 +74,29 @@
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.averagingNumericUpDown);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Size = new System.Drawing.Size(1077, 633);
-            this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.Size = new System.Drawing.Size(1077, 658);
+            this.splitContainer1.SplitterDistance = 449;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // showWhiteRefButton
+            // 
+            this.showWhiteRefButton.Location = new System.Drawing.Point(313, 41);
+            this.showWhiteRefButton.Name = "showWhiteRefButton";
+            this.showWhiteRefButton.Size = new System.Drawing.Size(96, 23);
+            this.showWhiteRefButton.TabIndex = 15;
+            this.showWhiteRefButton.Text = "Show White Ref";
+            this.showWhiteRefButton.UseVisualStyleBackColor = true;
+            this.showWhiteRefButton.Click += new System.EventHandler(this.showWhiteRefButton_Click);
+            // 
+            // showDarkRefButton
+            // 
+            this.showDarkRefButton.Location = new System.Drawing.Point(313, 12);
+            this.showDarkRefButton.Name = "showDarkRefButton";
+            this.showDarkRefButton.Size = new System.Drawing.Size(96, 23);
+            this.showDarkRefButton.TabIndex = 14;
+            this.showDarkRefButton.Text = "Show Dark Ref";
+            this.showDarkRefButton.UseVisualStyleBackColor = true;
+            this.showDarkRefButton.Click += new System.EventHandler(this.showDarkRefButton_Click);
             // 
             // whiteRefButton
             // 
@@ -232,25 +254,15 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Integration time [ms]";
             // 
-            // showDarkRefButton
+            // saveExposureSettingsButton
             // 
-            this.showDarkRefButton.Location = new System.Drawing.Point(313, 12);
-            this.showDarkRefButton.Name = "showDarkRefButton";
-            this.showDarkRefButton.Size = new System.Drawing.Size(96, 23);
-            this.showDarkRefButton.TabIndex = 14;
-            this.showDarkRefButton.Text = "Show Dark Ref";
-            this.showDarkRefButton.UseVisualStyleBackColor = true;
-            this.showDarkRefButton.Click += new System.EventHandler(this.showDarkRefButton_Click);
-            // 
-            // showWhiteRefButton
-            // 
-            this.showWhiteRefButton.Location = new System.Drawing.Point(313, 41);
-            this.showWhiteRefButton.Name = "showWhiteRefButton";
-            this.showWhiteRefButton.Size = new System.Drawing.Size(96, 23);
-            this.showWhiteRefButton.TabIndex = 15;
-            this.showWhiteRefButton.Text = "Show White Ref";
-            this.showWhiteRefButton.UseVisualStyleBackColor = true;
-            this.showWhiteRefButton.Click += new System.EventHandler(this.showWhiteRefButton_Click);
+            this.saveExposureSettingsButton.Location = new System.Drawing.Point(15, 161);
+            this.saveExposureSettingsButton.Name = "saveExposureSettingsButton";
+            this.saveExposureSettingsButton.Size = new System.Drawing.Size(149, 23);
+            this.saveExposureSettingsButton.TabIndex = 16;
+            this.saveExposureSettingsButton.Text = "Save Exposure Settings";
+            this.saveExposureSettingsButton.UseVisualStyleBackColor = true;
+            this.saveExposureSettingsButton.Click += new System.EventHandler(this.saveExposureSettingsButton_Click);
             // 
             // SpectrometerControl
             // 
@@ -258,7 +270,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Name = "SpectrometerControl";
-            this.Size = new System.Drawing.Size(1077, 633);
+            this.Size = new System.Drawing.Size(1077, 658);
             this.Load += new System.EventHandler(this.SpectrometerDialog_Load);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -287,5 +299,6 @@
         private System.Windows.Forms.Button darkRefButton;
         private System.Windows.Forms.Button showDarkRefButton;
         private System.Windows.Forms.Button showWhiteRefButton;
+        private System.Windows.Forms.Button saveExposureSettingsButton;
     }
 }
