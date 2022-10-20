@@ -65,6 +65,7 @@ namespace MFT
             }
 
             workspace.Cameras.Add(camera);
+            camera.Start();
             Messenger.SendMessage(this, Message.Types.CAMERA_UPDATED, camera);
         }
 
