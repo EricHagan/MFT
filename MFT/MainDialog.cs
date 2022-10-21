@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using System.Xml.Linq;
 
 namespace MFT
 {
@@ -183,18 +181,33 @@ namespace MFT
             }
             else
             {
-                TreeNode settingsNode;
                 TabPage tabPage;
                 // if it's in the tree, update it:
                 if (spectrometerNode != null)
                 {
-                    var h = spectrometerNode.Tag as ItemHolder;
-                    tabPage = h.Page;
-                    var c = tabPage.Controls[0] as SpectrometerControl;
+                    var holder = spectrometerNode.Tag as ItemHolder;
+                    tabPage = holder.Page;
+                    var control = tabPage.Controls[0] as SpectrometerControl;
                     spectrometerNode.Text = spectrometer.GetDeviceDescription();
-                    h.Object = spectrometer;
-                    c.SetSpectrometer(spectrometer);
-                    settingsNode = spectrometerNode.Nodes[0];
+                    holder.Object = spectrometer;
+                    control.SetSpectrometer(spectrometer);
+
+                    if (spectrometer.DarkReference != null)
+                    {
+                        if (darkRefNode == null)
+                        {
+                            darkRefNode = new TreeNode("Dark Reference");
+                            var darkControl = new SingleSpectrumGraph();
+                            darkControl.Exposure = spectrometer.DarkReference;
+                            darkControl.Dock = DockStyle.Fill;
+                            var darkTab = new TabPage("Dark Reference");
+                            darkTab.Controls.Add(darkControl);
+                            tabControl1.TabPages.Add(darkTab);
+                            var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                            darkRefNode.Tag = darkHolder;
+                            spectrometerNode.Nodes.Add(darkRefNode);
+                        }
+                    }
                 }
                 // if not, add it to the tree:
                 else
@@ -215,13 +228,27 @@ namespace MFT
                     spectrometerNode.Tag = item;
                     spectrometerNode.Text = spectrometer.GetDeviceDescription();
 
-                    settingsNode = new TreeNode();
-                    spectrometerNode.Nodes.Add(settingsNode);
+                    spectrometerSettingsNode = new TreeNode();
+                    spectrometerNode.Nodes.Add(spectrometerSettingsNode);
                     var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, null, spectrometer.Settings);
-                    settingsNode.Tag = settingsItem;
-                    settingsNode.Text = spectrometer.Settings.ToString();
+                    spectrometerSettingsNode.Tag = settingsItem;
+                    spectrometerSettingsNode.Text = spectrometer.Settings.ToString();
+
+                    if (spectrometer.DarkReference != null)
+                    {
+                        darkRefNode = new TreeNode("Dark Reference");
+                        var darkControl = new SingleSpectrumGraph();
+                        darkControl.Exposure = spectrometer.DarkReference;
+                        darkControl.Dock = DockStyle.Fill;
+                        var darkTab = new TabPage("Dark Reference");
+                        darkTab.Controls.Add(darkControl);
+                        tabControl1.TabPages.Add(darkTab);
+                        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                        darkRefNode.Tag = darkHolder;
+                        spectrometerNode.Nodes.Add(darkRefNode);
+                    }
                 }
-                settingsNode.EnsureVisible();
+                spectrometerSettingsNode.EnsureVisible();
                 tabControl1.SelectTab(tabPage);
             }
         }
@@ -230,6 +257,9 @@ namespace MFT
         TreeNode camerasNode;
         TreeNode spectrometerTitleNode;
         TreeNode spectrometerNode;
+        TreeNode spectrometerSettingsNode;
+        TreeNode darkRefNode;
+        TreeNode whiteRefNode;
         TreeNode exposureSettingsNode;
         TreeNode spectrumProcessorChainsNode;
         TreeNode testsNode;
