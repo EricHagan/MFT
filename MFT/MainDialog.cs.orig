@@ -120,6 +120,8 @@ namespace MFT
             }
             else
             {
+<<<<<<< HEAD
+                //TreeNode settingsNode;
                 TabPage tabPage;
                 // if it's in the tree, update it:
                 //if (spectrometerNode != null)
@@ -131,24 +133,37 @@ namespace MFT
                 //    h.Object = spectrometer;
                 //    c.SetSpectrometer(spectrometer);
                 //    settingsNode = spectrometerNode.Nodes[0];
-                
-                    //if (spectrometer.DarkReference != null)
-                    //{
-                    //    if (darkRefNode == null)
-                    //    {
-                    //        darkRefNode = new TreeNode("Dark Reference");
-                    //        var darkControl = new SingleSpectrumGraph();
-                    //        darkControl.Exposure = spectrometer.DarkReference;
-                    //        darkControl.Dock = DockStyle.Fill;
-                    //        var darkTab = new TabPage("Dark Reference");
-                    //        darkTab.Controls.Add(darkControl);
-                    //        tabControl1.TabPages.Add(darkTab);
-                    //        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
-                    //        darkRefNode.Tag = darkHolder;
-                    //        spectrometerNode.Nodes.Add(darkRefNode);
-                    //    }
-                    //}
                 //}
+=======
+                TabPage tabPage;
+                // if it's in the tree, update it:
+                if (spectrometerNode != null)
+                {
+                    var holder = spectrometerNode.Tag as ItemHolder;
+                    tabPage = holder.Page;
+                    var control = tabPage.Controls[0] as SpectrometerControl;
+                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
+                    holder.Object = spectrometer;
+                    control.SetSpectrometer(spectrometer);
+
+                    if (spectrometer.DarkReference != null)
+                    {
+                        if (darkRefNode == null)
+                        {
+                            darkRefNode = new TreeNode("Dark Reference");
+                            var darkControl = new SingleSpectrumGraph();
+                            darkControl.Exposure = spectrometer.DarkReference;
+                            darkControl.Dock = DockStyle.Fill;
+                            var darkTab = new TabPage("Dark Reference");
+                            darkTab.Controls.Add(darkControl);
+                            tabControl1.TabPages.Add(darkTab);
+                            var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                            darkRefNode.Tag = darkHolder;
+                            spectrometerNode.Nodes.Add(darkRefNode);
+                        }
+                    }
+                }
+>>>>>>> origin/matt
                 // if not, add it to the tree:
                 //else
                 {
@@ -157,27 +172,56 @@ namespace MFT
                     control.Dock = DockStyle.Fill;
                     tabPage.Controls.Add(control);
                     tabControl1.TabPages.Add(tabPage);
-
-                    //if (spectrometer.DarkReference != null)
-                    //{
-                    //    darkRefNode = new TreeNode("Dark Reference");
-                    //    var darkControl = new SingleSpectrumGraph();
-                    //    darkControl.Exposure = spectrometer.DarkReference;
-                    //    darkControl.Dock = DockStyle.Fill;
-                    //    var darkTab = new TabPage("Dark Reference");
-                    //    darkTab.Controls.Add(darkControl);
-                    //    tabControl1.TabPages.Add(darkTab);
-                    //    var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
-                    //    darkRefNode.Tag = darkHolder;
-                    //    spectrometerNode.Nodes.Add(darkRefNode);
-                    //}
-                    //spectrometerSettingsNode.EnsureVisible();
-                    tabControl1.SelectTab(tabPage);
+<<<<<<< HEAD
                 }
+=======
+                    var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, tabPage, spectrometer);
+
+                    spectrometerNode.Tag = item;
+                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
+
+                    spectrometerSettingsNode = new TreeNode();
+                    spectrometerNode.Nodes.Add(spectrometerSettingsNode);
+                    var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, null, spectrometer.Settings);
+                    spectrometerSettingsNode.Tag = settingsItem;
+                    spectrometerSettingsNode.Text = spectrometer.Settings.ToString();
+
+                    if (spectrometer.DarkReference != null)
+                    {
+                        darkRefNode = new TreeNode("Dark Reference");
+                        var darkControl = new SingleSpectrumGraph();
+                        darkControl.Exposure = spectrometer.DarkReference;
+                        darkControl.Dock = DockStyle.Fill;
+                        var darkTab = new TabPage("Dark Reference");
+                        darkTab.Controls.Add(darkControl);
+                        tabControl1.TabPages.Add(darkTab);
+                        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                        darkRefNode.Tag = darkHolder;
+                        spectrometerNode.Nodes.Add(darkRefNode);
+                    }
+                }
+                spectrometerSettingsNode.EnsureVisible();
+>>>>>>> origin/matt
+                tabControl1.SelectTab(tabPage);
             }
         }
 
-
+<<<<<<< HEAD
+=======
+        TreeNode root;
+        TreeNode camerasNode;
+        TreeNode spectrometerTitleNode;
+        TreeNode spectrometerNode;
+        TreeNode spectrometerSettingsNode;
+        TreeNode darkRefNode;
+        TreeNode whiteRefNode;
+        TreeNode exposureSettingsNode;
+        TreeNode spectrumProcessorChainsNode;
+        TreeNode testsNode;
+        void InitTreeView()
+        {
+            workspaceTreeView.Nodes.Clear();
+>>>>>>> origin/matt
 
 
         TabPage AddTabpage(string name, Control control)
@@ -221,5 +265,6 @@ namespace MFT
             //    camera.Stop();
             //}
         }
+
     }
 }
