@@ -120,7 +120,6 @@ namespace MFT
             }
             else
             {
-                //TreeNode settingsNode;
                 TabPage tabPage;
                 // if it's in the tree, update it:
                 //if (spectrometerNode != null)
@@ -133,6 +132,21 @@ namespace MFT
                 //    c.SetSpectrometer(spectrometer);
                 //    settingsNode = spectrometerNode.Nodes[0];
                 //}
+                    {
+                        if (darkRefNode == null)
+                        {
+                            darkRefNode = new TreeNode("Dark Reference");
+                            var darkControl = new SingleSpectrumGraph();
+                            darkControl.Exposure = spectrometer.DarkReference;
+                            darkControl.Dock = DockStyle.Fill;
+                            var darkTab = new TabPage("Dark Reference");
+                            darkTab.Controls.Add(darkControl);
+                            tabControl1.TabPages.Add(darkTab);
+                            var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                            darkRefNode.Tag = darkHolder;
+                            spectrometerNode.Nodes.Add(darkRefNode);
+                        }
+                    }
                 // if not, add it to the tree:
                 //else
                 {
@@ -141,11 +155,28 @@ namespace MFT
                     control.Dock = DockStyle.Fill;
                     tabPage.Controls.Add(control);
                     tabControl1.TabPages.Add(tabPage);
-                }
+
+                    if (spectrometer.DarkReference != null)
+                    {
+                        darkRefNode = new TreeNode("Dark Reference");
+                        var darkControl = new SingleSpectrumGraph();
+                        darkControl.Exposure = spectrometer.DarkReference;
+                        darkControl.Dock = DockStyle.Fill;
+                        var darkTab = new TabPage("Dark Reference");
+                        darkTab.Controls.Add(darkControl);
+                        tabControl1.TabPages.Add(darkTab);
+                        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                        darkRefNode.Tag = darkHolder;
+                        spectrometerNode.Nodes.Add(darkRefNode);
+                    }
+                spectrometerSettingsNode.EnsureVisible();
                 tabControl1.SelectTab(tabPage);
             }
         }
 
+        TreeNode spectrometerSettingsNode;
+        TreeNode darkRefNode;
+        TreeNode whiteRefNode;
 
 
         TabPage AddTabpage(string name, Control control)

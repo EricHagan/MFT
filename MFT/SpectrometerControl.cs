@@ -1,5 +1,4 @@
-﻿using MFT.Properties;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace MFT
@@ -160,7 +159,10 @@ namespace MFT
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
+            { 
                 showDarkRefButton_Click(sender, e);
+                Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, spectrometer);
+            }
         }
 
         private void whiteRefButton_Click(object sender, EventArgs e)
@@ -169,7 +171,10 @@ namespace MFT
             if (spectrometer.WhiteReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
+            {
                 showWhiteRefButton_Click(sender, e);
+                Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, spectrometer);
+            }
         }
 
         private void showDarkRefButton_Click(object sender, EventArgs e)
