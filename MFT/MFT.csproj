@@ -135,6 +135,12 @@
     </Compile>
     <Compile Include="Workspace.cs" />
     <Compile Include="SpectrumWindow.cs" />
+    <Compile Include="WorkspaceControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WorkspaceControl.Designer.cs">
+      <DependentUpon>WorkspaceControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkspaceItem.cs" />
     <Compile Include="WorkspaceManager.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpectrometerControl.resx">
       <DependentUpon>SpectrometerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkspaceControl.resx">
+      <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

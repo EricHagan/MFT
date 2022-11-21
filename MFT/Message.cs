@@ -17,6 +17,7 @@ namespace MFT
         {
             CAMERA_CONNECT,
             CAMERA_UPDATED,
+            CAMERA_ACTIVATED,
             ERROR,
             EXPOSURE_SETTINGS_CREATE,
             EXPOSURE_SETTINGS_CREATED,
@@ -24,8 +25,10 @@ namespace MFT
             EXPOSURE_SETTINGS_APPLY,
             EXPOSURE_SETTINGS_SET_DEFAULT,
             EXPOSURE_SETTINGS_DEFAULT_SET,
+            EXPOSURE_SETTINGS_ACTIVATED,
             SPECTROMETER_CONNECT,
             SPECTROMETER_UPDATED,
+            SPECTROMETER_ACTIVATED,
         }
     }
 }
