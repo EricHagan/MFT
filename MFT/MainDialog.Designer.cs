@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
@@ -51,12 +50,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.spectrometerTitleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.exposureSettingsTitleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.camerasContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.exposureSettingsItemContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.applyToSpectrometerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setAsDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workspaceControl1 = new MFT.WorkspaceControl();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
@@ -71,7 +64,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            this.exposureSettingsItemContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // numericUpDown3
@@ -340,46 +332,6 @@
             this.splitContainer3.SplitterDistance = 601;
             this.splitContainer3.TabIndex = 0;
             // 
-            // spectrometerTitleContextMenuStrip
-            // 
-            this.spectrometerTitleContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.spectrometerTitleContextMenuStrip.Name = "spectrometerContextMenuStrip";
-            this.spectrometerTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
-            this.spectrometerTitleContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerContextMenuStrip_ItemClicked);
-            // 
-            // exposureSettingsTitleContextMenuStrip
-            // 
-            this.exposureSettingsTitleContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.exposureSettingsTitleContextMenuStrip.Name = "contextMenuStrip2";
-            this.exposureSettingsTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
-            // 
-            // camerasContextMenuStrip
-            // 
-            this.camerasContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.camerasContextMenuStrip.Name = "camerasContextMenuStrip";
-            this.camerasContextMenuStrip.Size = new System.Drawing.Size(61, 4);
-            this.camerasContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.camerasContextMenuStrip_ItemClicked);
-            // 
-            // exposureSettingsItemContextMenuStrip
-            // 
-            this.exposureSettingsItemContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applyToSpectrometerToolStripMenuItem,
-            this.setAsDefaultToolStripMenuItem});
-            this.exposureSettingsItemContextMenuStrip.Name = "exposureSettingsItemContextMenuStrip";
-            this.exposureSettingsItemContextMenuStrip.Size = new System.Drawing.Size(195, 48);
-            // 
-            // applyToSpectrometerToolStripMenuItem
-            // 
-            this.applyToSpectrometerToolStripMenuItem.Name = "applyToSpectrometerToolStripMenuItem";
-            this.applyToSpectrometerToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.applyToSpectrometerToolStripMenuItem.Text = "Apply To Spectrometer";
-            // 
-            // setAsDefaultToolStripMenuItem
-            // 
-            this.setAsDefaultToolStripMenuItem.Name = "setAsDefaultToolStripMenuItem";
-            this.setAsDefaultToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.setAsDefaultToolStripMenuItem.Text = "Set As Default";
-            // 
             // workspaceControl1
             // 
             this.workspaceControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -428,7 +380,6 @@
             this.splitContainer3.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            this.exposureSettingsItemContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -457,12 +408,6 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.ContextMenuStrip spectrometerTitleContextMenuStrip;
-        private System.Windows.Forms.ContextMenuStrip exposureSettingsTitleContextMenuStrip;
-        private System.Windows.Forms.ContextMenuStrip camerasContextMenuStrip;
-        private System.Windows.Forms.ContextMenuStrip exposureSettingsItemContextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem setAsDefaultToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem applyToSpectrometerToolStripMenuItem;
         private WorkspaceControl workspaceControl1;
     }
 }

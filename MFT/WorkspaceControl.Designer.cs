@@ -44,7 +44,7 @@
             this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
-            this.treeView.Size = new System.Drawing.Size(512, 688);
+            this.treeView.Size = new System.Drawing.Size(452, 598);
             this.treeView.TabIndex = 0;
             this.treeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseClick);
             this.treeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseDoubleClick);
@@ -52,12 +52,14 @@
             // spectrometerTitleContextMenuStrip
             // 
             this.spectrometerTitleContextMenuStrip.Name = "spectrometerTitleContextMenuStrip";
-            this.spectrometerTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            this.spectrometerTitleContextMenuStrip.Size = new System.Drawing.Size(181, 26);
+            this.spectrometerTitleContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.spectrometerTitleContextMenuStrip_ItemClicked);
             // 
             // camerasContextMenuStrip
             // 
             this.camerasContextMenuStrip.Name = "camerasContextMenuStrip";
             this.camerasContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            this.camerasContextMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.camerasContextMenuStrip_ItemClicked_1);
             // 
             // exposureSettingsTitleContextMenuStrip
             // 
@@ -92,7 +94,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.treeView);
             this.Name = "WorkspaceControl";
-            this.Size = new System.Drawing.Size(512, 688);
+            this.Size = new System.Drawing.Size(452, 598);
             this.exposureSettingsItemContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -300,6 +300,10 @@ namespace MFT
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings);
         }
 
+
+
+        #region Context Menu Item Clicked Handlers
+
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             // make sure that we select the node we right-click, so context menus know
@@ -307,6 +311,23 @@ namespace MFT
             if (e.Button == MouseButtons.Right)
                 treeView.SelectedNode = e.Node;
         }
+
+        private void spectrometerTitleContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            // assumes item clicked is a connect instruction
+            var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
+            Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECT, selected.Type);
+        }
+
+        private void camerasContextMenuStrip_ItemClicked_1(object sender, ToolStripItemClickedEventArgs e)
+        {
+            var camera = (ICamera)e.ClickedItem.Tag;
+            Messenger.SendMessage(this, Message.Types.CAMERA_CONNECT, camera);
+        }
+
+        #endregion
+
+
 
         private void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -330,6 +351,8 @@ namespace MFT
                 }
             }
         }
+
+
 
         List<TreeNode> FlattenTreeView(TreeNode topNode)
         {
@@ -357,5 +380,7 @@ namespace MFT
             }
             return null;
         }
+
+
     }
 }

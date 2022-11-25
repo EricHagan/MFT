@@ -195,23 +195,6 @@ namespace MFT
             d.ShowDialog();
         }
 
-        #region Context Menu Item Clicked Handlers
-
-        private void spectrometerContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            // assumes item clicked is a connect instruction
-            var selected = (SpectrometerSelectionView)e.ClickedItem.Tag;
-            Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECT, selected.Type);
-        }
-
-        private void camerasContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            var camera = (ICamera)e.ClickedItem.Tag;
-            Messenger.SendMessage(this, Message.Types.CAMERA_CONNECT, camera);
-        }
-
-        #endregion
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             //foreach (TreeNode cameraNode in camerasNode.Nodes)
