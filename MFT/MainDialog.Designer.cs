@@ -43,7 +43,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,6 +50,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.workspaceControl1 = new MFT.WorkspaceControl();
+            this.documentsControl1 = new MFT.DocumentsControl();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -256,15 +256,6 @@
             this.panel3.Size = new System.Drawing.Size(165, 174);
             this.panel3.TabIndex = 30;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(676, 738);
-            this.tabControl1.TabIndex = 38;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -313,7 +304,7 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer2.Panel2.Controls.Add(this.documentsControl1);
             this.splitContainer2.Size = new System.Drawing.Size(1020, 738);
             this.splitContainer2.SplitterDistance = 340;
             this.splitContainer2.TabIndex = 41;
@@ -339,6 +330,14 @@
             this.workspaceControl1.Name = "workspaceControl1";
             this.workspaceControl1.Size = new System.Drawing.Size(340, 601);
             this.workspaceControl1.TabIndex = 0;
+            // 
+            // documentsControl1
+            // 
+            this.documentsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.documentsControl1.Location = new System.Drawing.Point(0, 0);
+            this.documentsControl1.Name = "documentsControl1";
+            this.documentsControl1.Size = new System.Drawing.Size(676, 738);
+            this.documentsControl1.TabIndex = 0;
             // 
             // MainDialog
             // 
@@ -401,7 +400,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -409,6 +407,7 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private WorkspaceControl workspaceControl1;
+        private DocumentsControl documentsControl1;
     }
 }
 
