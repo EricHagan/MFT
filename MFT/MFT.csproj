@@ -86,7 +86,6 @@
     <Compile Include="ExposureSettingsControl.Designer.cs">
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="IWorkspaceItem.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Messenger.cs" />
     <Compile Include="SpectrometerBase.cs" />
@@ -141,7 +140,6 @@
     <Compile Include="WorkspaceControl.Designer.cs">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WorkspaceItem.cs" />
     <Compile Include="WorkspaceManager.cs" />
     <EmbeddedResource Include="AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MFT.Properties;
+using System;
 using System.Windows.Forms;
 
 namespace MFT
@@ -25,28 +26,35 @@ namespace MFT
         public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
         string ExposureSettingsName = null;
-        long ExposureSettingsHandle = 0;
         public ExposureSettings ExposureControls
         {
             get
             {
-                return new ExposureSettings(
-                    (int)averagingNumericUpDown.Value,
-                    (int)integrationTimeMsNumericUpDown.Value,
-                    (int)dwellTimeNumericUpDown.Value,
-                    normalizedCheckBox.Enabled && normalizedCheckBox.Checked,
-                    ExposureSettingsName,
-                    ExposureSettingsHandle);
+                return settings;
             }
             internal set
             {
-                averagingNumericUpDown.Value = value.Averaging;
-                integrationTimeMsNumericUpDown.Value = value.IntegrationTimeMs;
-                dwellTimeNumericUpDown.Value = value.DwellTimeMs;
-                normalizedCheckBox.Checked = value.Normalized;
-                ExposureSettingsName = value.Name;
-                ExposureSettingsHandle = value.Handle;
+                settings = value;
+                if (settings != null)
+                    UpdateForm();
             }
+        }
+        ExposureSettings settings;
+
+        public void UpdateForm()
+        {
+            averagingNumericUpDown.Value = ExposureControls.Averaging;
+            integrationTimeMsNumericUpDown.Value = ExposureControls.IntegrationTimeMs;
+            dwellTimeNumericUpDown.Value = ExposureControls.DwellTimeMs;
+            normalizedCheckBox.Checked = ExposureControls.Normalized;
+        }
+
+        public void UpdateFromForm()
+        {
+            ExposureControls.Averaging = (int)averagingNumericUpDown.Value;
+            ExposureControls.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
+            ExposureControls.DwellTimeMs = (int)dwellTimeNumericUpDown.Value;
+            ExposureControls.Normalized = normalizedCheckBox.Checked;
         }
 
         // same as ExposureControls, except doesn't care if normalized is allowed
@@ -59,8 +67,7 @@ namespace MFT
                     (int)integrationTimeMsNumericUpDown.Value,
                     (int)dwellTimeNumericUpDown.Value,
                     normalizedCheckBox.Checked,
-                    ExposureSettingsName,
-                    ExposureSettingsHandle);
+                    ExposureSettingsName);
             }
         }
 
@@ -124,13 +131,8 @@ namespace MFT
 
         void RaiseSpectrometerControlsChangedEvent(object sender)
         {
+            UpdateFromForm();
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
-            if (ControlsChanged == null)
-                return;
-            ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
-            {
-                Settings = ExposureControls
-            });
         }
 
         private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)

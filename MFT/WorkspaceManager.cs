@@ -76,19 +76,13 @@ namespace MFT
                 s = new ExposureSettings(workspace.DefaultExposureSettings);
             else
                 s = settings;
-            Register(s);
-            workspace.ExposureSettings.Add(s.Handle, s);
+            workspace.ExposureSettings.Add(s);
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATED, s);
         }
 
         void UpdateExposureSettings(object sender, ExposureSettings settings)
         {
-            if (sender == this)
-                return;
-            if (workspace.ExposureSettings.ContainsKey(settings.Handle))
-                workspace.ExposureSettings[settings.Handle] = settings;
-            if (workspace.DefaultExposureSettings.Handle == settings.Handle)
-                workspace.DefaultExposureSettings = settings;
+            // if we're just referencing ExposureSettings, do we need to do anything here?
         }
 
         void ApplyExposureSettingsToSpectrometer(ExposureSettings settings)
@@ -98,9 +92,7 @@ namespace MFT
                 Messenger.SendMessage(this, Message.Types.ERROR, "No spectrometer connected.");
                 return;
             }
-            long oldHandle = workspace.Spectrometer.Settings.Handle;
             workspace.Spectrometer.Settings = new ExposureSettings(settings);
-            workspace.Spectrometer.Settings.Handle = oldHandle;
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer);
         }
 
@@ -128,20 +120,7 @@ namespace MFT
                 return;
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
-            Register(workspace.Spectrometer.Settings);
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, workspace.Spectrometer);
         }
-
-        long Register(WorkspaceItem item)
-        {
-            lock (Lock)
-            {
-                item.Handle = NextHandle++;
-            }
-            return item.Handle;
-        }
-        long NextHandle = 1;
-        void SetNextHandle(int handle) { NextHandle = handle; }
-        static object Lock = new object();
     }
 }

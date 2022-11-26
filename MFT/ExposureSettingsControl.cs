@@ -12,29 +12,37 @@ namespace MFT
 
         public bool Quiet { get; set; }
 
-        long settingsHandle { get; set; }
-
         public ExposureSettings Settings
         {
             get
             {
-                return new ExposureSettings(
-                    (int)averagingNumericUpDown.Value,
-                    (int)integrationTimeMsNumericUpDown.Value,
-                    (int)dwellTimeNumericUpDown.Value,
-                    normalizedCheckBox.Checked,
-                    nameTextBox.Text,
-                    settingsHandle);
+                return settings;
             }
             set
             {
-                averagingNumericUpDown.Value = value.Averaging;
-                integrationTimeMsNumericUpDown.Value = value.IntegrationTimeMs;
-                dwellTimeNumericUpDown.Value = value.DwellTimeMs;
-                normalizedCheckBox.Checked = value.Normalized;
-                nameTextBox.Text = value.Name;
-                settingsHandle = value.Handle;
+                settings = value;
+                if (settings != null)
+                    UpdateForm();
             }
+        }
+        ExposureSettings settings;
+
+        public void UpdateForm()
+        {
+            averagingNumericUpDown.Value = Settings.Averaging;
+            integrationTimeMsNumericUpDown.Value = Settings.IntegrationTimeMs;
+            dwellTimeNumericUpDown.Value = Settings.DwellTimeMs;
+            normalizedCheckBox.Checked = Settings.Normalized;
+            nameTextBox.Text = Settings.Name;
+        }
+
+        public void UpdateFromForm()
+        {
+            Settings.Averaging = (int)averagingNumericUpDown.Value;
+            Settings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
+            Settings.DwellTimeMs = (int)dwellTimeNumericUpDown.Value;
+            Settings.Normalized = normalizedCheckBox.Checked;
+            Settings.Name = nameTextBox.Text;
         }
 
         void OnSettingsChanged()
@@ -45,26 +53,31 @@ namespace MFT
 
         private void nameTextBox_TextChanged(object sender, EventArgs e)
         {
+            settings.Name = nameTextBox.Text;
             OnSettingsChanged();
         }
 
         private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            settings.Averaging = (int)averagingNumericUpDown.Value;
             OnSettingsChanged();
         }
 
         private void integrationTimeMsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            settings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
             OnSettingsChanged();
         }
 
         private void dwellTimeNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            settings.DwellTimeMs = (int)dwellTimeNumericUpDown.Value;
             OnSettingsChanged();
         }
 
         private void normalizedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            settings.Normalized = normalizedCheckBox.Checked;
             OnSettingsChanged();
         }
 

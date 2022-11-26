@@ -69,7 +69,6 @@ namespace MFT
             }
             else
             {
-                long handle = settings.Handle;
                 var control = new ExposureSettingsControl();
                 control.Quiet = true; // otherwise stack overflow
                 control.Settings = settings;
@@ -88,7 +87,6 @@ namespace MFT
             }
             else
             {
-                long handle = settings.Handle;
                 //var t = FindTreeNode(treeView.TopNode, handle);
                 //if (t != null)
                 //{

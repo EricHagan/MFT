@@ -141,10 +141,9 @@ namespace MFT
             }
             else
             {
-                long handle = settings.Handle;
-                var t = FindTreeNode(treeView.TopNode, handle);
+                var t = FindTreeNode(treeView.TopNode, settings);
                 if (t != null)
-                    throw new Exception($"Internal error. There's already an ExposureSettings object with handle {handle} in the tree.");
+                    throw new Exception($"Internal error. That ExposureSettings object is already in the tree.");
                 var control = new ExposureSettingsControl();
                 control.Quiet = true; // otherwise stack overflow
                 control.Settings = settings;
@@ -167,17 +166,12 @@ namespace MFT
             }
             else
             {
-                long handle = settings.Handle;
-                var t = FindTreeNode(treeView.TopNode, handle);
+                var t = FindTreeNode(treeView.TopNode, settings);
                 if (t != null)
                 {
                     var h = t.Tag as ItemHolder;
                     var s = h.Object as ExposureSettings;
-                    if (s.Handle == handle)
-                    {
-                        h.Object = settings;
-                        t.Text = settings.ToString();
-                    }
+                    t.Text = settings.ToString();
                 }
             }
         }
@@ -191,7 +185,6 @@ namespace MFT
             }
             else
             {
-                long handle = settings.Handle;
                 bool success = false;
                 foreach (var o in exposureSettingsNode.Nodes)
                 {
@@ -199,7 +192,7 @@ namespace MFT
                     var h = t.Tag as ItemHolder;
                     var s = h.Object as ExposureSettings;
                     t.NodeFont = new Font(treeView.Font, FontStyle.Regular);
-                    if (s.Handle == handle)
+                    if (s == settings)
                     {
                         t.NodeFont = new Font(treeView.Font, FontStyle.Underline);
                         success = true;
@@ -363,19 +356,15 @@ namespace MFT
             return nodes;
         }
 
-        TreeNode FindTreeNode(TreeNode baseNode, long handle)
+        TreeNode FindTreeNode(TreeNode baseNode, object obj)
         {
             foreach (var node in FlattenTreeView(baseNode))
             {
                 var itemHolder = (ItemHolder)node.Tag;
                 if (itemHolder != null)
                 {
-                    var o = itemHolder.Object as IWorkspaceItem;
-                    if (o != null)
-                    {
-                        if (o.Handle == handle)
-                            return node;
-                    }
+                    if (itemHolder.Object == obj)
+                        return node;
                 }
             }
             return null;
