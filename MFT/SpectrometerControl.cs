@@ -133,6 +133,14 @@ namespace MFT
         {
             UpdateFromForm();
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
+
+            // this is just used by ExposureStream; need to refactor to use messages:
+            if (ControlsChanged == null)
+                return;
+            ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
+            {
+                Settings = ExposureControls
+            });
         }
 
         private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)
