@@ -30,9 +30,6 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_CREATE:
                     CreateExposureSettings(msg.Object as ExposureSettings);
                     break;
-                case Message.Types.EXPOSURE_SETTINGS_UPDATED:
-                    UpdateExposureSettings(sender, msg.Object as ExposureSettings);
-                    break;
                 case Message.Types.EXPOSURE_SETTINGS_APPLY:
                     ApplyExposureSettingsToSpectrometer(msg.Object as ExposureSettings);
                     break;
@@ -81,11 +78,6 @@ namespace MFT
                 s = settings;
             workspace.ExposureSettings.Add(s);
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATED, s);
-        }
-
-        void UpdateExposureSettings(object sender, ExposureSettings settings)
-        {
-            // if we're just referencing ExposureSettings, do we need to do anything here?
         }
 
         void ApplyExposureSettingsToSpectrometer(ExposureSettings settings)
