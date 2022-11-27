@@ -47,6 +47,9 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
                     break;
+                case Message.Types.SPECTROMETER_CONNECTED:
+                    ConnectSpectrometer(sender, msg.Object as ISpectrometer);
+                    break;
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
@@ -148,6 +151,36 @@ namespace MFT
                 item.Page.Text = settings.ToString();
             }
         }
+
+        void ConnectSpectrometer(object sender, ISpectrometer spectrometer)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { ConnectSpectrometer(sender, spectrometer); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                // delete any existing spectrometer page:
+                var itemsToRemoveKeys = new List<object>();
+                foreach (var item in items)
+                {
+                    if (item.Value.Type == ItemHolder.ItemTypes.SPECTROMETER)
+                    {
+                        itemsToRemoveKeys.Add(item.Key);
+                        if (tabControl1.TabPages.Contains(item.Value.Page))
+                            tabControl1.TabPages.Remove(item.Value.Page);
+                    }
+                }
+                foreach (var key in itemsToRemoveKeys)
+                    items.Remove(key);
+
+                AddItem(ItemHolder.ItemTypes.SPECTROMETER, spectrometer.GetDeviceDescription(),
+                    new SpectrometerControl(spectrometer), spectrometer);
+            }
+        }
+
+
 
         void UpdateSpectrometer(object sender, ISpectrometer spectrometer)
         {

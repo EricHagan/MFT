@@ -110,6 +110,7 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET:
                     SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
+                case Message.Types.SPECTROMETER_CONNECTED:
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
