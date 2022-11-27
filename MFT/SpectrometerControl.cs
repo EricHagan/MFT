@@ -60,20 +60,6 @@ namespace MFT
             spectrometer.Settings.Normalized = normalizedCheckBox.Checked;
         }
 
-        // same as spectrometer.Settings, except doesn't care if normalized is allowed
-        ExposureSettings ExposureControlsRawNormalized
-        {
-            get
-            {
-                return new ExposureSettings(
-                    (int)averagingNumericUpDown.Value,
-                    (int)integrationTimeMsNumericUpDown.Value,
-                    (int)dwellTimeNumericUpDown.Value,
-                    normalizedCheckBox.Checked,
-                    "");
-            }
-        }
-
         private void SpectrometerDialog_Load(object sender, EventArgs e)
         {
             averagingNumericUpDown.Value = 10;
@@ -181,7 +167,13 @@ namespace MFT
 
         private void saveExposureSettingsButton_Click(object sender, EventArgs e)
         {
-            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, ExposureControlsRawNormalized);
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE,
+                new ExposureSettings(
+                    (int)averagingNumericUpDown.Value,
+                    (int)integrationTimeMsNumericUpDown.Value,
+                    (int)dwellTimeNumericUpDown.Value,
+                    normalizedCheckBox.Checked,
+                    ""));
         }
     }
 }
