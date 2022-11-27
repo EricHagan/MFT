@@ -32,8 +32,6 @@ namespace MFT
             MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var d = new AboutDialog();

@@ -16,8 +16,6 @@ namespace MFT
 
         public bool NormalizeAllowed { get; protected set; }
 
-        public event EventHandler SpectrometerChanged;
-
         public bool CollectDarkReferenceExposure(ExposureSettings settings, out string ErrMsg)
         {
             TriedToGetDarkReference = true;
@@ -29,7 +27,7 @@ namespace MFT
             {
                 if (!DarkReference.Name.Contains("Dark Reference: "))
                     DarkReference.Name = "Dark Reference: " + DarkReference.Name;
-                SpectrometerChanged?.Invoke(this, new EventArgs());
+                Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, this);
             }
             return DarkReference != null;
         }
@@ -44,7 +42,7 @@ namespace MFT
             {
                 if (!WhiteReference.Name.Contains("White Reference: "))
                     WhiteReference.Name = "White Reference: " + WhiteReference.Name;
-                SpectrometerChanged?.Invoke(this, new EventArgs());
+                Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, this);
             }
             return WhiteReference != null;
         }
@@ -70,7 +68,7 @@ namespace MFT
 
             if (NormalizeAllowed != oldValue)
             {
-                SpectrometerChanged?.Invoke(this, new EventArgs());
+                Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, this);
             }
         }
     }

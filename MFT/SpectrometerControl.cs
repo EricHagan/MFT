@@ -1,4 +1,5 @@
 ﻿using MFT.Properties;
+using RgbDriverKit;
 using System;
 using System.Windows.Forms;
 
@@ -9,15 +10,32 @@ namespace MFT
         public SpectrometerControl(ISpectrometer _spectrometer)
         {
             InitializeComponent();
+            Messenger.MessageAvailable += OnMessageReceived;
             SetSpectrometer(_spectrometer);
-            spectrometer.SpectrometerChanged += HandleSpectrometerChanged;
-            UpdateFromSpectrometer();
+            UpdateForm();
+        }
+
+        void OnMessageReceived(object sender, Message msg)
+        {
+            switch (msg.Type)
+            {
+                //case Message.Types.SPECTROMETER_CONNECTED:
+                case Message.Types.SPECTROMETER_UPDATED:
+                    UpdateSpectrometer(sender, msg.Object as ISpectrometer);
+                    break;
+            }
+        }
+
+        void UpdateSpectrometer(object sender, ISpectrometer spectrometer)
+        {
+            if (this.spectrometer != spectrometer)
+                return;
+            UpdateForm();
         }
 
         public void SetSpectrometer(ISpectrometer s)
         {
             spectrometer = s;
-            ExposureControls = s.Settings;
         }
 
         ISpectrometer spectrometer;
@@ -25,39 +43,31 @@ namespace MFT
         // todo: rethink this with Messages:
         public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
-        string ExposureSettingsName = null;
-        public ExposureSettings ExposureControls
-        {
-            get
-            {
-                return settings;
-            }
-            internal set
-            {
-                settings = value;
-                if (settings != null)
-                    UpdateForm();
-            }
-        }
-        ExposureSettings settings;
-
         public void UpdateForm()
         {
-            averagingNumericUpDown.Value = ExposureControls.Averaging;
-            integrationTimeMsNumericUpDown.Value = ExposureControls.IntegrationTimeMs;
-            dwellTimeNumericUpDown.Value = ExposureControls.DwellTimeMs;
-            normalizedCheckBox.Checked = ExposureControls.Normalized;
+            averagingNumericUpDown.Value = spectrometer.Settings.Averaging;
+            integrationTimeMsNumericUpDown.Value = spectrometer.Settings.IntegrationTimeMs;
+            dwellTimeNumericUpDown.Value = spectrometer.Settings.DwellTimeMs;
+            normalizedCheckBox.Checked = spectrometer.Settings.Normalized;
+
+            if (spectrometer.NormalizeAllowed)
+                AllowNormalized();
+            else
+                DisallowNormalized();
+
+            showDarkRefButton.Enabled = spectrometer.DarkReference != null;
+            showWhiteRefButton.Enabled = spectrometer.WhiteReference != null;
         }
 
         public void UpdateFromForm()
         {
-            ExposureControls.Averaging = (int)averagingNumericUpDown.Value;
-            ExposureControls.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
-            ExposureControls.DwellTimeMs = (int)dwellTimeNumericUpDown.Value;
-            ExposureControls.Normalized = normalizedCheckBox.Checked;
+            spectrometer.Settings.Averaging = (int)averagingNumericUpDown.Value;
+            spectrometer.Settings.IntegrationTimeMs = (int)integrationTimeMsNumericUpDown.Value;
+            spectrometer.Settings.DwellTimeMs = (int)dwellTimeNumericUpDown.Value;
+            spectrometer.Settings.Normalized = normalizedCheckBox.Checked;
         }
 
-        // same as ExposureControls, except doesn't care if normalized is allowed
+        // same as spectrometer.Settings, except doesn't care if normalized is allowed
         ExposureSettings ExposureControlsRawNormalized
         {
             get
@@ -67,7 +77,7 @@ namespace MFT
                     (int)integrationTimeMsNumericUpDown.Value,
                     (int)dwellTimeNumericUpDown.Value,
                     normalizedCheckBox.Checked,
-                    ExposureSettingsName);
+                    "");
             }
         }
 
@@ -83,7 +93,7 @@ namespace MFT
             bool oldValue = normalizedCheckBox.Enabled;
             normalizedCheckBox.Enabled = true;
             if (normalizedCheckBox.Enabled != oldValue)
-                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, spectrometer.Settings);
         }
 
         void DisallowNormalized()
@@ -91,12 +101,12 @@ namespace MFT
             bool oldValue = normalizedCheckBox.Enabled;
             normalizedCheckBox.Enabled = false;
             if (normalizedCheckBox.Enabled != oldValue)
-                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, spectrometer.Settings);
         }
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = spectrometer.CollectSpectrum(ExposureControls, out string errMsg);
+            var exposure = spectrometer.CollectSpectrum(spectrometer.Settings, out string errMsg);
             if (exposure != null)
             {
                 var singleGraph = new SingleSpectrumGraph();
@@ -132,14 +142,14 @@ namespace MFT
         void RaiseSpectrometerControlsChangedEvent(object sender)
         {
             UpdateFromForm();
-            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, ExposureControls);
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, spectrometer.Settings);
 
             // this is just used by ExposureStream; need to refactor to use messages:
             if (ControlsChanged == null)
                 return;
             ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
             {
-                Settings = ExposureControls
+                Settings = spectrometer.Settings
             });
         }
 
@@ -165,7 +175,7 @@ namespace MFT
 
         private void darkRefButton_Click(object sender, EventArgs e)
         {
-            spectrometer.CollectDarkReferenceExposure(ExposureControls.Unnormalized(), out string errMsg);
+            spectrometer.CollectDarkReferenceExposure(spectrometer.Settings.Unnormalized(), out string errMsg);
             if (spectrometer.DarkReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -177,7 +187,7 @@ namespace MFT
 
         private void whiteRefButton_Click(object sender, EventArgs e)
         {
-            spectrometer.CollectWhiteReferenceExposure(ExposureControls.Unnormalized(), out string errMsg);
+            spectrometer.CollectWhiteReferenceExposure(spectrometer.Settings.Unnormalized(), out string errMsg);
             if (spectrometer.WhiteReference == null)
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
@@ -201,27 +211,6 @@ namespace MFT
             singleGraph.Exposure = spectrometer.WhiteReference;
             SetMainControl(singleGraph);
             singleGraph.Dock = DockStyle.Fill;
-        }
-
-        private void HandleSpectrometerChanged(object sender, EventArgs e)
-        {
-            var sentSpectrometer = sender as ISpectrometer;
-            if (sentSpectrometer == null)
-                throw new Exception("Internal error. Sender was not an ISpectrometer.");
-            if (sentSpectrometer != spectrometer)
-                throw new Exception("Internal error. Sender ISpectrometer doesn't match the existing spectrometer.");
-            UpdateFromSpectrometer();
-        }
-
-        private void UpdateFromSpectrometer()
-        {
-            if (spectrometer.NormalizeAllowed)
-                AllowNormalized();
-            else
-                DisallowNormalized();
-
-            showDarkRefButton.Enabled = spectrometer.DarkReference != null;
-            showWhiteRefButton.Enabled = spectrometer.WhiteReference != null;
         }
 
         private void saveExposureSettingsButton_Click(object sender, EventArgs e)

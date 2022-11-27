@@ -16,6 +16,5 @@ namespace MFT
         Exposure WhiteReference { get; set; }
         Exposure DarkReference { get; set; }
         bool NormalizeAllowed { get; }
-        event EventHandler SpectrometerChanged;
     }
 }

@@ -15,12 +15,12 @@ namespace MFT
 
         WorkspaceManager()
         {
-            Messenger.MessageAvailable += OnMessageRecieved;
+            Messenger.MessageAvailable += OnMessageReceived;
         }
 
         Workspace workspace { get; set; } = new Workspace();
 
-        void OnMessageRecieved(object sender, Message msg)
+        void OnMessageReceived(object sender, Message msg)
         {
             switch (msg.Type)
             {
