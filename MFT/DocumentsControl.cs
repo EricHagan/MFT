@@ -14,17 +14,19 @@ namespace MFT
     {
         public class ItemHolder
         {
-            public ItemHolder(ItemTypes type, TabPage page, object _object)
+            public ItemHolder() { }
+
+            public ItemHolder(ItemTypes type, object _object)
             {
                 Type = type;
-                Page = page;
                 Object = _object;
             }
 
-            public enum ItemTypes { CAMERA, SPECTROMETER, EXPOSURE, EXPOSURE_SETTINGS }
+            public enum ItemTypes { CAMERA,
+                SPECTROMETER, DARKREF,
+                EXPOSURE, EXPOSURE_SETTINGS }
 
             public ItemTypes Type { get; set; }
-            public TabPage Page { get; set; }
             public object Object { get; set; }
         }
 
@@ -56,48 +58,45 @@ namespace MFT
             }
         }
 
-        Dictionary<object, ItemHolder> items { get; set; } = new Dictionary<object, ItemHolder>();
-        ItemHolder AddItem(ItemHolder.ItemTypes type, string name, Control control, object obj)
+        TabPage AddPage(ItemHolder.ItemTypes type, string name, Control control, object obj)
         {
-            if (GetItem(obj) != null)
+            if (GetPage(obj) != null)
                 return null;
             var tabPage = new TabPage(name);
             tabPage.Controls.Add(control);
-            var item = new ItemHolder(type, tabPage, obj);
-            items.Add(obj, item);
+            tabPage.Tag = new ItemHolder(type, obj);
             tabControl1.TabPages.Add(tabPage);
             tabControl1.SelectedTab = tabPage;
-            return item;
+            return tabPage;
         }
 
-        ItemHolder GetItem(object obj)
+        TabPage GetPage(object obj)
         {
-            if (items.ContainsKey(obj))
-                return items[obj];
-            else
-                return null;
+            foreach (var item in tabControl1.TabPages)
+            {
+                var page = item as TabPage;
+                var h = page.Tag as ItemHolder;
+                if (h.Object == obj)
+                    return page;
+            }
+            return null;
         }
 
-        bool ActivateItem(object obj)
+        bool ActivatePage(object obj)
         {
-            var item = GetItem(obj);
-            if (item == null)
+            var page = GetPage(obj);
+            if (page == null)
                 return false;
-            if (!tabControl1.TabPages.Contains(item.Page))
-                return false;
-            tabControl1.SelectedTab = item.Page;
+            tabControl1.SelectedTab = page;
             return true;
         }
 
-        bool DeleteItem(object obj)
+        bool DeletePage(object obj)
         {
-            var item = GetItem(obj);
-            if (item == null)
+            var page = GetPage(obj);
+            if (page == null)
                 return false;
-            items.Remove(item);
-            if (!tabControl1.TabPages.Contains(item.Page))
-                return false;
-            tabControl1.TabPages.Remove(item.Page);
+            tabControl1.TabPages.Remove(page);
             return true;
         }
 
@@ -113,7 +112,7 @@ namespace MFT
                 string name = camera.Name;
                 var camDialog = new CameraControl();
                 camDialog.SetCamera(camera);
-                var tabpage = AddItem(ItemHolder.ItemTypes.CAMERA, name, camDialog, camera);
+                var tabpage = AddPage(ItemHolder.ItemTypes.CAMERA, name, camDialog, camera);
             }
         }
 
@@ -126,12 +125,12 @@ namespace MFT
             }
             else
             {
-                if (GetItem(settings) != null)
+                if (GetPage(settings) != null)
                     throw new Exception($"Settings '{settings}' already exists in documentHolder");
                 var control = new ExposureSettingsControl();
                 control.Quiet = true; // otherwise stack overflow
                 control.Settings = settings;
-                var tabpage = AddItem(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings.ToString(), control, settings);
+                var tabpage = AddPage(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings.ToString(), control, settings);
                 control.Quiet = false;
             }
         }
@@ -145,10 +144,10 @@ namespace MFT
             }
             else
             {
-                var item = GetItem(settings);
-                if (item == null)
+                var page = GetPage(settings);
+                if (page == null)
                     return;
-                item.Page.Text = settings.ToString();
+                page.Text = settings.ToString();
             }
         }
 
@@ -161,26 +160,27 @@ namespace MFT
             }
             else
             {
-                // delete any existing spectrometer page:
-                var itemsToRemoveKeys = new List<object>();
-                foreach (var item in items)
+                // delete any existing spectrometer pages:
+                var pagesToRemove = new List<TabPage>();
+                foreach (var item in tabControl1.TabPages)
                 {
-                    if (item.Value.Type == ItemHolder.ItemTypes.SPECTROMETER)
+                    var page = item as TabPage;
+                    var h = page.Tag as ItemHolder;
+                    if (h.Type == ItemHolder.ItemTypes.SPECTROMETER ||
+                        h.Type == ItemHolder.ItemTypes.DARKREF)
                     {
-                        itemsToRemoveKeys.Add(item.Key);
-                        if (tabControl1.TabPages.Contains(item.Value.Page))
-                            tabControl1.TabPages.Remove(item.Value.Page);
+                        pagesToRemove.Add(page);
                     }
                 }
-                foreach (var key in itemsToRemoveKeys)
-                    items.Remove(key);
+                foreach (var page in pagesToRemove)
+                    tabControl1.TabPages.Remove(page);
 
-                AddItem(ItemHolder.ItemTypes.SPECTROMETER, spectrometer.GetDeviceDescription(),
+                AddPage(ItemHolder.ItemTypes.SPECTROMETER, spectrometer.GetDeviceDescription(),
                     new SpectrometerControl(spectrometer), spectrometer);
+
+                UpdateSpectrometer(sender, spectrometer);
             }
         }
-
-
 
         void UpdateSpectrometer(object sender, ISpectrometer spectrometer)
         {
@@ -191,60 +191,44 @@ namespace MFT
             }
             else
             {
-                //TabPage tabPage;
-                ////if it's in the tree, update it:
-                //if (spectrometerNode != null)
-                //{
-                //    var h = spectrometerNode.Tag as ItemHolder;
-                //    tabPage = h.Page;
-                //    var c = tabPage.Controls[0] as SpectrometerControl;
-                //    spectrometerNode.Text = spectrometer.GetDeviceDescription();
-                //    h.Object = spectrometer;
-                //    c.SetSpectrometer(spectrometer);
-                //    settingsNode = spectrometerNode.Nodes[0];
+                var spectrometerPage = GetPage(spectrometer);
+                if (spectrometerPage == null)
+                    return; // this shouldn't happen; throw an exception?
 
-                //    if (spectrometer.DarkReference != null)
-                //    {
-                //        if (darkRefNode == null)
-                //        {
-                //            darkRefNode = new TreeNode("Dark Reference");
-                //            var darkControl = new SingleSpectrumGraph();
-                //            darkControl.Exposure = spectrometer.DarkReference;
-                //            darkControl.Dock = DockStyle.Fill;
-                //            var darkTab = new TabPage("Dark Reference");
-                //            darkTab.Controls.Add(darkControl);
-                //            tabControl1.TabPages.Add(darkTab);
-                //            var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
-                //            darkRefNode.Tag = darkHolder;
-                //            spectrometerNode.Nodes.Add(darkRefNode);
-                //        }
-                //    }
-                //}
-                ////if not, add it to the tree:
-                //else
-                //{
-                //    tabPage = new TabPage(spectrometer.GetDeviceDescription());
-                //    var control = new SpectrometerControl(spectrometer);
-                //    control.Dock = DockStyle.Fill;
-                //    tabPage.Controls.Add(control);
-                //    tabControl1.TabPages.Add(tabPage);
+                if (spectrometer.DarkReference != null)
+                {
+                    //var darkRefHolders = items.Where(x => x.Value.Type == ItemHolder.ItemTypes.DARKREF);
+                    //if (darkRefHolders.Count() > 1)
+                    //    throw new Exception("More than 1 dark ref in database");
 
-                //    if (spectrometer.DarkReference != null)
-                //    {
-                //        darkRefNode = new TreeNode("Dark Reference");
-                //        var darkControl = new SingleSpectrumGraph();
-                //        darkControl.Exposure = spectrometer.DarkReference;
-                //        darkControl.Dock = DockStyle.Fill;
-                //        var darkTab = new TabPage("Dark Reference");
-                //        darkTab.Controls.Add(darkControl);
-                //        tabControl1.TabPages.Add(darkTab);
-                //        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
-                //        darkRefNode.Tag = darkHolder;
-                //        spectrometerNode.Nodes.Add(darkRefNode);
-                //    }
-                //    spectrometerSettingsNode.EnsureVisible();
-                //    tabControl1.SelectTab(tabPage);
-                //}
+                    //ItemHolder darkRefHolder;
+                    //if (darkRefHolders.Count() == 1)
+                    //    darkRefHolder = darkRefHolders.First().Value;
+                    //else
+                    //    darkRefHolder = new ItemHolder();
+
+                    //darkRefHolder.Type = ItemHolder.ItemTypes.DARKREF;
+                    //darkRefHolder.Page  
+                    //darkRefHolder.Object = spectrometer.DarkReference;
+
+
+                    //var darkrefHolder = GetPage(spectrometer.DarkReference);
+                    //if (darkrefHolder == null)
+
+
+
+                    //darkRefNode = new TreeNode("Dark Reference");
+                    //var darkControl = new SingleSpectrumGraph();
+                    //darkControl.Exposure = spectrometer.DarkReference;
+                    //darkControl.Dock = DockStyle.Fill;
+                    //var darkTab = new TabPage("Dark Reference");
+                    //darkTab.Controls.Add(darkControl);
+                    //tabControl1.TabPages.Add(darkTab);
+                    //var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
+                    //darkRefNode.Tag = darkHolder;
+                    //spectrometerNode.Nodes.Add(darkRefNode);
+                }
+
             }
         }
 
