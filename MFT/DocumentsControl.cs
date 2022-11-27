@@ -138,7 +138,7 @@ namespace MFT
                 var control = new ExposureSettingsControl();
                 control.Quiet = true; // otherwise stack overflow
                 control.Settings = settings;
-                var tabpage = AddPage(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings.ToString(), control, settings);
+                var tabpage = AddPage(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings.ToString(), control, settings, activate: false);
                 control.Quiet = false;
             }
         }
