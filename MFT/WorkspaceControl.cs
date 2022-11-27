@@ -37,6 +37,7 @@ namespace MFT
         TreeNode camerasNode;
         TreeNode spectrometerTitleNode;
         TreeNode spectrometerNode;
+        TreeNode spectrometerSettingsNode;
         TreeNode darkRefNode;
         TreeNode whiteRefNode;
         TreeNode exposureSettingsNode;
@@ -227,62 +228,29 @@ namespace MFT
             }
             else
             {
-                TreeNode settingsNode;
-                // if it's in the tree, update it:
-                if (spectrometerNode != null)
+                spectrometerTitleNode.Nodes.Clear();
+
+                spectrometerNode = new TreeNode();
+                spectrometerTitleNode.Nodes.Add(spectrometerNode);
+                var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, spectrometer);
+                spectrometerNode.Tag = item;
+                spectrometerNode.Text = spectrometer.GetDeviceDescription();
+
+                spectrometerSettingsNode = new TreeNode();
+                spectrometerNode.Nodes.Add(spectrometerSettingsNode);
+                var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, spectrometer.Settings);
+                spectrometerSettingsNode.Tag = settingsItem;
+                spectrometerSettingsNode.Text = spectrometer.Settings.ToString();
+                spectrometerSettingsNode.EnsureVisible();
+
+                if (spectrometer.DarkReference != null)
                 {
-                    var h = spectrometerNode.Tag as ItemHolder;
-                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
-                    h.Object = spectrometer;
-                    settingsNode = spectrometerNode.Nodes[0];
-                    if (spectrometer.DarkReference != null)
-                    {
-                        if (darkRefNode == null)
-                        {
-                            darkRefNode = new TreeNode("Dark Reference");
-                            var darkControl = new SingleSpectrumGraph();
-                            darkControl.Exposure = spectrometer.DarkReference;
-                            darkControl.Dock = DockStyle.Fill;
-                            var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, spectrometer.DarkReference);
-                            darkRefNode.Tag = darkHolder;
-                            spectrometerNode.Nodes.Add(darkRefNode);
-                        }
-                    }
+                    darkRefNode = new TreeNode("Dark Reference");
+                    var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, spectrometer.DarkReference);
+                    darkRefNode.Tag = darkHolder;
+                    spectrometerNode.Nodes.Add(darkRefNode);
+                    darkRefNode.EnsureVisible();
                 }
-                // if not, add it to the tree:
-                else
-                {
-                    if (spectrometerNode == null)
-                    {
-                        spectrometerNode = new TreeNode();
-                        spectrometerTitleNode.Nodes.Add(spectrometerNode);
-                    }
-
-                    var control = new SpectrometerControl(spectrometer);
-                    control.Dock = DockStyle.Fill;
-                    var item = new ItemHolder(ItemHolder.ItemTypes.SPECTROMETER, spectrometer);
-
-                    spectrometerNode.Tag = item;
-                    spectrometerNode.Text = spectrometer.GetDeviceDescription();
-
-                    settingsNode = new TreeNode();
-                    spectrometerNode.Nodes.Add(settingsNode);
-                    var settingsItem = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, spectrometer.Settings);
-                    settingsNode.Tag = settingsItem;
-                    settingsNode.Text = spectrometer.Settings.ToString();
-
-                    if (spectrometer.DarkReference != null)
-                    {
-                        darkRefNode = new TreeNode("Dark Reference");
-                        var darkControl = new SingleSpectrumGraph();
-                        darkControl.Exposure = spectrometer.DarkReference;
-                        darkControl.Dock = DockStyle.Fill;
-                        var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, spectrometer.DarkReference);
-                        darkRefNode.Tag = darkHolder;
-                        spectrometerNode.Nodes.Add(darkRefNode);
-                    }
-                }
-                settingsNode.EnsureVisible();
             }
         }
 
@@ -306,8 +274,6 @@ namespace MFT
             var settings = h.Object as ExposureSettings;
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings);
         }
-
-
 
         #region Context Menu Item Clicked Handlers
 
@@ -358,8 +324,6 @@ namespace MFT
                 }
             }
         }
-
-
 
         List<TreeNode> FlattenTreeView(TreeNode topNode)
         {
