@@ -19,7 +19,6 @@ namespace MFT
         {
             switch (msg.Type)
             {
-                //case Message.Types.SPECTROMETER_CONNECTED:
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
@@ -39,9 +38,6 @@ namespace MFT
         }
 
         ISpectrometer spectrometer;
-
-        // todo: rethink this with Messages:
-        public event EventHandler<SpectrometerControlsChangedEventArgs> ControlsChanged;
 
         public void UpdateForm()
         {
@@ -125,7 +121,6 @@ namespace MFT
         private void ContinuousButton_Click(object sender, EventArgs e)
         {
             var exposureStream = new ExposureStream(spectrometer);
-            ControlsChanged += exposureStream.ControlsAdjustedEventHandler;
             RaiseSpectrometerControlsChangedEvent(ContinuousButton);
             var graph = new ContinuousSpectrumGraph();
             graph.ExposureStream = exposureStream;
@@ -140,14 +135,6 @@ namespace MFT
         {
             UpdateFromForm();
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_UPDATED, spectrometer.Settings);
-
-            // this is just used by ExposureStream; need to refactor to use messages:
-            if (ControlsChanged == null)
-                return;
-            ControlsChanged(sender, new SpectrometerControlsChangedEventArgs()
-            {
-                Settings = spectrometer.Settings
-            });
         }
 
         private void averagingNumericUpDown_ValueChanged(object sender, EventArgs e)

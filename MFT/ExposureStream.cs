@@ -9,11 +9,9 @@ namespace MFT
         public ExposureStream(ISpectrometer s)
         {
             Spectrometer = s;
-            Settings = new ExposureSettings();
         }
 
         public ISpectrometer Spectrometer { get; set; }
-        public ExposureSettings Settings { get; set; }
         public event EventHandler<ExposureEventArgs> ExposureAvailable;
 
         bool PleaseStop;
@@ -30,19 +28,14 @@ namespace MFT
                 while (!PleaseStop)
                 {
                     string errMsg;
-                    var exposure = Spectrometer.CollectSpectrum(Settings, out errMsg);
+                    var exposure = Spectrometer.CollectSpectrum(Spectrometer.Settings, out errMsg);
                     if (exposure == null)
                         continue;
                     if (ExposureAvailable != null)
                         ExposureAvailable(this, new ExposureEventArgs(exposure));
-                    Thread.Sleep(Settings.DwellTimeMs);
+                    Thread.Sleep(Spectrometer.Settings.DwellTimeMs);
                 }
             }    );
-        }
-
-        public void ControlsAdjustedEventHandler(object sender, SpectrometerControlsChangedEventArgs e)
-        {
-            Settings = e.Settings;
         }
 
         public void Stop()
