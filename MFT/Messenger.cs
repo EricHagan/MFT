@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace MFT
 {
@@ -6,9 +7,9 @@ namespace MFT
     {
         public static void SendMessage(object sender, Message.Types type, object _object)
         {
-            activeEvents++;
+            Interlocked.Increment(ref activeEvents);
             MessageAvailable?.Invoke(sender, new Message(type, _object));
-            activeEvents--;
+            Interlocked.Decrement(ref activeEvents);
         }
 
         public static event EventHandler<Message> MessageAvailable;
