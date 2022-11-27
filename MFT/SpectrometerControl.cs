@@ -54,9 +54,6 @@ namespace MFT
                 AllowNormalized();
             else
                 DisallowNormalized();
-
-            showDarkRefButton.Enabled = spectrometer.DarkReference != null;
-            showWhiteRefButton.Enabled = spectrometer.WhiteReference != null;
         }
 
         public void UpdateFromForm()
@@ -180,7 +177,6 @@ namespace MFT
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             { 
-                showDarkRefButton_Click(sender, e);
                 Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, spectrometer);
             }
         }
@@ -192,25 +188,8 @@ namespace MFT
                 MessageBox.Show(this, $"Problem collecting spectrum: {errMsg}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                showWhiteRefButton_Click(sender, e);
                 Messenger.SendMessage(this, Message.Types.SPECTROMETER_UPDATED, spectrometer);
             }
-        }
-
-        private void showDarkRefButton_Click(object sender, EventArgs e)
-        {
-            var singleGraph = new SingleSpectrumGraph();
-            singleGraph.Exposure = spectrometer.DarkReference;
-            SetMainControl(singleGraph);
-            singleGraph.Dock = DockStyle.Fill;
-        }
-
-        private void showWhiteRefButton_Click(object sender, EventArgs e)
-        {
-            var singleGraph = new SingleSpectrumGraph();
-            singleGraph.Exposure = spectrometer.WhiteReference;
-            SetMainControl(singleGraph);
-            singleGraph.Dock = DockStyle.Fill;
         }
 
         private void saveExposureSettingsButton_Click(object sender, EventArgs e)
