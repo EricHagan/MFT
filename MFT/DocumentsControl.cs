@@ -17,7 +17,7 @@ namespace MFT
             }
 
             public enum ItemTypes { CAMERA,
-                SPECTROMETER, DARKREF,
+                SPECTROMETER, DARKREF, WHITEREF,
                 EXPOSURE, EXPOSURE_SETTINGS }
 
             public ItemTypes Type { get; set; }
@@ -188,7 +188,8 @@ namespace MFT
                     var p = item as TabPage;
                     var h = p.Tag as ItemHolder;
                     if (h.Type == ItemHolder.ItemTypes.SPECTROMETER ||
-                        h.Type == ItemHolder.ItemTypes.DARKREF)
+                        h.Type == ItemHolder.ItemTypes.DARKREF ||
+                        h.Type == ItemHolder.ItemTypes.WHITEREF)
                     {
                         pagesToRemove.Add(p);
                     }
@@ -256,7 +257,7 @@ namespace MFT
                     {
                         var page = item as TabPage;
                         var h = page.Tag as ItemHolder;
-                        if (h.Type == ItemHolder.ItemTypes.DARKREF)
+                        if (h.Type == ItemHolder.ItemTypes.WHITEREF)
                             existingWhiteRefPages.Add(page);
                     }
                     if (existingWhiteRefPages.Count > 1)
@@ -269,10 +270,10 @@ namespace MFT
                         whiteRefPage.Text = "White Reference";
                         whiteRefPage.Controls.Clear();
                         whiteRefPage.Controls.Add(control);
-                        whiteRefPage.Tag = new ItemHolder(ItemHolder.ItemTypes.DARKREF, spectrometer.WhiteReference);
+                        whiteRefPage.Tag = new ItemHolder(ItemHolder.ItemTypes.WHITEREF, spectrometer.WhiteReference);
                     }
                     else
-                        AddPage(ItemHolder.ItemTypes.DARKREF, "White Reference", control, spectrometer.WhiteReference, activate: false);
+                        AddPage(ItemHolder.ItemTypes.WHITEREF, "White Reference", control, spectrometer.WhiteReference, activate: false);
                 }
             }
         }
