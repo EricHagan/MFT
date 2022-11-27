@@ -164,21 +164,22 @@ namespace MFT
                 var pagesToRemove = new List<TabPage>();
                 foreach (var item in tabControl1.TabPages)
                 {
-                    var page = item as TabPage;
-                    var h = page.Tag as ItemHolder;
+                    var p = item as TabPage;
+                    var h = p.Tag as ItemHolder;
                     if (h.Type == ItemHolder.ItemTypes.SPECTROMETER ||
                         h.Type == ItemHolder.ItemTypes.DARKREF)
                     {
-                        pagesToRemove.Add(page);
+                        pagesToRemove.Add(p);
                     }
                 }
-                foreach (var page in pagesToRemove)
-                    tabControl1.TabPages.Remove(page);
+                foreach (var p in pagesToRemove)
+                    tabControl1.TabPages.Remove(p);
 
-                AddPage(ItemHolder.ItemTypes.SPECTROMETER, spectrometer.GetDeviceDescription(),
+                var page = AddPage(ItemHolder.ItemTypes.SPECTROMETER, spectrometer.GetDeviceDescription(),
                     new SpectrometerControl(spectrometer), spectrometer);
 
                 UpdateSpectrometer(sender, spectrometer);
+                tabControl1.SelectedTab = page;
             }
         }
 
@@ -193,42 +194,36 @@ namespace MFT
             {
                 var spectrometerPage = GetPage(spectrometer);
                 if (spectrometerPage == null)
-                    return; // this shouldn't happen; throw an exception?
+                    return;
 
                 if (spectrometer.DarkReference != null)
                 {
-                    //var darkRefHolders = items.Where(x => x.Value.Type == ItemHolder.ItemTypes.DARKREF);
-                    //if (darkRefHolders.Count() > 1)
-                    //    throw new Exception("More than 1 dark ref in database");
+                    var control = new SingleSpectrumGraph();
+                    control.Exposure = spectrometer.DarkReference;
 
-                    //ItemHolder darkRefHolder;
-                    //if (darkRefHolders.Count() == 1)
-                    //    darkRefHolder = darkRefHolders.First().Value;
-                    //else
-                    //    darkRefHolder = new ItemHolder();
+                    var existingDarkRefPages = new List<TabPage>();
+                    foreach (var item in tabControl1.TabPages)
+                    {
+                        var page = item as TabPage;
+                        var h = page.Tag as ItemHolder;
+                        if (h.Type == ItemHolder.ItemTypes.DARKREF)
+                            existingDarkRefPages.Add(page);
+                    }
+                    if (existingDarkRefPages.Count > 1)
+                        throw new Exception("More than 1 dark ref page exists.");
 
-                    //darkRefHolder.Type = ItemHolder.ItemTypes.DARKREF;
-                    //darkRefHolder.Page  
-                    //darkRefHolder.Object = spectrometer.DarkReference;
-
-
-                    //var darkrefHolder = GetPage(spectrometer.DarkReference);
-                    //if (darkrefHolder == null)
-
-
-
-                    //darkRefNode = new TreeNode("Dark Reference");
-                    //var darkControl = new SingleSpectrumGraph();
-                    //darkControl.Exposure = spectrometer.DarkReference;
-                    //darkControl.Dock = DockStyle.Fill;
-                    //var darkTab = new TabPage("Dark Reference");
-                    //darkTab.Controls.Add(darkControl);
-                    //tabControl1.TabPages.Add(darkTab);
-                    //var darkHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, darkTab, spectrometer.DarkReference);
-                    //darkRefNode.Tag = darkHolder;
-                    //spectrometerNode.Nodes.Add(darkRefNode);
+                    TabPage darkRefPage;
+                    if (existingDarkRefPages.Count == 1)
+                    {
+                        darkRefPage = existingDarkRefPages[0];
+                        darkRefPage.Text = "Dark Reference";
+                        darkRefPage.Controls.Clear();
+                        darkRefPage.Controls.Add(control);
+                        darkRefPage.Tag = new ItemHolder(ItemHolder.ItemTypes.DARKREF, spectrometer.DarkReference);
+                    }
+                    else
+                        AddPage(ItemHolder.ItemTypes.DARKREF, "Dark Reference", control, spectrometer.DarkReference);
                 }
-
             }
         }
 
