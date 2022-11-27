@@ -105,6 +105,9 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET:
                     SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
+                case Message.Types.EXPOSURE_SETTINGS_DELETE:
+                    DeleteExposureSettings(msg.Object as ExposureSettings);
+                    break;
                 case Message.Types.SPECTROMETER_CONNECTED:
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
@@ -215,6 +218,22 @@ namespace MFT
             }
         }
 
+        void DeleteExposureSettings(ExposureSettings settings)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { DeleteExposureSettings(settings); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                var node = FindTreeNode(treeView.TopNode, settings);
+                if (node == null)
+                    return;
+                treeView.Nodes.Remove(node);
+            }
+        }
+
         void UpdateSpectrometer(object sender, ISpectrometer spectrometer)
         {
             if (InvokeRequired)
@@ -264,22 +283,6 @@ namespace MFT
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, null);
         }
 
-        private void applyToSpectrometerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var n = treeView.SelectedNode;
-            var h = n.Tag as ItemHolder;
-            var settings = h.Object as ExposureSettings;
-            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_APPLY, settings);
-        }
-
-        private void setAsDefaultToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var n = treeView.SelectedNode;
-            var h = n.Tag as ItemHolder;
-            var settings = h.Object as ExposureSettings;
-            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings);
-        }
-
         #region Context Menu Item Clicked Handlers
 
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -325,6 +328,30 @@ namespace MFT
             Messenger.SendMessage(this, Message.Types.CAMERA_CONNECT, camera);
         }
 
+        private void applyToSpectrometerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var n = treeView.SelectedNode;
+            var h = n.Tag as ItemHolder;
+            var settings = h.Object as ExposureSettings;
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_APPLY, settings);
+        }
+
+        private void setAsDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var n = treeView.SelectedNode;
+            var h = n.Tag as ItemHolder;
+            var settings = h.Object as ExposureSettings;
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT, settings);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var n = treeView.SelectedNode;
+            var h = n.Tag as ItemHolder;
+            var settings = h.Object as ExposureSettings;
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_DELETE, settings);
+        }
+
         #endregion
 
         List<TreeNode> FlattenTreeView(TreeNode topNode)
@@ -349,5 +376,6 @@ namespace MFT
             }
             return null;
         }
+
     }
 }

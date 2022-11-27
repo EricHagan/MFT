@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MFT
@@ -48,6 +42,9 @@ namespace MFT
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
+                    break;
+                case Message.Types.EXPOSURE_SETTINGS_DELETE:
+                    DeleteExposureSettings(msg.Object as ExposureSettings);
                     break;
                 case Message.Types.SPECTROMETER_CONNECTED:
                     ConnectSpectrometer(sender, msg.Object as ISpectrometer);
@@ -156,6 +153,22 @@ namespace MFT
                 if (page == null)
                     return;
                 page.Text = settings.ToString();
+            }
+        }
+
+        void DeleteExposureSettings(ExposureSettings settings)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { DeleteExposureSettings(settings); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                var page = GetPage(settings);
+                if (page == null)
+                    return;
+                tabControl1.TabPages.Remove(page);
             }
         }
 

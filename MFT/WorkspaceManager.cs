@@ -36,6 +36,9 @@ namespace MFT
                 case Message.Types.EXPOSURE_SETTINGS_SET_DEFAULT:
                     SetDefaultExposureSettings(msg.Object as ExposureSettings);
                     break;
+                case Message.Types.EXPOSURE_SETTINGS_DELETE:
+                    DeleteExposureSettings(msg.Object as ExposureSettings);
+                    break;
                 case Message.Types.SPECTROMETER_CONNECT:
                     ConnectSpectrometer((SpectrometerTypes)msg.Object);
                     break;
@@ -95,6 +98,16 @@ namespace MFT
         {
             workspace.DefaultExposureSettings = settings;
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_DEFAULT_SET, settings);
+        }
+
+        void DeleteExposureSettings(ExposureSettings settings)
+        {
+            if (!workspace.ExposureSettings.Contains(settings))
+                throw new Exception($"Could not find '{settings}' to delete.");
+            if (workspace.ExposureSettings.Remove(settings))
+                Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_DELETED, settings);
+            else
+                Messenger.SendMessage(this, Message.Types.ERROR, "Could not delete exposure settings.");
         }
 
         void ConnectSpectrometer(SpectrometerTypes type)
