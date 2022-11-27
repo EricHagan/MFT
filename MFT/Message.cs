@@ -19,6 +19,7 @@ namespace MFT
             CAMERA_UPDATED,
             CAMERA_ACTIVATED,
             ERROR,
+            EXPOSURE_ACTIVATED,
             EXPOSURE_SETTINGS_CREATE,
             EXPOSURE_SETTINGS_CREATED,
             EXPOSURE_SETTINGS_UPDATED,

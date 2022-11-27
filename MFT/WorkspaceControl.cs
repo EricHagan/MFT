@@ -279,6 +279,28 @@ namespace MFT
             // what node opened them
             if (e.Button == MouseButtons.Right)
                 treeView.SelectedNode = e.Node;
+            else if (e.Button == MouseButtons.Left)
+            {
+                var node = e.Node;
+                var itemHolder = (ItemHolder)node.Tag;
+                if (itemHolder == null)
+                    return;
+                switch (itemHolder.Type)
+                {
+                    case ItemHolder.ItemTypes.CAMERA:
+                        Messenger.SendMessage(this, Message.Types.CAMERA_ACTIVATED, itemHolder.Object);
+                        break;
+                    case ItemHolder.ItemTypes.SPECTROMETER:
+                        Messenger.SendMessage(this, Message.Types.SPECTROMETER_ACTIVATED, itemHolder.Object);
+                        break;
+                    case ItemHolder.ItemTypes.EXPOSURE:
+                        Messenger.SendMessage(this, Message.Types.EXPOSURE_ACTIVATED, itemHolder.Object);
+                        break;
+                    case ItemHolder.ItemTypes.EXPOSURE_SETTINGS:
+                        Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_ACTIVATED, itemHolder.Object);
+                        break;
+                }
+            }
         }
 
         private void spectrometerTitleContextMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -295,29 +317,6 @@ namespace MFT
         }
 
         #endregion
-
-        private void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                var node = e.Node;
-                var itemHolder = (ItemHolder)node.Tag;
-                if (itemHolder == null)
-                    return;
-                switch (itemHolder.Type)
-                {
-                    case ItemHolder.ItemTypes.CAMERA:
-                        Messenger.SendMessage(this, Message.Types.CAMERA_ACTIVATED, itemHolder.Object);
-                        break;
-                    case ItemHolder.ItemTypes.SPECTROMETER:
-                        Messenger.SendMessage(this, Message.Types.SPECTROMETER_ACTIVATED, itemHolder.Object);
-                        break;
-                    case ItemHolder.ItemTypes.EXPOSURE_SETTINGS:
-                        Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_ACTIVATED, itemHolder.Object);
-                        break;
-                }
-            }
-        }
 
         List<TreeNode> FlattenTreeView(TreeNode topNode)
         {

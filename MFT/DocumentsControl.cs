@@ -55,10 +55,17 @@ namespace MFT
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
+                case Message.Types.CAMERA_ACTIVATED:
+                case Message.Types.SPECTROMETER_ACTIVATED:
+                case Message.Types.EXPOSURE_ACTIVATED:
+                case Message.Types.EXPOSURE_SETTINGS_ACTIVATED:
+                    ItemActivated(msg.Object);
+                    break;
             }
         }
 
-        TabPage AddPage(ItemHolder.ItemTypes type, string name, Control control, object obj)
+        TabPage AddPage(ItemHolder.ItemTypes type, string name,
+            Control control, object obj, bool activate = true)
         {
             if (GetPage(obj) != null)
                 return null;
@@ -66,7 +73,8 @@ namespace MFT
             tabPage.Controls.Add(control);
             tabPage.Tag = new ItemHolder(type, obj);
             tabControl1.TabPages.Add(tabPage);
-            tabControl1.SelectedTab = tabPage;
+            if (activate)
+                tabControl1.SelectedTab = tabPage;
             return tabPage;
         }
 
@@ -222,12 +230,18 @@ namespace MFT
                         darkRefPage.Tag = new ItemHolder(ItemHolder.ItemTypes.DARKREF, spectrometer.DarkReference);
                     }
                     else
-                        AddPage(ItemHolder.ItemTypes.DARKREF, "Dark Reference", control, spectrometer.DarkReference);
+                        AddPage(ItemHolder.ItemTypes.DARKREF, "Dark Reference", control, spectrometer.DarkReference, activate: false);
                 }
             }
         }
 
-
+        void ItemActivated(object obj)
+        {
+            var page = GetPage(obj);
+            if (page == null)
+                return;
+            tabControl1.SelectedTab = page;
+        }
 
 
     }
