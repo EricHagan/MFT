@@ -232,6 +232,35 @@ namespace MFT
                     else
                         AddPage(ItemHolder.ItemTypes.DARKREF, "Dark Reference", control, spectrometer.DarkReference, activate: false);
                 }
+
+                if (spectrometer.WhiteReference != null)
+                {
+                    var control = new SingleSpectrumGraph();
+                    control.Exposure = spectrometer.WhiteReference;
+
+                    var existingWhiteRefPages = new List<TabPage>();
+                    foreach (var item in tabControl1.TabPages)
+                    {
+                        var page = item as TabPage;
+                        var h = page.Tag as ItemHolder;
+                        if (h.Type == ItemHolder.ItemTypes.DARKREF)
+                            existingWhiteRefPages.Add(page);
+                    }
+                    if (existingWhiteRefPages.Count > 1)
+                        throw new Exception("More than 1 white ref page exists.");
+
+                    TabPage whiteRefPage;
+                    if (existingWhiteRefPages.Count == 1)
+                    {
+                        whiteRefPage = existingWhiteRefPages[0];
+                        whiteRefPage.Text = "White Reference";
+                        whiteRefPage.Controls.Clear();
+                        whiteRefPage.Controls.Add(control);
+                        whiteRefPage.Tag = new ItemHolder(ItemHolder.ItemTypes.DARKREF, spectrometer.WhiteReference);
+                    }
+                    else
+                        AddPage(ItemHolder.ItemTypes.DARKREF, "White Reference", control, spectrometer.WhiteReference, activate: false);
+                }
             }
         }
 

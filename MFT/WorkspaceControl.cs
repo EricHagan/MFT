@@ -247,6 +247,15 @@ namespace MFT
                     spectrometerNode.Nodes.Add(darkRefNode);
                     darkRefNode.EnsureVisible();
                 }
+
+                if (spectrometer.WhiteReference != null)
+                {
+                    whiteRefNode = new TreeNode("White Reference");
+                    var whiteHolder = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE, spectrometer.WhiteReference);
+                    whiteRefNode.Tag = whiteHolder;
+                    spectrometerNode.Nodes.Add(whiteRefNode);
+                    whiteRefNode.EnsureVisible();
+                }
             }
         }
 
