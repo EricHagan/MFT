@@ -42,6 +42,9 @@ namespace MFT
                 case Message.Types.SPECTROMETER_CONNECT:
                     ConnectSpectrometer((SpectrometerTypes)msg.Object);
                     break;
+                case Message.Types.EXITING:
+                    Cleanup();
+                    break;
             }
         }
 
@@ -121,6 +124,14 @@ namespace MFT
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECTED, workspace.Spectrometer);
+        }
+
+        void Cleanup()
+        {
+            foreach (var camera in workspace.Cameras)
+            {
+                camera.Stop();
+            }
         }
     }
 }

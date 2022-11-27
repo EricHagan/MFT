@@ -30,6 +30,7 @@ namespace MFT
             SPECTROMETER_CONNECTED,
             SPECTROMETER_UPDATED,
             SPECTROMETER_ACTIVATED,
+            EXITING,
         }
     }
 }
