@@ -1,6 +1,4 @@
-﻿using MFT.Properties;
-using RgbDriverKit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace MFT
