@@ -2,7 +2,7 @@
 
 namespace MFT
 {
-    public class SpectrometerControlsChangedEventArgs : EventArgs
+    internal class SpectrometerControlsChangedEventArgs : EventArgs
     {
         public ExposureSettings Settings { get; set; }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    public class Spectrum
+    internal class Spectrum
     {
         public Spectrum(List<double> wavelengthNm, List<double> values)
         {

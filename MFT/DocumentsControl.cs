@@ -6,7 +6,7 @@ namespace MFT
 {
     public partial class DocumentsControl : UserControl
     {
-        public class ItemHolder
+        internal class ItemHolder
         {
             public ItemHolder() { }
 

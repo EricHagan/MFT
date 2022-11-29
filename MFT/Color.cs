@@ -3,7 +3,7 @@ using Colorimetry;
 
 namespace MFT
 {
-    public class Color
+    internal class Color
     {
         public Color(Spectrum spectrum)
         {

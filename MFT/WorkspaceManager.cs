@@ -2,7 +2,7 @@
 
 namespace MFT
 {
-    public class WorkspaceManager
+    internal class WorkspaceManager
     {
         public static WorkspaceManager GetWorkspaceManager()
         {

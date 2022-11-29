@@ -7,7 +7,7 @@ namespace MFT
 {
     public partial class WorkspaceControl : UserControl
     {
-        public class ItemHolder
+        internal class ItemHolder
         {
             public ItemHolder(ItemTypes type, object _object)
             {

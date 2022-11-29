@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    public class SpectrometerDescription
+    internal class SpectrometerDescription
     {
         SpectrometerTypes Type { get; set; }
         string Description { get; set; }
