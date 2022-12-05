@@ -97,7 +97,7 @@ namespace MFT
                     OnCameraUpdated(sender, msg.Object as ICamera);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_CREATED:
-                    CreateExposureSettings(sender, msg.Object as ExposureSettings);
+                    CreateExposureSettingsNode(sender, msg.Object as ExposureSettings);
                     break;
                 case Message.Types.EXPOSURE_SETTINGS_UPDATED:
                     UpdateExposureSettings(sender, msg.Object as ExposureSettings);
@@ -146,11 +146,11 @@ namespace MFT
             }
         }
 
-        void CreateExposureSettings(object sender, ExposureSettings settings)
+        void CreateExposureSettingsNode(object sender, ExposureSettings settings)
         {
             if (InvokeRequired)
             {
-                Action safeUpdate = delegate { CreateExposureSettings(sender, settings); };
+                Action safeUpdate = delegate { CreateExposureSettingsNode(sender, settings); };
                 Invoke(safeUpdate);
             }
             else
@@ -158,16 +158,12 @@ namespace MFT
                 var t = FindTreeNode(treeView.TopNode, settings);
                 if (t != null)
                     throw new Exception($"Internal error. That ExposureSettings object is already in the tree.");
-                var control = new ExposureSettingsControl();
-                control.Quiet = true; // otherwise stack overflow
-                control.Settings = settings;
                 var node = new TreeNode();
                 node.Tag = new ItemHolder(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings);
                 node.Text = settings.ToString();
                 node.ContextMenuStrip = exposureSettingsItemContextMenuStrip;
                 exposureSettingsNode.Nodes.Add(node);
                 node.EnsureVisible();
-                control.Quiet = false;
             }
         }
 
