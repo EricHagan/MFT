@@ -37,7 +37,7 @@ namespace MFT
 
         void ExposureAvailableEventHandler(object sender, ExposureEventArgs e)
         {
-            Exposure = e.Exposure; // this will trigger Update() in SingleSpectrumGraph
+            Exposure = e.Exposure; // this will trigger Update() in ExposureControl
         }
 
         private void ContinuousExposureControl_Load(object sender, EventArgs e)
