@@ -59,7 +59,7 @@
             this.Controls.Add(this.chart1);
             this.Name = "SingleSpectrumGraph";
             this.Size = new System.Drawing.Size(556, 537);
-            this.Load += new System.EventHandler(this.SingleSpectrumGraph_Load);
+            this.Load += new System.EventHandler(this.ExposureControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 

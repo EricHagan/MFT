@@ -11,7 +11,7 @@ namespace MFT
             InitializeComponent();
         }
 
-        protected void SingleSpectrumGraph_Load(object sender, EventArgs e)
+        protected void ExposureControl_Load(object sender, EventArgs e)
         {
             if (!DesignTimeHelper.IsInDesignMode)
                 Dock = DockStyle.Fill;
