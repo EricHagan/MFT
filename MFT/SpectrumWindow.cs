@@ -48,5 +48,7 @@ namespace MFT
             var newValues = data.Values.GetRange(startIndex, span);
             return new Spectrum(newWavelengths, newValues);
         }
+
+        public string GetDescription() => "Window";
     }
 }

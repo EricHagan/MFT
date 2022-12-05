@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MFT
@@ -17,6 +18,19 @@ namespace MFT
                 spectrum = processor.Process(spectrum);
             }
             return spectrum;
+        }
+
+        public string GetDescription()
+        {
+            var output = new StringBuilder();
+            output.Append("Chain: ");
+            if (chain == null || chain.Count == 0)
+                output.Append("Empty");
+            foreach (ISpectrumProcessor processor in chain)
+            {
+                output.Append(processor.GetDescription() + " ");
+            }
+            return output.ToString();
         }
 
         public int ID { get; set; }

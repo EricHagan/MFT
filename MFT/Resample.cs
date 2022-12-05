@@ -18,5 +18,7 @@ namespace MFT
                 data.WavelengthsNm.ToArray(), MinWavelength_nm, MaxWavelength_nm, Increment_nm);
             return new Spectrum(new List<double>(newWavelengths.Select(x => (double)x)), new List<double>(newSpectrum));
         }
+
+        public string GetDescription() => "Resample";
     }
 }

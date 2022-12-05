@@ -96,6 +96,12 @@
     <Compile Include="Message.cs" />
     <Compile Include="Messenger.cs" />
     <Compile Include="ModifiedExposure.cs" />
+    <Compile Include="MovingAverageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MovingAverageControl.Designer.cs">
+      <DependentUpon>MovingAverageControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpectrometerBase.cs" />
     <Compile Include="SpectrometerControlsChangedEventArgs.cs" />
     <Compile Include="DesignTimeHelper.cs" />
@@ -130,6 +136,13 @@
     <Compile Include="Qmini.cs" />
     <Compile Include="Spectrum.cs" />
     <Compile Include="SpectrumProcessorChain.cs" />
+    <Compile Include="SpectrumProcessorChainControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpectrumProcessorChainControl.Designer.cs">
+      <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpectrumProcessorFactory.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
@@ -166,6 +179,9 @@
     <EmbeddedResource Include="MainDialog.resx">
       <DependentUpon>MainDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MovingAverageControl.resx">
+      <DependentUpon>MovingAverageControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -180,6 +196,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpectrometerControl.resx">
       <DependentUpon>SpectrometerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpectrumProcessorChainControl.resx">
+      <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>

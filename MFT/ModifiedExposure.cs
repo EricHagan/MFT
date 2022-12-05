@@ -11,5 +11,7 @@ namespace MFT
         public SpectrumProcessorChain SpectrumProcessor { get; set; }
 
         public Spectrum InputSpectrum { get; set; }
+
+
     }
 }

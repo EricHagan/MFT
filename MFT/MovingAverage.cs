@@ -17,5 +17,7 @@ namespace MFT
             var values = new List<double>(Functions.SmoothSpectrum(data.Values.ToArray(), WindowPoints, Iterations));
             return new Spectrum(data.WavelengthsNm, values);
         }
+
+        public string GetDescription() => "Moving Average";
     }
 }
