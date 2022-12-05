@@ -85,10 +85,10 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = spectrometer.CollectSpectrum(spectrometer.Settings, out string errMsg);
+            var exposure = spectrometer.CollectExposure(spectrometer.Settings, out string errMsg);
             if (exposure != null)
             {
-                var singleGraph = new SingleSpectrumGraph();
+                var singleGraph = new ExposureControl();
                 singleGraph.Exposure = exposure;
 
                 SetMainControl(singleGraph);
@@ -108,7 +108,7 @@ namespace MFT
         {
             var exposureStream = new ExposureStream(spectrometer);
             RaiseSpectrometerControlsChangedEvent(ContinuousButton);
-            var graph = new ContinuousSpectrumGraph();
+            var graph = new ContinuousExposureControl();
             graph.ExposureStream = exposureStream;
 
             var tabPage = new TabPage("Continuous");

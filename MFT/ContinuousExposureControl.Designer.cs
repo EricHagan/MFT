@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class ContinuousSpectrumGraph
+    partial class ContinuousExposureControl
     {
         /// <summary> 
         /// Required designer variable.

@@ -61,7 +61,7 @@ namespace MFT
             return new List<double>(spectrometer.GetWavelengths()); ;
         }
 
-        public override Exposure CollectSpectrum(ExposureSettings settings, out string ErrMsg)
+        public override Exposure CollectExposure(ExposureSettings settings, out string ErrMsg)
         {
             lock (collectLock)
             {
@@ -70,11 +70,12 @@ namespace MFT
                 {
                     return null;
                 }
-                var Spectrum = spectrometer.GetSpectrum().ToList();
+                var spectrum = new Spectrum(GetWavelengths(),
+                    spectrometer.GetSpectrum().Select(x => (double)x).ToList());
                 var TimeStamp = GetTimeStamp();
-                var exposure = new Exposure(this, Spectrum.Select(x => (double)x), TimeStamp, false);
+                var exposure = new Exposure(spectrum, TimeStamp, false);
                 if (settings.Normalized)
-                    exposure = exposure.GetNormalized();
+                    exposure = Normalize(exposure);
                 exposure.IntegrationTimeSeconds = settings.IntegrationTimeMs / 1000;
                 exposure.AveragingNum = settings.Averaging;
                 return exposure;
@@ -112,7 +113,7 @@ namespace MFT
             }
         }
 
-        protected List<double> GetSpectrum()
+        protected List<double> GetSpectrumValues()
         {
             var output = new List<double>();
             foreach (var value in spectrometer.GetSpectrum())

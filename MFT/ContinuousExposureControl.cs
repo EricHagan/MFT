@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class ContinuousSpectrumGraph : SingleSpectrumGraph
+    public partial class ContinuousExposureControl : ExposureControl
     {
-        public ContinuousSpectrumGraph()
+        public ContinuousExposureControl()
         {
             InitializeComponent();
         }

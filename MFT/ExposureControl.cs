@@ -4,9 +4,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace MFT
 {
-    public partial class SingleSpectrumGraph : UserControl
+    public partial class ExposureControl : UserControl
     {
-        public SingleSpectrumGraph()
+        public ExposureControl()
         {
             InitializeComponent();
         }
@@ -44,18 +44,19 @@ namespace MFT
             {
                 if (exposure == null)
                     return;
+                if (exposure.Spectrum == null)
+                    return;
+                if (!exposure.Spectrum.IsGood(out string errMsg))
+                    throw new Exception($"Problem with exposure '{exposure.Name}': {errMsg}");
 
                 chart1.Titles.Clear();
                 chart1.Titles.Add(exposure.Name);
 
                 var series = new Series();
                 series.ChartType = SeriesChartType.Line;
-                var wavelengths = exposure.Spectrometer.GetWavelengths();
-                if (exposure.Spectrum.Count != wavelengths.Count)
-                    throw new Exception($"Spectrum '{exposure.Name}' is a different length" +
-                        $" ({exposure.Spectrum.Count}) than its spectrometer's wavelength array ({wavelengths.Count})");
-                for (int i = 0; i < wavelengths.Count; i++)
-                    series.Points.AddXY(wavelengths[i], exposure.Spectrum[i]);
+                for (int i = 0; i < Exposure.Spectrum.WavelengthsNm.Count; i++)
+                    series.Points.AddXY(Exposure.Spectrum.WavelengthsNm[i],
+                        Exposure.Spectrum.Values[i]);
 
                 chart1.Series.Clear();
                 chart1.Series.Add(series);
@@ -66,8 +67,8 @@ namespace MFT
                     SetYAxisScale(-0.1, 1.1, 0.1);
                 else
                 {
-                    SetYAxisScale(exposure.MinReflectance, exposure.MaxReflectance,
-                                        (exposure.MaxReflectance - exposure.MinReflectance) / YAxisTicks);
+                    SetYAxisScale(exposure.MinValue, exposure.MaxValue,
+                                        (exposure.MaxValue - exposure.MinValue) / YAxisTicks);
                 }
 
                 chart1.Update();

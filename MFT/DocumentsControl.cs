@@ -220,7 +220,7 @@ namespace MFT
 
                 if (spectrometer.DarkReference != null)
                 {
-                    var control = new SingleSpectrumGraph();
+                    var control = new ExposureControl();
                     control.Exposure = spectrometer.DarkReference;
 
                     var existingDarkRefPages = new List<TabPage>();
@@ -249,7 +249,7 @@ namespace MFT
 
                 if (spectrometer.WhiteReference != null)
                 {
-                    var control = new SingleSpectrumGraph();
+                    var control = new ExposureControl();
                     control.Exposure = spectrometer.WhiteReference;
 
                     var existingWhiteRefPages = new List<TabPage>();

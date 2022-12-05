@@ -74,11 +74,11 @@
       <DependentUpon>CameraControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Color.cs" />
-    <Compile Include="ContinuousSpectrumGraph.cs">
+    <Compile Include="ContinuousExposureControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ContinuousSpectrumGraph.Designer.cs">
-      <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
+    <Compile Include="ContinuousExposureControl.Designer.cs">
+      <DependentUpon>ContinuousExposureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="DocumentsControl.cs">
       <SubType>UserControl</SubType>
@@ -92,8 +92,10 @@
     <Compile Include="ExposureSettingsControl.Designer.cs">
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Messenger.cs" />
+    <Compile Include="ModifiedExposure.cs" />
     <Compile Include="SpectrometerBase.cs" />
     <Compile Include="SpectrometerControlsChangedEventArgs.cs" />
     <Compile Include="DesignTimeHelper.cs" />
@@ -131,11 +133,11 @@
     <Compile Include="Test.cs" />
     <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
-    <Compile Include="SingleSpectrumGraph.cs">
+    <Compile Include="ExposureControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SingleSpectrumGraph.Designer.cs">
-      <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
+    <Compile Include="ExposureControl.Designer.cs">
+      <DependentUpon>ExposureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Workspace.cs" />
     <Compile Include="SpectrumWindow.cs" />
@@ -152,8 +154,8 @@
     <EmbeddedResource Include="CameraControl.resx">
       <DependentUpon>CameraControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ContinuousSpectrumGraph.resx">
-      <DependentUpon>ContinuousSpectrumGraph.cs</DependentUpon>
+    <EmbeddedResource Include="ContinuousExposureControl.resx">
+      <DependentUpon>ContinuousExposureControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DocumentsControl.resx">
       <DependentUpon>DocumentsControl.cs</DependentUpon>
@@ -173,8 +175,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SingleSpectrumGraph.resx">
-      <DependentUpon>SingleSpectrumGraph.cs</DependentUpon>
+    <EmbeddedResource Include="ExposureControl.resx">
+      <DependentUpon>ExposureControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpectrometerControl.resx">
       <DependentUpon>SpectrometerControl.cs</DependentUpon>
