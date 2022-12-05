@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MFT
@@ -40,11 +39,6 @@ namespace MFT
             }
     }
         string name;
-
-        public Exposure GetNormalized(ISpectrometer s)
-        {
-            return s.Normalize(this);
-        }
 
         public static Exposure operator /(Exposure A, Exposure B)
         {
