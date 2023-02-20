@@ -15,6 +15,18 @@ namespace MFT
         public SpectrumProcessorChainControl()
         {
             InitializeComponent();
+            Init();
+        }
+
+        public void Init()
+        {
+            availableProcessorsListBox.Items.Clear();
+            foreach (int i in Enum.GetValues(typeof(SpectrumProcessorFactory.Types)))
+            {
+                var view = new SpectrumProcessorView();
+                view.Type = (SpectrumProcessorFactory.Types)i;
+                availableProcessorsListBox.Items.Add(view);
+            }
         }
     }
 }

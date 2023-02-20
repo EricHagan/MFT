@@ -15,7 +15,8 @@ namespace MFT
                 Object = _object;
             }
 
-            public enum ItemTypes { CAMERA, SPECTROMETER, EXPOSURE, EXPOSURE_SETTINGS }
+            public enum ItemTypes { CAMERA, SPECTROMETER, EXPOSURE, EXPOSURE_SETTINGS,
+                SPECTRUM_PROCESSOR_CHAIN }
 
             public ItemTypes Type { get; set; }
             public object Object { get; set; }
@@ -82,10 +83,15 @@ namespace MFT
 
             // spectrum processor chains
             spectrumProcessorChainsNode = root.Nodes.Add("Spectrum Processor Chains");
+            spectrumProcessorChainsNode.ContextMenuStrip = spectrumProcessorChainTitleContextMenuStrip;
+            spectrumProcessorChainTitleContextMenuStrip.Items.Clear();
+            var createSpectrumProcesssorChain = new ToolStripMenuItem();
+            createSpectrumProcesssorChain.Text = "Create Spectrum Processor Chain";
+            createSpectrumProcesssorChain.Click += CreateSpectrumProcessorChain_Click;
+            spectrumProcessorChainTitleContextMenuStrip.Items.Add(createSpectrumProcesssorChain);
 
             // tests
             testsNode = root.Nodes.Add("Tests");
-
             root.Expand();
         }
 
@@ -111,6 +117,9 @@ namespace MFT
                 case Message.Types.SPECTROMETER_CONNECTED:
                 case Message.Types.SPECTROMETER_UPDATED:
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
+                    break;
+                case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
+                    CreateSpectrumProcessorChainNode(sender, msg.Object as SpectrumProcessorChain);
                     break;
             }
         }
@@ -274,9 +283,25 @@ namespace MFT
             }
         }
 
-        private void CreateExposureSettings_Click(object sender, EventArgs e)
+        void CreateSpectrumProcessorChainNode(object sender, SpectrumProcessorChain chain)
         {
-            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, null);
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { CreateSpectrumProcessorChainNode(sender, chain); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                var t = FindTreeNode(treeView.TopNode, chain);
+                if (t != null)
+                    throw new Exception($"Internal error. That spectrum processor chain already exists.");
+                var node = new TreeNode();
+                node.Tag = new ItemHolder(ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN, chain);
+                node.Text = chain.ToString();
+                //node.ContextMenuStrip = exposureSettingsItemContextMenuStrip;
+                spectrumProcessorChainsNode.Nodes.Add(node);
+                node.EnsureVisible();
+            }
         }
 
         #region Context Menu Item Clicked Handlers
@@ -348,6 +373,15 @@ namespace MFT
             Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_DELETE, settings);
         }
 
+        private void CreateExposureSettings_Click(object sender, EventArgs e)
+        {
+            Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_CREATE, null);
+        }
+
+        private void CreateSpectrumProcessorChain_Click(object sender, EventArgs e)
+        {
+            Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATE, null);
+        }
         #endregion
 
         List<TreeNode> FlattenTreeView(TreeNode topNode)

@@ -37,6 +37,7 @@
             this.applyToSpectrometerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setAsDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spectrumProcessorChainTitleContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exposureSettingsItemContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,7 @@
             // exposureSettingsTitleContextMenuStrip
             // 
             this.exposureSettingsTitleContextMenuStrip.Name = "exposureSettingsTitleContextMenuStrip";
-            this.exposureSettingsTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
+            this.exposureSettingsTitleContextMenuStrip.Size = new System.Drawing.Size(181, 26);
             // 
             // exposureSettingsItemContextMenuStrip
             // 
@@ -73,7 +74,7 @@
             this.setAsDefaultToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.exposureSettingsItemContextMenuStrip.Name = "exposureSettingsItemContextMenuStrip";
-            this.exposureSettingsItemContextMenuStrip.Size = new System.Drawing.Size(195, 92);
+            this.exposureSettingsItemContextMenuStrip.Size = new System.Drawing.Size(195, 70);
             // 
             // applyToSpectrometerToolStripMenuItem
             // 
@@ -95,6 +96,11 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // spectrumProcessorChainTitleContextMenuStrip
+            // 
+            this.spectrumProcessorChainTitleContextMenuStrip.Name = "spectrumProcessorChainTitleContextMenuStrip";
+            this.spectrumProcessorChainTitleContextMenuStrip.Size = new System.Drawing.Size(61, 4);
             // 
             // WorkspaceControl
             // 
@@ -118,5 +124,6 @@
         private System.Windows.Forms.ToolStripMenuItem applyToSpectrometerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setAsDefaultToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip spectrumProcessorChainTitleContextMenuStrip;
     }
 }

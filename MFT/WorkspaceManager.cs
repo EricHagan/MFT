@@ -42,6 +42,9 @@ namespace MFT
                 case Message.Types.SPECTROMETER_CONNECT:
                     ConnectSpectrometer((SpectrometerTypes)msg.Object);
                     break;
+                case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATE:
+                    CreateSpectrumProcessorChain();
+                    break;
                 case Message.Types.EXITING:
                     Cleanup();
                     break;
@@ -129,6 +132,13 @@ namespace MFT
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECTED, workspace.Spectrometer);
+        }
+
+        void CreateSpectrumProcessorChain()
+        {
+            var c = new SpectrumProcessorChain();
+            workspace.SpectrumProcessorChains.Add(c);
+            Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED, c);
         }
 
         void Cleanup()

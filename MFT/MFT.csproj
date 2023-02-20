@@ -143,6 +143,7 @@
       <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
     </Compile>
     <Compile Include="SpectrumProcessorFactory.cs" />
+    <Compile Include="SpectrumProcessorView.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
