@@ -18,7 +18,8 @@ namespace MFT
 
             public enum ItemTypes { CAMERA,
                 SPECTROMETER, DARKREF, WHITEREF,
-                EXPOSURE, EXPOSURE_SETTINGS }
+                EXPOSURE, EXPOSURE_SETTINGS,
+                SPECTRUM_PROCESSOR_CHAIN}
 
             public ItemTypes Type { get; set; }
             public object Object { get; set; }
@@ -57,6 +58,9 @@ namespace MFT
                 case Message.Types.EXPOSURE_ACTIVATED:
                 case Message.Types.EXPOSURE_SETTINGS_ACTIVATED:
                     ItemActivated(msg.Object);
+                    break;
+                case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
+                    CreateSpectrumProcessorChain(sender, msg.Object as SpectrumProcessorChain);
                     break;
             }
         }
@@ -277,6 +281,26 @@ namespace MFT
                 }
             }
         }
+
+        void CreateSpectrumProcessorChain(object sender, SpectrumProcessorChain chain)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { CreateSpectrumProcessorChain(sender, chain); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                if (GetPage(chain) != null)
+                    throw new Exception($"Spectrum processor chain '{chain}' already exists in documentHolder");
+                var control = new SpectrumProcessorChainControl();
+                //control.Quiet = true; // otherwise stack overflow
+                control.Chain = chain;
+                var tabpage = AddPage(ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN, chain.ToString(), control, chain, activate: false);
+                //control.Quiet = false;
+            }
+        }
+
 
         void ItemActivated(object obj)
         {

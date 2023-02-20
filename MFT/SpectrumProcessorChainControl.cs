@@ -28,5 +28,8 @@ namespace MFT
                 availableProcessorsListBox.Items.Add(view);
             }
         }
+
+        internal SpectrumProcessorChain Chain { get; set; }
+
     }
 }
