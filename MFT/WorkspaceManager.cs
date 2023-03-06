@@ -137,8 +137,20 @@ namespace MFT
         void CreateSpectrumProcessorChain()
         {
             var c = new SpectrumProcessorChain();
+            c.Name = GetSpectrumProcessorAutoName();
             workspace.SpectrumProcessorChains.Add(c);
             Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED, c);
+        }
+
+        string GetSpectrumProcessorAutoName()
+        {
+            string name = "Chain " + workspace.NextSpectrumProcessorChainNameIndex.ToString();
+            while (workspace.SpectrumProcessorChainNames.Contains(name))
+            {
+                workspace.NextSpectrumProcessorChainNameIndex++;
+                name = "Chain " + workspace.NextSpectrumProcessorChainNameIndex.ToString();
+            }
+            return name;
         }
 
         void Cleanup()

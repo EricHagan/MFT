@@ -78,7 +78,12 @@ namespace MFT
             OnSettingsChanged();
         }
 
-        void UpdateForm() {}
+        void UpdateForm()
+        {
+            nameTextBox.Text = chain.Name;
+
+
+        }
 
         void UpdateFromForm()
         {
