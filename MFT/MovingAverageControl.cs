@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class MovingAverageControl : UserControl
+    public partial class MovingAverageControl : UserControl, ISpectrumProcessorControl
     {
         public MovingAverageControl()
         {
             InitializeComponent();
             Messenger.MessageAvailable += OnMessageReceived;
+            movingAverage = new MovingAverage();
         }
 
         bool Quiet { get; set; } = false;
@@ -29,23 +30,28 @@ namespace MFT
             }
             set
             {
-                UpdateForm();
                 movingAverage = value;
+                if (movingAverage != null)
+                    UpdateForm();
             }
         }
         MovingAverage movingAverage;
 
-        void UpdateForm()
+        public void UpdateForm()
         {
             PointsNumericUpDown.Value = movingAverage.WindowPoints;
             iterationsNumericUpDown.Value = movingAverage.Iterations;
         }
 
-        void UpdateFromForm()
+        public void UpdateFromForm()
         {
             movingAverage.WindowPoints = (int)PointsNumericUpDown.Value;
             movingAverage.Iterations = (int)iterationsNumericUpDown.Value;
+        }
 
+        public ISpectrumProcessor GetProcessor()
+        {
+            return movingAverage;
         }
 
         void OnMessageReceived(object sender, Message msg)

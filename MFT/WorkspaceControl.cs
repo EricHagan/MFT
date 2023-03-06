@@ -121,6 +121,9 @@ namespace MFT
                 case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
                     CreateSpectrumProcessorChainNode(sender, msg.Object as SpectrumProcessorChain);
                     break;
+                case Message.Types.SPECTRUM_PROCESSOR_CHAIN_UPDATED:
+                    UpdateSpectrumProcessorChain(sender, msg.Object as SpectrumProcessorChain);
+                    break;
             }
         }
 
@@ -297,10 +300,26 @@ namespace MFT
                     throw new Exception($"Internal error. That spectrum processor chain already exists.");
                 var node = new TreeNode();
                 node.Tag = new ItemHolder(ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN, chain);
-                node.Text = chain.ToString();
+                node.Text = chain.Name;
                 //node.ContextMenuStrip = exposureSettingsItemContextMenuStrip;
                 spectrumProcessorChainsNode.Nodes.Add(node);
                 node.EnsureVisible();
+            }
+        }
+
+        void UpdateSpectrumProcessorChain(object sender, SpectrumProcessorChain chain)
+        {
+            if (InvokeRequired)
+            {
+                Action safeUpdate = delegate { UpdateSpectrumProcessorChain(sender, chain); };
+                Invoke(safeUpdate);
+            }
+            else
+            {
+                var node = FindTreeNode(treeView.TopNode, chain);
+                if (node == null)
+                    return;
+                node.Text = chain.Name;
             }
         }
 

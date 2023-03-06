@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    internal interface ISpectrumProcessor
+    public interface ISpectrumProcessor
     {
         Spectrum Process(Spectrum data);
         string GetDescription();

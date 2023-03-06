@@ -23,17 +23,23 @@ namespace MFT
         public string GetDescription()
         {
             var output = new StringBuilder();
-            output.Append("Chain: ");
+            if (!string.IsNullOrWhiteSpace(Name))
+                output.Append(Name + ":");
+            else           
+                output.Append("Chain: ");
             if (chain == null || chain.Count == 0)
                 output.Append("Empty");
             foreach (ISpectrumProcessor processor in chain)
             {
                 output.Append(processor.GetDescription() + " ");
             }
+            output.Remove(output.Length - 1, 1);
             return output.ToString();
         }
 
         public int ID { get; set; }
+
+        public string Name { get; set; }
 
         List<ISpectrumProcessor> chain => new List<ISpectrumProcessor>();
 

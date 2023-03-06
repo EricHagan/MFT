@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RgbDriverKit;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,10 +28,32 @@ namespace MFT
                 view.Type = (SpectrumProcessorFactory.Types)i;
                 availableProcessorsListBox.Items.Add(view);
             }
-            Chain = new SpectrumProcessorChain();
+            chain = new SpectrumProcessorChain();
         }
 
-        internal SpectrumProcessorChain Chain { get; set; }
+        public bool Quiet { get; set; } = false;
+
+        internal SpectrumProcessorChain Chain
+        {
+            get
+            {
+                UpdateFromForm();
+                return chain;
+            }
+            set
+            {
+                chain = value;
+                if (chain != null)
+                    UpdateForm();
+            }
+        }
+        SpectrumProcessorChain chain;
+
+        void OnSettingsChanged()
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_UPDATED, Chain);
+        }
 
         private void addButton_Click(object sender, EventArgs e)
         {
@@ -42,5 +65,33 @@ namespace MFT
             control.BorderStyle = BorderStyle.FixedSingle;
             chainFlowLayoutPanel.Controls.Add(control);
         }
+
+        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            chain.Name = nameTextBox.Text;
+            OnSettingsChanged();
+        }
+
+        private void chainFlowLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+            UpdateFromForm();
+            OnSettingsChanged();
+        }
+
+        void UpdateForm() {}
+
+        void UpdateFromForm()
+        {
+            chain.Name = nameTextBox.Text;
+            chain.Clear();
+            foreach (var p in chainFlowLayoutPanel.Controls)
+            {
+                var processorGui = (ISpectrumProcessorControl)p;
+                processorGui.UpdateFromForm();
+                chain.Add(processorGui.GetProcessor());
+            }
+        }
+
+        
     }
 }

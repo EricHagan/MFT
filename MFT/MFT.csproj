@@ -93,6 +93,7 @@
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="ISpectrumProcessorControl.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Messenger.cs" />
     <Compile Include="ModifiedExposure.cs" />
