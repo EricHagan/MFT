@@ -332,6 +332,9 @@ namespace MFT
                     case ItemHolder.ItemTypes.EXPOSURE_SETTINGS:
                         Messenger.SendMessage(this, Message.Types.EXPOSURE_SETTINGS_ACTIVATED, itemHolder.Object);
                         break;
+                    case ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN:
+                        Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_ACTIVATED, itemHolder.Object);
+                        break;
                 }
             }
         }

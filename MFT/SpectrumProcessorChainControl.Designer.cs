@@ -35,37 +35,43 @@
             // 
             // chainFlowLayoutPanel
             // 
-            this.chainFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.chainFlowLayoutPanel.Location = new System.Drawing.Point(4, 4);
+            this.chainFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chainFlowLayoutPanel.Name = "chainFlowLayoutPanel";
-            this.chainFlowLayoutPanel.Size = new System.Drawing.Size(269, 459);
+            this.chainFlowLayoutPanel.Size = new System.Drawing.Size(359, 565);
             this.chainFlowLayoutPanel.TabIndex = 0;
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(325, 104);
+            this.addButton.Location = new System.Drawing.Point(433, 128);
+            this.addButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.Size = new System.Drawing.Size(100, 28);
             this.addButton.TabIndex = 1;
             this.addButton.Text = "Add";
             this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // availableProcessorsListBox
             // 
             this.availableProcessorsListBox.FormattingEnabled = true;
-            this.availableProcessorsListBox.Location = new System.Drawing.Point(300, 3);
+            this.availableProcessorsListBox.ItemHeight = 16;
+            this.availableProcessorsListBox.Location = new System.Drawing.Point(400, 4);
+            this.availableProcessorsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.availableProcessorsListBox.Name = "availableProcessorsListBox";
-            this.availableProcessorsListBox.Size = new System.Drawing.Size(120, 95);
+            this.availableProcessorsListBox.Size = new System.Drawing.Size(159, 116);
             this.availableProcessorsListBox.TabIndex = 2;
             // 
             // SpectrumProcessorChainControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.availableProcessorsListBox);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.chainFlowLayoutPanel);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SpectrumProcessorChainControl";
-            this.Size = new System.Drawing.Size(434, 475);
+            this.Size = new System.Drawing.Size(579, 585);
             this.ResumeLayout(false);
 
         }

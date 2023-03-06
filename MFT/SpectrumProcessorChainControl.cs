@@ -27,9 +27,20 @@ namespace MFT
                 view.Type = (SpectrumProcessorFactory.Types)i;
                 availableProcessorsListBox.Items.Add(view);
             }
+            Chain = new SpectrumProcessorChain();
         }
 
         internal SpectrumProcessorChain Chain { get; set; }
 
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            var selected = availableProcessorsListBox.SelectedItem;
+            if (selected == null)
+                return;
+            var processorView = (SpectrumProcessorView)selected;
+            var control = SpectrumProcessorGuiFactory.GetSpectrumProcessorControl(processorView.Type);
+            control.BorderStyle = BorderStyle.FixedSingle;
+            chainFlowLayoutPanel.Controls.Add(control);
+        }
     }
 }

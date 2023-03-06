@@ -57,6 +57,7 @@ namespace MFT
                 case Message.Types.SPECTROMETER_ACTIVATED:
                 case Message.Types.EXPOSURE_ACTIVATED:
                 case Message.Types.EXPOSURE_SETTINGS_ACTIVATED:
+                case Message.Types.SPECTRUM_PROCESSOR_CHAIN_ACTIVATED:
                     ItemActivated(msg.Object);
                     break;
                 case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
