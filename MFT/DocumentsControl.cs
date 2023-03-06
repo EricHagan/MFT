@@ -142,6 +142,7 @@ namespace MFT
                 control.Settings = settings;
                 var tabpage = AddPage(ItemHolder.ItemTypes.EXPOSURE_SETTINGS, settings.ToString(), control, settings, activate: false);
                 control.Quiet = false;
+                ItemActivated(settings);
             }
         }
 
@@ -295,13 +296,11 @@ namespace MFT
                 if (GetPage(chain) != null)
                     throw new Exception($"Spectrum processor chain '{chain}' already exists in documentHolder");
                 var control = new SpectrumProcessorChainControl();
-                //control.Quiet = true; // otherwise stack overflow
                 control.Chain = chain;
                 var tabpage = AddPage(ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN, chain.ToString(), control, chain, activate: false);
-                //control.Quiet = false;
+                ItemActivated(chain);
             }
         }
-
 
         void ItemActivated(object obj)
         {
@@ -310,7 +309,5 @@ namespace MFT
                 return;
             tabControl1.SelectedTab = page;
         }
-
-
     }
 }
