@@ -8,6 +8,7 @@ namespace MFT
         #region ISpectrometer
 
         public ExposureSettings Settings { get; set; } = new ExposureSettings();
+        public SpectrumProcessorChain Chain { get; set; } = new SpectrumProcessorChain();
 
         public Exposure WhiteReference { get; set; }
         public Exposure DarkReference { get; set; }
@@ -63,6 +64,14 @@ namespace MFT
         public abstract string GetDeviceDescription();
         public abstract SpectrometerTypes GetDeviceType();
         public abstract List<double> GetWavelengths();
+
+        public Exposure ProcessWithChain(Exposure input)
+        {
+            if (!ChainActive || Chain == null)
+                return input;
+            return Chain.Process(input);
+        }
+        public bool ChainActive { get; set; } = true;
 
         #endregion
 

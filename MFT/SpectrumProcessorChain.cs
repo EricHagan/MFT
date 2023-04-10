@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MFT
 {
-    internal class SpectrumProcessorChain : IEnumerable<ISpectrumProcessor>, IList<ISpectrumProcessor>, ISpectrumProcessor
+    public class SpectrumProcessorChain : IEnumerable<ISpectrumProcessor>, IList<ISpectrumProcessor>, ISpectrumProcessor
     {
         public Spectrum Process(Spectrum data)
         {
@@ -18,6 +18,16 @@ namespace MFT
                 spectrum = processor.Process(spectrum);
             }
             return spectrum;
+        }
+
+        public Exposure Process(Exposure data)
+        {
+            var newSpectrum = Process(data.Spectrum);
+            return new Exposure(
+                newSpectrum,
+                data.TimeStamp,
+                data.Normalized,
+                this);
         }
 
         public string GetDescription()

@@ -10,6 +10,7 @@ namespace MFT
         string GetDeviceDescription();
         List<double> GetWavelengths();
         ExposureSettings Settings { get; set; }
+        SpectrumProcessorChain Chain { get; set; }
         Exposure CollectExposure(ExposureSettings Setttings, out string ErrMsg);
         bool CollectWhiteReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
         bool CollectDarkReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
@@ -17,5 +18,7 @@ namespace MFT
         Exposure DarkReference { get; set; }
         bool NormalizeAllowed { get; }
         Exposure Normalize(Exposure input);
+        Exposure ProcessWithChain(Exposure input);
+        bool ChainActive { get; set; }
     }
 }
