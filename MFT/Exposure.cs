@@ -7,7 +7,7 @@ namespace MFT
     {
         public Exposure(Spectrum spectrum, DateTime timeStamp, bool normalized, SpectrumProcessorChain chain = null)
         {
-            Spectrum = spectrum;
+            RawSpectrum = spectrum;
             TimeStamp = timeStamp;
             Normalized = normalized;
             Chain = chain;
@@ -17,7 +17,9 @@ namespace MFT
         public Exposure()
             : this(new Spectrum(), DateTime.MinValue, false) { }
 
-        public Spectrum Spectrum { get; protected set; }
+        Spectrum RawSpectrum;
+
+        public Spectrum Spectrum { get => ProcessWithChain(RawSpectrum); }
         public double MaxValue { get => Spectrum.Values.Max(); }
         public double MinValue { get => Spectrum.Values.Min(); }
         public DateTime TimeStamp { get; private set; }
@@ -42,6 +44,14 @@ namespace MFT
     }
         string name;
 
+        public Spectrum ProcessWithChain(Spectrum input)
+        {
+            if (Chain == null)
+                return input;
+            else
+                return Chain.Process(input);
+        }
+
         public static Exposure operator /(Exposure A, Exposure B)
         {
             if (A == null)
@@ -51,7 +61,20 @@ namespace MFT
             var output = new Exposure();
             output.TimeStamp = A.TimeStamp;
             output.Normalized = A.Normalized && B.Normalized; // if either is unnormalized, quotient is unnormalized
-            output.Spectrum = A.Spectrum / B.Spectrum;
+            if ((A.Chain != null) && (B.Chain == null))
+                output.Chain = A.Chain;
+            else if ((A.Chain == null) && (B.Chain != null))
+                output.Chain = B.Chain;
+            else if ((A.Chain == null) && (B.Chain == null))
+                output.Chain = null;
+            else if ((A.Chain != null ) && (B.Chain != null))
+            {
+                if (A.Chain == B.Chain)
+                    output.Chain = A.Chain;
+                else
+                    throw new Exception("A.Chain not equal to B.Chain and neither null.");
+            }
+            output.RawSpectrum = A.RawSpectrum / B.RawSpectrum;
             return output;
         }
 
@@ -67,7 +90,20 @@ namespace MFT
             var output = new Exposure();
             output.TimeStamp = A.TimeStamp;
             output.Normalized = A.Normalized;
-            output.Spectrum = A.Spectrum - B.Spectrum;
+            if ((A.Chain != null) && (B.Chain == null))
+                output.Chain = A.Chain;
+            else if ((A.Chain == null) && (B.Chain != null))
+                output.Chain = B.Chain;
+            else if ((A.Chain == null) && (B.Chain == null))
+                output.Chain = null;
+            else if ((A.Chain != null) && (B.Chain != null))
+            {
+                if (A.Chain == B.Chain)
+                    output.Chain = A.Chain;
+                else
+                    throw new Exception("A.Chain not equal to B.Chain and neither null.");
+            }
+            output.RawSpectrum = A.RawSpectrum - B.RawSpectrum;
             return output;
         }
     }
