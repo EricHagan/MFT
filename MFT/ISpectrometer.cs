@@ -11,7 +11,7 @@ namespace MFT
         List<double> GetWavelengths();
         ExposureSettings Settings { get; set; }
         SpectrumProcessorChain Chain { get; set; }
-        Exposure CollectExposure(ExposureSettings Setttings, out string ErrMsg);
+        Exposure CollectExposure(ExposureSettings Setttings, SpectrumProcessorChain Chain, out string ErrMsg);
         bool CollectWhiteReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
         bool CollectDarkReferenceExposure(ExposureSettings Setttings, out string ErrMsg);
         Exposure WhiteReference { get; set; }

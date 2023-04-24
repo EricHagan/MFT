@@ -61,7 +61,7 @@ namespace MFT
             return new List<double>(spectrometer.GetWavelengths()); ;
         }
 
-        public override Exposure CollectExposure(ExposureSettings settings, out string ErrMsg)
+        public override Exposure CollectExposure(ExposureSettings settings, SpectrumProcessorChain Chain, out string ErrMsg)
         {
             lock (collectLock)
             {
@@ -78,6 +78,7 @@ namespace MFT
                     exposure = Normalize(exposure);
                 exposure.IntegrationTimeSeconds = settings.IntegrationTimeMs / 1000;
                 exposure.AveragingNum = settings.Averaging;
+                exposure = ProcessWithChain(exposure);
                 return exposure;
             }
         }

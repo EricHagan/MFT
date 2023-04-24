@@ -85,7 +85,7 @@ namespace MFT
 
         private void singleSpectrumButton_Click(object sender, EventArgs e)
         {
-            var exposure = spectrometer.CollectExposure(spectrometer.Settings, out string errMsg);
+            var exposure = spectrometer.CollectExposure(spectrometer.Settings, spectrometer.Chain, out string errMsg);
             if (exposure != null)
             {
                 var singleGraph = new ExposureControl();
