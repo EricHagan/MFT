@@ -20,5 +20,8 @@ namespace MFT
         }
 
         public string GetDescription() => "Resample";
+
+        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.RESAMPLE;
+
     }
 }

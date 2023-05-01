@@ -2,9 +2,9 @@
 
 namespace MFT
 {
-    internal static class SpectrumProcessorFactory
+    public static class SpectrumProcessorFactory
     {
-        public enum Types { MOVING_AVERAGE, RESAMPLE, WINDOW }
+        public enum Types { MOVING_AVERAGE, RESAMPLE, WINDOW, CHAIN }
         public static ISpectrumProcessor GetSpectrumProcessor(Types type)
         {
             switch (type)
@@ -29,6 +29,8 @@ namespace MFT
                     return "Resample";
                 case Types.WINDOW:
                     return "Window";
+                case Types.CHAIN:
+                    return "Chain";
                 default:
                     throw new Exception($"Unknown type: '{type}'");
             }

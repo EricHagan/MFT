@@ -9,6 +9,8 @@ namespace MFT
     public interface ISpectrumProcessor
     {
         Spectrum Process(Spectrum data);
+        // todo: add Exposure Process(Exposure data);
         string GetDescription();
+        SpectrumProcessorFactory.Types Type { get; }
     }
 }

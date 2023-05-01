@@ -50,5 +50,7 @@ namespace MFT
         }
 
         public string GetDescription() => "Window";
+
+        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.WINDOW;
     }
 }

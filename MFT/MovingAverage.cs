@@ -19,5 +19,7 @@ namespace MFT
         }
 
         public string GetDescription() => "Moving Average";
+
+        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.MOVING_AVERAGE;
     }
 }

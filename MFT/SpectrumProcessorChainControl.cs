@@ -28,7 +28,7 @@ namespace MFT
                 view.Type = (SpectrumProcessorFactory.Types)i;
                 availableProcessorsListBox.Items.Add(view);
             }
-            chain = new SpectrumProcessorChain();
+            Chain = new SpectrumProcessorChain();
         }
 
         public bool Quiet { get; set; } = false;
@@ -81,8 +81,13 @@ namespace MFT
         void UpdateForm()
         {
             nameTextBox.Text = chain.Name;
-
-
+            chainFlowLayoutPanel.Controls.Clear();
+            foreach (var p in chain)
+            {
+                var control = SpectrumProcessorGuiFactory.GetSpectrumProcessorControl(p.Type);
+                control.BorderStyle = BorderStyle.FixedSingle;
+                chainFlowLayoutPanel.Controls.Add(control);
+            }
         }
 
         void UpdateFromForm()
