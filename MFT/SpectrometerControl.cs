@@ -35,6 +35,7 @@ namespace MFT
         public void SetSpectrometer(ISpectrometer s)
         {
             spectrometer = s;
+            spectrumProcessorChainControl1.Chain = spectrometer.Chain;
         }
 
         ISpectrometer spectrometer;
