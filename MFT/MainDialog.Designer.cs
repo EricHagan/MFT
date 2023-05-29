@@ -265,7 +265,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(1245, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1555, 24);
             this.menuStrip1.TabIndex = 40;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -305,8 +305,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.documentsControl1);
-            this.splitContainer2.Size = new System.Drawing.Size(1020, 738);
-            this.splitContainer2.SplitterDistance = 340;
+            this.splitContainer2.Size = new System.Drawing.Size(1330, 738);
+            this.splitContainer2.SplitterDistance = 443;
             this.splitContainer2.TabIndex = 41;
             // 
             // splitContainer3
@@ -319,7 +319,7 @@
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.workspaceControl1);
-            this.splitContainer3.Size = new System.Drawing.Size(340, 738);
+            this.splitContainer3.Size = new System.Drawing.Size(443, 738);
             this.splitContainer3.SplitterDistance = 601;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -328,7 +328,7 @@
             this.workspaceControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.workspaceControl1.Location = new System.Drawing.Point(0, 0);
             this.workspaceControl1.Name = "workspaceControl1";
-            this.workspaceControl1.Size = new System.Drawing.Size(340, 601);
+            this.workspaceControl1.Size = new System.Drawing.Size(443, 601);
             this.workspaceControl1.TabIndex = 0;
             // 
             // documentsControl1
@@ -336,14 +336,14 @@
             this.documentsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.documentsControl1.Location = new System.Drawing.Point(0, 0);
             this.documentsControl1.Name = "documentsControl1";
-            this.documentsControl1.Size = new System.Drawing.Size(676, 738);
+            this.documentsControl1.Size = new System.Drawing.Size(883, 738);
             this.documentsControl1.TabIndex = 0;
             // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1245, 788);
+            this.ClientSize = new System.Drawing.Size(1555, 788);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label7);
