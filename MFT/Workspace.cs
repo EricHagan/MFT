@@ -16,6 +16,7 @@ namespace MFT
         public HashSet<ICamera> Cameras { get; set; }
         public ISpectrometer Spectrometer { get; set; }
         public List<SpectrumProcessorChain> SpectrumProcessorChains { get; set; }
+        public SpectrumProcessorChain DefaultSpectrumProcessorChain { get; set; }
         public int NextSpectrumProcessorChainNameIndex { get; set; }
         public int CurrentSpectrumProcessorChainId { get; set; }
         public Dictionary<long, TestCollection> TestCollections { get; set; }
@@ -37,6 +38,7 @@ namespace MFT
             Cameras = new HashSet<ICamera>();
             Spectrometer = null;
             SpectrumProcessorChains = new List<SpectrumProcessorChain>();
+            DefaultSpectrumProcessorChain = new SpectrumProcessorChain();
             NextSpectrumProcessorChainNameIndex = 1;
             CurrentSpectrumProcessorChainId = 0;
             TestCollections = new Dictionary<long, TestCollection>();

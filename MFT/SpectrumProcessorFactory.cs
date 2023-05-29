@@ -35,6 +35,21 @@ namespace MFT
                     throw new Exception($"Unknown type: '{type}'");
             }
         }
-
+        public static ISpectrumProcessor GetCopyOf(ISpectrumProcessor x)
+        {
+            switch (x.Type)
+            {
+                case Types.MOVING_AVERAGE:
+                    return new MovingAverage((MovingAverage)x);
+                case Types.RESAMPLE:
+                    return null; // todo
+                case Types.WINDOW:
+                    return null; // todo
+                case Types.CHAIN:
+                    return null; // todo
+                default:
+                    throw new Exception($"Unknown type: '{x.Type}'");
+            }
+        }
     }
 }

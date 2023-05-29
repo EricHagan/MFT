@@ -9,6 +9,14 @@ namespace MFT
 {
     internal class MovingAverage : ISpectrumProcessor
     {
+        public MovingAverage() { }
+
+        public MovingAverage(MovingAverage x)
+        {
+            WindowPoints= x.WindowPoints;
+            Iterations= x.Iterations;
+        }
+
         public int WindowPoints { get; set; } = 1;
         public int Iterations { get; set; } = 1;
 

@@ -6,6 +6,17 @@ namespace MFT
 {
     public class SpectrumProcessorChain : IEnumerable<ISpectrumProcessor>, IList<ISpectrumProcessor>, ISpectrumProcessor
     {
+        public SpectrumProcessorChain() { }
+
+        public SpectrumProcessorChain(SpectrumProcessorChain x)
+        {
+            ID = x.ID;
+            Name= x.Name;
+            chain = new List<ISpectrumProcessor>();
+            foreach (var processor in x.chain)
+                chain.Add(SpectrumProcessorFactory.GetCopyOf(processor));
+        }
+
         public int ID { get; set; }
 
         public string Name { get; set; }

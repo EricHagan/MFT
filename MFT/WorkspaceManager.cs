@@ -131,6 +131,7 @@ namespace MFT
                 return;
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
+            workspace.Spectrometer.Chain = new SpectrumProcessorChain(workspace.DefaultSpectrumProcessorChain);
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECTED, workspace.Spectrometer);
         }
 
