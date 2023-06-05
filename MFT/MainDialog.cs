@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MFT
 {
@@ -41,6 +43,12 @@ namespace MFT
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Messenger.SendMessage(this, Message.Types.EXITING, null);
+        }
+
+        private void deletemeTextBox_TextChanged(object sender, EventArgs e)
+        {
+            
+            deletemeTextBox.Text = Regex.Replace(deletemeTextBox.Text, @"\D", "");
         }
     }
 }

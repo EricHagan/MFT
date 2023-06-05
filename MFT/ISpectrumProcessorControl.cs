@@ -8,6 +8,7 @@ namespace MFT
 {
     internal interface ISpectrumProcessorControl
     {
+        bool Quiet { get; set; }
         void UpdateForm();
         void UpdateFromForm();
         ISpectrumProcessor GetProcessor();

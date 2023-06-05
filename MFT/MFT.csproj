@@ -86,6 +86,12 @@
     <Compile Include="DocumentsControl.Designer.cs">
       <DependentUpon>DocumentsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ResampleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ResampleControl.Designer.cs">
+      <DependentUpon>ResampleControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpectrumProcessorChain.cs" />
     <Compile Include="ExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
@@ -143,6 +149,12 @@
     <Compile Include="SpectrumProcessorChainControl.Designer.cs">
       <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SpectrumProcessorControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpectrumProcessorControlBase.Designer.cs">
+      <DependentUpon>SpectrumProcessorControlBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpectrumProcessorFactory.cs" />
     <Compile Include="SpectrumProcessorGuiFactory.cs" />
     <Compile Include="SpectrumProcessorView.cs" />
@@ -197,11 +209,17 @@
     <EmbeddedResource Include="ExposureControl.resx">
       <DependentUpon>ExposureControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ResampleControl.resx">
+      <DependentUpon>ResampleControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SpectrometerControl.resx">
       <DependentUpon>SpectrometerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SpectrumProcessorChainControl.resx">
       <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpectrumProcessorControlBase.resx">
+      <DependentUpon>SpectrumProcessorControlBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>

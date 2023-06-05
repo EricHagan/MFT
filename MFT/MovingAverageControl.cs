@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class MovingAverageControl : UserControl, ISpectrumProcessorControl
+    public partial class MovingAverageControl : SpectrumProcessorControlBase
     {
         public MovingAverageControl()
         {
@@ -18,8 +18,6 @@ namespace MFT
             Messenger.MessageAvailable += OnMessageReceived;
             movingAverage = new MovingAverage();
         }
-
-        bool Quiet { get; set; } = false;
 
         internal MovingAverage MovingAverage 
         {
@@ -37,19 +35,19 @@ namespace MFT
         }
         MovingAverage movingAverage;
 
-        public void UpdateForm()
+        public override void UpdateForm()
         {
             PointsNumericUpDown.Value = movingAverage.WindowPoints;
             iterationsNumericUpDown.Value = movingAverage.Iterations;
         }
 
-        public void UpdateFromForm()
+        public override void UpdateFromForm()
         {
             movingAverage.WindowPoints = (int)PointsNumericUpDown.Value;
             movingAverage.Iterations = (int)iterationsNumericUpDown.Value;
         }
 
-        public ISpectrumProcessor GetProcessor()
+        public override ISpectrumProcessor GetProcessor()
         {
             return movingAverage;
         }
@@ -73,6 +71,12 @@ namespace MFT
         }
 
         private void PointsNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.MOVING_AVERAGE_UPDATED, MovingAverage);
+        }
+
+        private void iterationsNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!Quiet)
                 Messenger.SendMessage(this, Message.Types.MOVING_AVERAGE_UPDATED, MovingAverage);
