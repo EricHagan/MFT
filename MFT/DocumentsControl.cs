@@ -72,6 +72,7 @@ namespace MFT
             if (GetPage(obj) != null)
                 return null;
             var tabPage = new TabPage(name);
+            control.Dock = DockStyle.Fill;
             tabPage.Controls.Add(control);
             tabPage.Tag = new ItemHolder(type, obj);
             tabControl1.TabPages.Add(tabPage);

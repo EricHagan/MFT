@@ -30,6 +30,7 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.spectrumProcessorChainControl1 = new MFT.ProcessorChainControl();
             this.saveExposureSettingsButton = new System.Windows.Forms.Button();
             this.whiteRefButton = new System.Windows.Forms.Button();
             this.darkRefButton = new System.Windows.Forms.Button();
@@ -42,7 +43,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.spectrumProcessorChainControl1 = new MFT.ProcessorChainControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -74,25 +74,36 @@
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Controls.Add(this.averagingNumericUpDown);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
-            this.splitContainer1.Size = new System.Drawing.Size(1077, 658);
-            this.splitContainer1.SplitterDistance = 448;
+            this.splitContainer1.Size = new System.Drawing.Size(951, 791);
+            this.splitContainer1.SplitterDistance = 538;
             this.splitContainer1.TabIndex = 0;
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.spectrumProcessorChainControl1);
-            this.groupBox1.Location = new System.Drawing.Point(316, 2);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(503, 45);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox1.Size = new System.Drawing.Size(442, 200);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Spectrum Processor Chain";
             // 
+            // spectrumProcessorChainControl1
+            // 
+            this.spectrumProcessorChainControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.spectrumProcessorChainControl1.Location = new System.Drawing.Point(2, 15);
+            this.spectrumProcessorChainControl1.Name = "spectrumProcessorChainControl1";
+            this.spectrumProcessorChainControl1.Quiet = false;
+            this.spectrumProcessorChainControl1.Size = new System.Drawing.Size(438, 183);
+            this.spectrumProcessorChainControl1.TabIndex = 0;
+            // 
             // saveExposureSettingsButton
             // 
-            this.saveExposureSettingsButton.Location = new System.Drawing.Point(15, 161);
+            this.saveExposureSettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.saveExposureSettingsButton.Location = new System.Drawing.Point(15, 204);
             this.saveExposureSettingsButton.Name = "saveExposureSettingsButton";
             this.saveExposureSettingsButton.Size = new System.Drawing.Size(149, 23);
             this.saveExposureSettingsButton.TabIndex = 16;
@@ -102,7 +113,8 @@
             // 
             // whiteRefButton
             // 
-            this.whiteRefButton.Location = new System.Drawing.Point(181, 42);
+            this.whiteRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.whiteRefButton.Location = new System.Drawing.Point(181, 85);
             this.whiteRefButton.Name = "whiteRefButton";
             this.whiteRefButton.Size = new System.Drawing.Size(113, 23);
             this.whiteRefButton.TabIndex = 13;
@@ -112,7 +124,8 @@
             // 
             // darkRefButton
             // 
-            this.darkRefButton.Location = new System.Drawing.Point(181, 12);
+            this.darkRefButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.darkRefButton.Location = new System.Drawing.Point(181, 55);
             this.darkRefButton.Name = "darkRefButton";
             this.darkRefButton.Size = new System.Drawing.Size(113, 23);
             this.darkRefButton.TabIndex = 12;
@@ -122,8 +135,9 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 104);
+            this.label1.Location = new System.Drawing.Point(13, 147);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 13);
@@ -132,13 +146,14 @@
             // 
             // dwellTimeNumericUpDown
             // 
+            this.dwellTimeNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.dwellTimeNumericUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.dwellTimeNumericUpDown.Location = new System.Drawing.Point(97, 103);
-            this.dwellTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dwellTimeNumericUpDown.Location = new System.Drawing.Point(97, 146);
+            this.dwellTimeNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.dwellTimeNumericUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -156,8 +171,9 @@
             // 
             // singleSpectrumButton
             // 
-            this.singleSpectrumButton.Location = new System.Drawing.Point(15, 12);
-            this.singleSpectrumButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.singleSpectrumButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.singleSpectrumButton.Location = new System.Drawing.Point(15, 55);
+            this.singleSpectrumButton.Margin = new System.Windows.Forms.Padding(2);
             this.singleSpectrumButton.Name = "singleSpectrumButton";
             this.singleSpectrumButton.Size = new System.Drawing.Size(63, 25);
             this.singleSpectrumButton.TabIndex = 7;
@@ -167,9 +183,10 @@
             // 
             // normalizedCheckBox
             // 
+            this.normalizedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.normalizedCheckBox.AutoSize = true;
-            this.normalizedCheckBox.Location = new System.Drawing.Point(42, 133);
-            this.normalizedCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.normalizedCheckBox.Location = new System.Drawing.Point(42, 176);
+            this.normalizedCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.normalizedCheckBox.Name = "normalizedCheckBox";
             this.normalizedCheckBox.Size = new System.Drawing.Size(118, 17);
             this.normalizedCheckBox.TabIndex = 9;
@@ -179,13 +196,14 @@
             // 
             // integrationTimeMsNumericUpDown
             // 
+            this.integrationTimeMsNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.integrationTimeMsNumericUpDown.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.integrationTimeMsNumericUpDown.Location = new System.Drawing.Point(114, 76);
-            this.integrationTimeMsNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.integrationTimeMsNumericUpDown.Location = new System.Drawing.Point(114, 119);
+            this.integrationTimeMsNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.integrationTimeMsNumericUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -208,8 +226,9 @@
             // 
             // ContinuousButton
             // 
-            this.ContinuousButton.Location = new System.Drawing.Point(82, 12);
-            this.ContinuousButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ContinuousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ContinuousButton.Location = new System.Drawing.Point(82, 55);
+            this.ContinuousButton.Margin = new System.Windows.Forms.Padding(2);
             this.ContinuousButton.Name = "ContinuousButton";
             this.ContinuousButton.Size = new System.Drawing.Size(79, 25);
             this.ContinuousButton.TabIndex = 8;
@@ -219,8 +238,9 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 51);
+            this.label3.Location = new System.Drawing.Point(14, 94);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(55, 13);
@@ -229,8 +249,9 @@
             // 
             // averagingNumericUpDown
             // 
-            this.averagingNumericUpDown.Location = new System.Drawing.Point(114, 50);
-            this.averagingNumericUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.averagingNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.averagingNumericUpDown.Location = new System.Drawing.Point(114, 93);
+            this.averagingNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.averagingNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -248,30 +269,23 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 77);
+            this.label2.Location = new System.Drawing.Point(14, 120);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(101, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Integration time [ms]";
             // 
-            // spectrumProcessorChainControl1
-            // 
-            this.spectrumProcessorChainControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.spectrumProcessorChainControl1.Location = new System.Drawing.Point(2, 15);
-            this.spectrumProcessorChainControl1.Name = "spectrumProcessorChainControl1";
-            this.spectrumProcessorChainControl1.Quiet = false;
-            this.spectrumProcessorChainControl1.Size = new System.Drawing.Size(438, 183);
-            this.spectrumProcessorChainControl1.TabIndex = 0;
-            // 
             // SpectrometerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(749, 667);
             this.Name = "SpectrometerControl";
-            this.Size = new System.Drawing.Size(1077, 658);
+            this.Size = new System.Drawing.Size(951, 791);
             this.Load += new System.EventHandler(this.SpectrometerDialog_Load);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
