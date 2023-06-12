@@ -39,6 +39,7 @@ namespace MFT
             SPECTRUM_PROCESSOR_CHAIN_CREATED,
             SPECTRUM_PROCESSOR_CHAIN_UPDATED,
             SPECTRUM_PROCESSOR_CHAIN_ACTIVATED,
+            WINDOW_UPDATED,
             EXITING,
         }
     }

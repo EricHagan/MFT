@@ -158,6 +158,12 @@
     <Compile Include="SpectrumProcessorFactory.cs" />
     <Compile Include="SpectrumProcessorGuiFactory.cs" />
     <Compile Include="SpectrumProcessorView.cs" />
+    <Compile Include="SpectrumWindowControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SpectrumWindowControl.Designer.cs">
+      <DependentUpon>SpectrumWindowControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Test.cs" />
     <Compile Include="TestCollection.cs" />
     <Compile Include="TestManager.cs" />
@@ -220,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SpectrumProcessorControlBase.resx">
       <DependentUpon>SpectrumProcessorControlBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpectrumWindowControl.resx">
+      <DependentUpon>SpectrumWindowControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>

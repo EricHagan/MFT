@@ -14,7 +14,7 @@ namespace MFT
                 case SpectrumProcessorFactory.Types.RESAMPLE:
                     return new ResampleControl();
                 case SpectrumProcessorFactory.Types.WINDOW:
-                    return null;// new SpectrumWindow();
+                    return new SpectrumWindowControl();
                 default:
                     throw new Exception($"Unknown type: '{type}'");
             }

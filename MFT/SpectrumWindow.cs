@@ -5,11 +5,11 @@ namespace MFT
 {
     internal class SpectrumWindow : ISpectrumProcessor
     {
-        public static double DefaultMinWavelengthNm { get; internal set; } = 380.0;
-        public static double DefaultMaxWavelengthNm { get; internal set; } = 840.0;
+        public static double DefaultMinWavelengthNm { get; internal set; } = 380;
+        public static double DefaultMaxWavelengthNm { get; internal set; } = 840;
 
-        public double MinWavelengthNm { get; set; } = DefaultMinWavelengthNm;
-        public double MaxWavelengthNm { get; set; } = DefaultMaxWavelengthNm;
+        public double MinWavelength_nm { get; set; } = DefaultMinWavelengthNm;
+        public double MaxWavelength_nm { get; set; } = DefaultMaxWavelengthNm;
 
         public Spectrum Process(Spectrum data)
         {
@@ -20,7 +20,7 @@ namespace MFT
             int startIndex, endIndex;
             try
             {
-                startWaveLength = data.WavelengthsNm.First(w => w > MinWavelengthNm);
+                startWaveLength = data.WavelengthsNm.First(w => w > MinWavelength_nm);
                 startIndex = data.WavelengthsNm.IndexOf(startWaveLength) - 1;
             }
             catch (InvalidOperationException)
@@ -31,7 +31,7 @@ namespace MFT
                 throw new Exception($"startIndex ({startIndex}) out of bounds");
             try
             {
-                endWaveLength = data.WavelengthsNm.First(w => w > MaxWavelengthNm);
+                endWaveLength = data.WavelengthsNm.First(w => w > MaxWavelength_nm);
                 endIndex = data.WavelengthsNm.IndexOf(endWaveLength);
             }
             catch (InvalidOperationException)
