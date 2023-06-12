@@ -8,7 +8,7 @@ namespace MFT
         #region ISpectrometer
 
         public ExposureSettings Settings { get; set; } = new ExposureSettings();
-        public SpectrumProcessorChain Chain { get; set; } = new SpectrumProcessorChain();
+        public ProcessorChain Chain { get; set; } = new ProcessorChain();
 
         public Exposure WhiteReference { get; set; }
         public Exposure DarkReference { get; set; }
@@ -63,7 +63,7 @@ namespace MFT
         }
 
 
-        public abstract Exposure CollectExposure(ExposureSettings settings, SpectrumProcessorChain Chain, out string ErrMsg);
+        public abstract Exposure CollectExposure(ExposureSettings settings, ProcessorChain Chain, out string ErrMsg);
         public abstract bool Connect(out string ErrMsg);
         public abstract string GetDeviceDescription();
         public abstract SpectrometerTypes GetDeviceType();

@@ -8,7 +8,7 @@ namespace MFT
 {
     internal class ModifiedExposure : Exposure
     {
-        public SpectrumProcessorChain SpectrumProcessor { get; set; }
+        public ProcessorChain SpectrumProcessor { get; set; }
 
         public Spectrum InputSpectrum { get; set; }
 

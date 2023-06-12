@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class SpectrumProcessorChainControl : UserControl
+    public partial class ProcessorChainControl : UserControl
     {
-        public SpectrumProcessorChainControl()
+        public ProcessorChainControl()
         {
             InitializeComponent();
             Init();
@@ -22,18 +22,18 @@ namespace MFT
         public void Init()
         {
             availableProcessorsListBox.Items.Clear();
-            foreach (int i in Enum.GetValues(typeof(SpectrumProcessorFactory.Types)))
+            foreach (int i in Enum.GetValues(typeof(ProcessorFactory.Types)))
             {
-                var view = new SpectrumProcessorView();
-                view.Type = (SpectrumProcessorFactory.Types)i;
+                var view = new ProcessorView();
+                view.Type = (ProcessorFactory.Types)i;
                 availableProcessorsListBox.Items.Add(view);
             }
-            Chain = new SpectrumProcessorChain();
+            Chain = new ProcessorChain();
         }
 
         public bool Quiet { get; set; } = false;
 
-        internal SpectrumProcessorChain Chain
+        internal ProcessorChain Chain
         {
             get
             {
@@ -47,7 +47,7 @@ namespace MFT
                     UpdateForm();
             }
         }
-        SpectrumProcessorChain chain;
+        ProcessorChain chain;
 
         void OnSettingsChanged()
         {
@@ -60,8 +60,8 @@ namespace MFT
             var selected = availableProcessorsListBox.SelectedItem;
             if (selected == null)
                 return;
-            var processorView = (SpectrumProcessorView)selected;
-            var control = SpectrumProcessorGuiFactory.GetSpectrumProcessorControl(processorView.Type);
+            var processorView = (ProcessorView)selected;
+            var control = ProcessorGuiFactory.GetSpectrumProcessorControl(processorView.Type);
             control.BorderStyle = BorderStyle.FixedSingle;
             chainFlowLayoutPanel.Controls.Add(control);
         }
@@ -84,7 +84,7 @@ namespace MFT
             chainFlowLayoutPanel.Controls.Clear();
             foreach (var p in chain)
             {
-                var control = SpectrumProcessorGuiFactory.GetSpectrumProcessorControl(p.Type);
+                var control = ProcessorGuiFactory.GetSpectrumProcessorControl(p.Type);
                 control.BorderStyle = BorderStyle.FixedSingle;
                 chainFlowLayoutPanel.Controls.Add(control);
             }
@@ -96,7 +96,7 @@ namespace MFT
             chain.Clear();
             foreach (var p in chainFlowLayoutPanel.Controls)
             {
-                var processorGui = (ISpectrumProcessorControl)p;
+                var processorGui = (IProcessorControl)p;
                 processorGui.UpdateFromForm();
                 chain.Add(processorGui.GetProcessor());
             }

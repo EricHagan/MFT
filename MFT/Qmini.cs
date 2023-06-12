@@ -61,7 +61,7 @@ namespace MFT
             return new List<double>(spectrometer.GetWavelengths()); ;
         }
 
-        public override Exposure CollectExposure(ExposureSettings settings, SpectrumProcessorChain Chain, out string ErrMsg)
+        public override Exposure CollectExposure(ExposureSettings settings, ProcessorChain Chain, out string ErrMsg)
         {
             lock (collectLock)
             {

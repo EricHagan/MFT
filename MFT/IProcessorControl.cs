@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MFT
 {
-    internal interface ISpectrumProcessorControl
+    internal interface IProcessorControl
     {
         bool Quiet { get; set; }
         void UpdateForm();
         void UpdateFromForm();
-        ISpectrumProcessor GetProcessor();
+        IProcessor GetProcessor();
     }
 }

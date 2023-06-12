@@ -15,7 +15,7 @@ namespace MFT
         string SampleName { get; set; }
         string User { get; set; }
         double SpotDiameter_mm { get; set; }
-        SpectrumProcessorChain SpectrumProcessorChain { get; set; }
+        ProcessorChain SpectrumProcessorChain { get; set; }
         List<Measurement> Measurements { get; set; }
     }
 }

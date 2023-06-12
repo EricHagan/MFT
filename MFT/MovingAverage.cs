@@ -7,7 +7,7 @@ using Colorimetry;
 
 namespace MFT
 {
-    internal class MovingAverage : ISpectrumProcessor
+    internal class MovingAverage : IProcessor
     {
         public MovingAverage() { }
 
@@ -28,6 +28,6 @@ namespace MFT
 
         public string GetDescription() => "Moving Average";
 
-        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.MOVING_AVERAGE;
+        public ProcessorFactory.Types Type => ProcessorFactory.Types.MOVING_AVERAGE;
     }
 }

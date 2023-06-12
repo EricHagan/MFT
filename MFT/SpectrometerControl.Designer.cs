@@ -42,7 +42,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.averagingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.spectrumProcessorChainControl1 = new MFT.SpectrumProcessorChainControl();
+            this.spectrumProcessorChainControl1 = new MFT.ProcessorChainControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -301,6 +301,6 @@
         private System.Windows.Forms.Button darkRefButton;
         private System.Windows.Forms.Button saveExposureSettingsButton;
         private System.Windows.Forms.GroupBox groupBox1;
-        private SpectrumProcessorChainControl spectrumProcessorChainControl1;
+        private ProcessorChainControl spectrumProcessorChainControl1;
     }
 }

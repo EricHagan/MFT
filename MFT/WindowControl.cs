@@ -10,19 +10,19 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class SpectrumWindowControl : SpectrumProcessorControlBase
+    public partial class WindowControl : ProcessorControlBase
     {
-        public SpectrumWindowControl()
+        public WindowControl()
         {
             InitializeComponent();
             Messenger.MessageAvailable += OnMessageReceived;
             Quiet = true;
-            window = new SpectrumWindow();
+            window = new Window();
             UpdateForm();
             Quiet = false;
         }
 
-        internal SpectrumWindow Window
+        internal Window Window
         {
             get
             {
@@ -36,7 +36,7 @@ namespace MFT
                     UpdateForm();
             }
         }
-        SpectrumWindow window;
+        Window window;
 
         public override void UpdateForm()
         {
@@ -50,7 +50,7 @@ namespace MFT
             window.MaxWavelength_nm = (double)MaxWavelengthNumericUpDown.Value;
         }
 
-        public override ISpectrumProcessor GetProcessor()
+        public override IProcessor GetProcessor()
         {
             return window;
         }
@@ -62,12 +62,12 @@ namespace MFT
                 case Message.Types.WINDOW_UPDATED:
                     if (sender == this)
                         return;
-                    WindowUpdated(msg.Object as SpectrumWindow);
+                    WindowUpdated(msg.Object as Window);
                     break;
             }
         }
 
-        void WindowUpdated(SpectrumWindow x)
+        void WindowUpdated(Window x)
         {
             if (x == Window)
                 UpdateForm();

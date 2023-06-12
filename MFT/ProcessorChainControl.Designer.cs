@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class SpectrumProcessorChainControl
+    partial class ProcessorChainControl
     {
         /// <summary> 
         /// Required designer variable.

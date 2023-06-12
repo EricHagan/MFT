@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class SpectrumProcessorControlBase : UserControl, ISpectrumProcessorControl
+    public partial class ProcessorControlBase : UserControl, IProcessorControl
     {
-        public SpectrumProcessorControlBase()
+        public ProcessorControlBase()
         {
             InitializeComponent();
         }
@@ -20,6 +20,6 @@ namespace MFT
         public bool Quiet { get; set; } = false;
         public virtual void UpdateForm() { }
         public virtual void UpdateFromForm() { }
-        public virtual ISpectrumProcessor GetProcessor() { return null; }
+        public virtual IProcessor GetProcessor() { return null; }
     }
 }

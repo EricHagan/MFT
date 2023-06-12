@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class SpectrumProcessorControlBase
+    partial class ProcessorControlBase
     {
         /// <summary> 
         /// Required designer variable.

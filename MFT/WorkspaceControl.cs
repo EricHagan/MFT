@@ -119,10 +119,10 @@ namespace MFT
                     UpdateSpectrometer(sender, msg.Object as ISpectrometer);
                     break;
                 case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
-                    CreateSpectrumProcessorChainNode(sender, msg.Object as SpectrumProcessorChain);
+                    CreateSpectrumProcessorChainNode(sender, msg.Object as ProcessorChain);
                     break;
                 case Message.Types.SPECTRUM_PROCESSOR_CHAIN_UPDATED:
-                    UpdateSpectrumProcessorChain(sender, msg.Object as SpectrumProcessorChain);
+                    UpdateSpectrumProcessorChain(sender, msg.Object as ProcessorChain);
                     break;
             }
         }
@@ -286,7 +286,7 @@ namespace MFT
             }
         }
 
-        void CreateSpectrumProcessorChainNode(object sender, SpectrumProcessorChain chain)
+        void CreateSpectrumProcessorChainNode(object sender, ProcessorChain chain)
         {
             if (InvokeRequired)
             {
@@ -307,7 +307,7 @@ namespace MFT
             }
         }
 
-        void UpdateSpectrumProcessorChain(object sender, SpectrumProcessorChain chain)
+        void UpdateSpectrumProcessorChain(object sender, ProcessorChain chain)
         {
             if (InvokeRequired)
             {

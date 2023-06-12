@@ -131,13 +131,13 @@ namespace MFT
                 return;
             }
             workspace.Spectrometer.Settings = new ExposureSettings(workspace.DefaultExposureSettings);
-            workspace.Spectrometer.Chain = new SpectrumProcessorChain(workspace.DefaultSpectrumProcessorChain);
+            workspace.Spectrometer.Chain = new ProcessorChain(workspace.DefaultSpectrumProcessorChain);
             Messenger.SendMessage(this, Message.Types.SPECTROMETER_CONNECTED, workspace.Spectrometer);
         }
 
         void CreateSpectrumProcessorChain()
         {
-            var c = new SpectrumProcessorChain();
+            var c = new ProcessorChain();
             c.Name = GetSpectrumProcessorAutoName();
             workspace.SpectrumProcessorChains.Add(c);
             Messenger.SendMessage(this, Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED, c);

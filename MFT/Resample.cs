@@ -5,7 +5,7 @@ using Colorimetry;
 
 namespace MFT
 {
-    internal class Resample : ISpectrumProcessor
+    internal class Resample : IProcessor
     {
         public int MinWavelength_nm { get; set; } = 400;
         public int MaxWavelength_nm { get; set; } = 750;
@@ -21,7 +21,7 @@ namespace MFT
 
         public string GetDescription() => "Resample";
 
-        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.RESAMPLE;
+        public ProcessorFactory.Types Type => ProcessorFactory.Types.RESAMPLE;
 
     }
 }

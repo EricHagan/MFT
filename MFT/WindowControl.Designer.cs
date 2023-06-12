@@ -1,6 +1,6 @@
 ﻿namespace MFT
 {
-    partial class SpectrumWindowControl
+    partial class WindowControl
     {
         /// <summary> 
         /// Required designer variable.

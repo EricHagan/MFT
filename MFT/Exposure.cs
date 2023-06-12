@@ -5,7 +5,7 @@ namespace MFT
 {
     public class Exposure
     {
-        public Exposure(Spectrum spectrum, DateTime timeStamp, bool normalized, SpectrumProcessorChain chain = null)
+        public Exposure(Spectrum spectrum, DateTime timeStamp, bool normalized, ProcessorChain chain = null)
         {
             RawSpectrum = spectrum;
             TimeStamp = timeStamp;
@@ -26,7 +26,7 @@ namespace MFT
         public float IntegrationTimeSeconds { get; internal set; }
         public int AveragingNum { get; internal set; }
         public bool Normalized { get; internal set; }
-        public SpectrumProcessorChain Chain { get; internal set; } = null;
+        public ProcessorChain Chain { get; internal set; } = null;
         public string Name
         {
             get

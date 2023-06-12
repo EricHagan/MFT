@@ -61,7 +61,7 @@ namespace MFT
                     ItemActivated(msg.Object);
                     break;
                 case Message.Types.SPECTRUM_PROCESSOR_CHAIN_CREATED:
-                    CreateSpectrumProcessorChain(sender, msg.Object as SpectrumProcessorChain);
+                    CreateSpectrumProcessorChain(sender, msg.Object as ProcessorChain);
                     break;
             }
         }
@@ -284,7 +284,7 @@ namespace MFT
             }
         }
 
-        void CreateSpectrumProcessorChain(object sender, SpectrumProcessorChain chain)
+        void CreateSpectrumProcessorChain(object sender, ProcessorChain chain)
         {
             if (InvokeRequired)
             {
@@ -295,7 +295,7 @@ namespace MFT
             {
                 if (GetPage(chain) != null)
                     throw new Exception($"Spectrum processor chain '{chain}' already exists in documentHolder");
-                var control = new SpectrumProcessorChainControl();
+                var control = new ProcessorChainControl();
                 control.Chain = chain;
                 var tabpage = AddPage(ItemHolder.ItemTypes.SPECTRUM_PROCESSOR_CHAIN, chain.ToString(), control, chain, activate: false);
                 ItemActivated(chain);

@@ -92,7 +92,7 @@
     <Compile Include="ResampleControl.Designer.cs">
       <DependentUpon>ResampleControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpectrumProcessorChain.cs" />
+    <Compile Include="ProcessorChain.cs" />
     <Compile Include="ExposureSettingsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,7 +100,7 @@
       <DependentUpon>ExposureSettingsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
-    <Compile Include="ISpectrumProcessorControl.cs" />
+    <Compile Include="IProcessorControl.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Messenger.cs" />
     <Compile Include="ModifiedExposure.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="ExposureSettings.cs" />
     <Compile Include="ExposureStream.cs" />
     <Compile Include="ICamera.cs" />
-    <Compile Include="ISpectrumProcessor.cs" />
+    <Compile Include="IProcessor.cs" />
     <Compile Include="Measurement.cs" />
     <Compile Include="MovingAverage.cs" />
     <Compile Include="Resample.cs" />
@@ -142,26 +142,26 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Qmini.cs" />
     <Compile Include="Spectrum.cs" />
-    <Compile Include="SpectrumProcessorChainControl.cs">
+    <Compile Include="ProcessorChainControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpectrumProcessorChainControl.Designer.cs">
-      <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
+    <Compile Include="ProcessorChainControl.Designer.cs">
+      <DependentUpon>ProcessorChainControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpectrumProcessorControlBase.cs">
+    <Compile Include="ProcessorControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpectrumProcessorControlBase.Designer.cs">
-      <DependentUpon>SpectrumProcessorControlBase.cs</DependentUpon>
+    <Compile Include="ProcessorControlBase.Designer.cs">
+      <DependentUpon>ProcessorControlBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpectrumProcessorFactory.cs" />
-    <Compile Include="SpectrumProcessorGuiFactory.cs" />
-    <Compile Include="SpectrumProcessorView.cs" />
-    <Compile Include="SpectrumWindowControl.cs">
+    <Compile Include="ProcessorFactory.cs" />
+    <Compile Include="ProcessorGuiFactory.cs" />
+    <Compile Include="ProcessorView.cs" />
+    <Compile Include="WindowControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SpectrumWindowControl.Designer.cs">
-      <DependentUpon>SpectrumWindowControl.cs</DependentUpon>
+    <Compile Include="WindowControl.Designer.cs">
+      <DependentUpon>WindowControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Test.cs" />
     <Compile Include="TestCollection.cs" />
@@ -173,7 +173,7 @@
       <DependentUpon>ExposureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Workspace.cs" />
-    <Compile Include="SpectrumWindow.cs" />
+    <Compile Include="Window.cs" />
     <Compile Include="WorkspaceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -220,14 +220,14 @@
     <EmbeddedResource Include="SpectrometerControl.resx">
       <DependentUpon>SpectrometerControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpectrumProcessorChainControl.resx">
-      <DependentUpon>SpectrumProcessorChainControl.cs</DependentUpon>
+    <EmbeddedResource Include="ProcessorChainControl.resx">
+      <DependentUpon>ProcessorChainControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpectrumProcessorControlBase.resx">
-      <DependentUpon>SpectrumProcessorControlBase.cs</DependentUpon>
+    <EmbeddedResource Include="ProcessorControlBase.resx">
+      <DependentUpon>ProcessorControlBase.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpectrumWindowControl.resx">
-      <DependentUpon>SpectrumWindowControl.cs</DependentUpon>
+    <EmbeddedResource Include="WindowControl.resx">
+      <DependentUpon>WindowControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkspaceControl.resx">
       <DependentUpon>WorkspaceControl.cs</DependentUpon>

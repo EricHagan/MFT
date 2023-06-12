@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class ResampleControl : SpectrumProcessorControlBase
+    public partial class ResampleControl : ProcessorControlBase
     {
         public ResampleControl()
         {
@@ -52,7 +52,7 @@ namespace MFT
             resample.Increment_nm = (int)IncrementNumericUpDown.Value;
         }
 
-        public override ISpectrumProcessor GetProcessor()
+        public override IProcessor GetProcessor()
         {
             return resample;
         }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace MFT
 {
-    internal class SpectrumWindow : ISpectrumProcessor
+    internal class Window : IProcessor
     {
         public static double DefaultMinWavelengthNm { get; internal set; } = 380;
         public static double DefaultMaxWavelengthNm { get; internal set; } = 840;
@@ -51,6 +51,6 @@ namespace MFT
 
         public string GetDescription() => "Window";
 
-        public SpectrumProcessorFactory.Types Type => SpectrumProcessorFactory.Types.WINDOW;
+        public ProcessorFactory.Types Type => ProcessorFactory.Types.WINDOW;
     }
 }

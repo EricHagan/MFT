@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MFT
 {
-    public partial class MovingAverageControl : SpectrumProcessorControlBase
+    public partial class MovingAverageControl : ProcessorControlBase
     {
         public MovingAverageControl()
         {
@@ -50,7 +50,7 @@ namespace MFT
             movingAverage.Iterations = (int)iterationsNumericUpDown.Value;
         }
 
-        public override ISpectrumProcessor GetProcessor()
+        public override IProcessor GetProcessor()
         {
             return movingAverage;
         }
