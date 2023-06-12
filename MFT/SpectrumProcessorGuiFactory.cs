@@ -5,14 +5,14 @@ namespace MFT
 {
     internal class SpectrumProcessorGuiFactory
     {
-        public static UserControl GetSpectrumProcessorControl(SpectrumProcessorFactory.Types type)
+        public static SpectrumProcessorControlBase GetSpectrumProcessorControl(SpectrumProcessorFactory.Types type)
         {
             switch (type)
             {
                 case SpectrumProcessorFactory.Types.MOVING_AVERAGE:
                     return new MovingAverageControl();
                 case SpectrumProcessorFactory.Types.RESAMPLE:
-                    return null;// new Resample();
+                    return new ResampleControl();
                 case SpectrumProcessorFactory.Types.WINDOW:
                     return null;// new SpectrumWindow();
                 default:

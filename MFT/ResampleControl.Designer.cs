@@ -33,91 +33,145 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.IncrementNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.MinWavelengthTextBox = new System.Windows.Forms.TextBox();
-            this.MaxWavelengthTextBox = new System.Windows.Forms.TextBox();
+            this.MinWavelengthNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.MaxWavelengthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.IncrementNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinWavelengthNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxWavelengthNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 18);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(13, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 20);
+            this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Resample";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 60);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(16, 39);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(196, 20);
+            this.label2.Size = new System.Drawing.Size(132, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Minimum Wavelength (nm)";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 102);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(13, 66);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(200, 20);
+            this.label3.Size = new System.Drawing.Size(135, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Maximum Wavelength (nm)";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(106, 145);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(71, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(117, 20);
+            this.label4.Size = new System.Drawing.Size(77, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Increment (nm)";
             // 
             // IncrementNumericUpDown
             // 
-            this.IncrementNumericUpDown.Location = new System.Drawing.Point(231, 142);
-            this.IncrementNumericUpDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.IncrementNumericUpDown.Location = new System.Drawing.Point(154, 92);
+            this.IncrementNumericUpDown.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.IncrementNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.IncrementNumericUpDown.Name = "IncrementNumericUpDown";
-            this.IncrementNumericUpDown.Size = new System.Drawing.Size(147, 26);
+            this.IncrementNumericUpDown.Size = new System.Drawing.Size(98, 20);
             this.IncrementNumericUpDown.TabIndex = 4;
+            this.IncrementNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.IncrementNumericUpDown.ValueChanged += new System.EventHandler(this.IncrementNumericUpDown_ValueChanged);
             // 
-            // MinWavelengthTextBox
+            // MinWavelengthNumericUpDown
             // 
-            this.MinWavelengthTextBox.Location = new System.Drawing.Point(231, 55);
-            this.MinWavelengthTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MinWavelengthTextBox.Name = "MinWavelengthTextBox";
-            this.MinWavelengthTextBox.Size = new System.Drawing.Size(148, 26);
-            this.MinWavelengthTextBox.TabIndex = 5;
-            this.MinWavelengthTextBox.TextChanged += new System.EventHandler(this.MinWavelengthTextBox_TextChanged);
+            this.MinWavelengthNumericUpDown.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.MinWavelengthNumericUpDown.Location = new System.Drawing.Point(154, 37);
+            this.MinWavelengthNumericUpDown.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.MinWavelengthNumericUpDown.Minimum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.MinWavelengthNumericUpDown.Name = "MinWavelengthNumericUpDown";
+            this.MinWavelengthNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.MinWavelengthNumericUpDown.TabIndex = 5;
+            this.MinWavelengthNumericUpDown.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.MinWavelengthNumericUpDown.ValueChanged += new System.EventHandler(this.MinWavelengthNumericUpDown_ValueChanged);
             // 
-            // MaxWavelengthTextBox
+            // MaxWavelengthNumericUpDown
             // 
-            this.MaxWavelengthTextBox.Location = new System.Drawing.Point(231, 97);
-            this.MaxWavelengthTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MaxWavelengthTextBox.Name = "MaxWavelengthTextBox";
-            this.MaxWavelengthTextBox.Size = new System.Drawing.Size(148, 26);
-            this.MaxWavelengthTextBox.TabIndex = 6;
+            this.MaxWavelengthNumericUpDown.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.MaxWavelengthNumericUpDown.Location = new System.Drawing.Point(154, 64);
+            this.MaxWavelengthNumericUpDown.Maximum = new decimal(new int[] {
+            800,
+            0,
+            0,
+            0});
+            this.MaxWavelengthNumericUpDown.Minimum = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.MaxWavelengthNumericUpDown.Name = "MaxWavelengthNumericUpDown";
+            this.MaxWavelengthNumericUpDown.Size = new System.Drawing.Size(98, 20);
+            this.MaxWavelengthNumericUpDown.TabIndex = 6;
+            this.MaxWavelengthNumericUpDown.Value = new decimal(new int[] {
+            600,
+            0,
+            0,
+            0});
+            this.MaxWavelengthNumericUpDown.ValueChanged += new System.EventHandler(this.MaxWavelengthNumericUpDown_ValueChanged);
             // 
             // ResampleControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.MaxWavelengthTextBox);
-            this.Controls.Add(this.MinWavelengthTextBox);
+            this.Controls.Add(this.MaxWavelengthNumericUpDown);
+            this.Controls.Add(this.MinWavelengthNumericUpDown);
             this.Controls.Add(this.IncrementNumericUpDown);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ResampleControl";
-            this.Size = new System.Drawing.Size(414, 208);
+            this.Size = new System.Drawing.Size(276, 135);
             ((System.ComponentModel.ISupportInitialize)(this.IncrementNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MinWavelengthNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MaxWavelengthNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,7 +184,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown IncrementNumericUpDown;
-        private System.Windows.Forms.TextBox MinWavelengthTextBox;
-        private System.Windows.Forms.TextBox MaxWavelengthTextBox;
+        private System.Windows.Forms.NumericUpDown MinWavelengthNumericUpDown;
+        private System.Windows.Forms.NumericUpDown MaxWavelengthNumericUpDown;
     }
 }

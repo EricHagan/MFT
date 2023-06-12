@@ -16,7 +16,10 @@ namespace MFT
         {
             InitializeComponent();
             Messenger.MessageAvailable += OnMessageReceived;
+            Quiet = true;
             resample = new Resample();
+            UpdateForm();
+            Quiet = false;
         }
 
         internal Resample Resample
@@ -37,21 +40,16 @@ namespace MFT
 
         public override void UpdateForm()
         {
-            MinWavelengthTextBox.Text = Resample.MinWavelength_nm.ToString();
-            MaxWavelengthTextBox.Text = Resample.MaxWavelength_nm.ToString();
-            IncrementNumericUpDown.Value = Resample.Increment_nm;
+            MinWavelengthNumericUpDown.Value = resample.MinWavelength_nm;
+            MaxWavelengthNumericUpDown.Value = resample.MaxWavelength_nm;
+            IncrementNumericUpDown.Value = resample.Increment_nm;
         }
 
         public override void UpdateFromForm()
         {
-            if (!int.TryParse(MinWavelengthTextBox.Text, out int minWavelengthNm))
-                throw new Exception($"Could not convert '{MinWavelengthTextBox.Text}' to an integer.");
-            if (!int.TryParse(MaxWavelengthTextBox.Text, out int maxWavelengthNm))
-                throw new Exception($"Could not convert '{MaxWavelengthTextBox.Text}' to an integer.");
-
-            Resample.MinWavelength_nm = minWavelengthNm;
-            Resample.MaxWavelength_nm = maxWavelengthNm;
-            Resample.Increment_nm = (int)IncrementNumericUpDown.Value;
+            resample.MinWavelength_nm = (int)MinWavelengthNumericUpDown.Value;
+            resample.MaxWavelength_nm = (int)MaxWavelengthNumericUpDown.Value;
+            resample.Increment_nm = (int)IncrementNumericUpDown.Value;
         }
 
         public override ISpectrumProcessor GetProcessor()
@@ -77,15 +75,22 @@ namespace MFT
                 UpdateForm();
         }
 
-        private void MinWavelengthTextBox_TextChanged(object sender, EventArgs e)
+        private void MinWavelengthNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.RESAMPLE_UPDATED, Resample);
+        }
 
+        private void MaxWavelengthNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.RESAMPLE_UPDATED, Resample);
+        }
+
+        private void IncrementNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!Quiet)
+                Messenger.SendMessage(this, Message.Types.RESAMPLE_UPDATED, Resample);
         }
     }
-
-
-
-
-
-
 }

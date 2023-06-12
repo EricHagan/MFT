@@ -16,7 +16,10 @@ namespace MFT
         {
             InitializeComponent();
             Messenger.MessageAvailable += OnMessageReceived;
+            Quiet = true;
             movingAverage = new MovingAverage();
+            UpdateForm();
+            Quiet = false;
         }
 
         internal MovingAverage MovingAverage 
