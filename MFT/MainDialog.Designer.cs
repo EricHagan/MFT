@@ -51,7 +51,6 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.workspaceControl1 = new MFT.WorkspaceControl();
             this.documentsControl1 = new MFT.DocumentsControl();
-            this.deletemeTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
@@ -340,20 +339,11 @@
             this.documentsControl1.Size = new System.Drawing.Size(883, 738);
             this.documentsControl1.TabIndex = 0;
             // 
-            // deletemeTextBox
-            // 
-            this.deletemeTextBox.Location = new System.Drawing.Point(24, 436);
-            this.deletemeTextBox.Name = "deletemeTextBox";
-            this.deletemeTextBox.Size = new System.Drawing.Size(177, 20);
-            this.deletemeTextBox.TabIndex = 42;
-            this.deletemeTextBox.TextChanged += new System.EventHandler(this.deletemeTextBox_TextChanged);
-            // 
             // MainDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1555, 788);
-            this.Controls.Add(this.deletemeTextBox);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label7);
@@ -370,6 +360,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(1390, 780);
             this.Name = "MainDialog";
             this.Text = "FadeMate";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -418,7 +409,6 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private WorkspaceControl workspaceControl1;
         private DocumentsControl documentsControl1;
-        private System.Windows.Forms.TextBox deletemeTextBox;
     }
 }
 

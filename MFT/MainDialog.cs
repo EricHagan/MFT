@@ -44,11 +44,5 @@ namespace MFT
         {
             Messenger.SendMessage(this, Message.Types.EXITING, null);
         }
-
-        private void deletemeTextBox_TextChanged(object sender, EventArgs e)
-        {
-            
-            deletemeTextBox.Text = Regex.Replace(deletemeTextBox.Text, @"\D", "");
-        }
     }
 }
